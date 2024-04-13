@@ -1,3 +1,4 @@
+import { FaChevronRight } from "react-icons/fa";
 
 
 export default function Folder(){
@@ -20,13 +21,12 @@ export default function Folder(){
             name: 'Melhorias'
         }
     ]
-
-    return(
-        folders.map( (folder) => {
-            <div className="flex items-center gap-3">
-                <p>{folder.id}</p>
-                <p>{folder.name}</p>
-            </div>
-        } )
-    );
+       return(
+        folders.map( ( folder ) => ( 
+        <div key={folder.id} className="flex items-center justify-between hover:cursor-pointer hover:bg-[#1b2631] hover:rounded-lg transition-all px-3 py-2">
+            <h1 className="text-md font-bold">{ folder.name }</h1>
+            <FaChevronRight />
+        </div> 
+        ))
+       );
 }
