@@ -1,0 +1,49 @@
+{
+    "tarefas": [
+      {
+        "id": 1,
+        "name": "Ajustar Dashboard por obra",
+        "responsible": 2,
+        "creationDate": "11/04/2024",
+        "finalizationDate": "13/04/2024",
+        "category":"URGENTE",
+        "status": "Não iniciado"
+      },
+      {
+        "id": 2,
+        "name": "Ajustar Table-repor",
+        "responsible": 2,
+        "creationDate": "12/04/2024",
+        "finalizationDate": "13/04/2024",
+        "category":"URGENTE",
+        "status": "Fazer"
+      },
+      {
+        "id": 3,
+        "name": "Colocar o lixo pra fora",
+        "responsible": 2,
+        "creationDate": "13/04/2024",
+        "finalizationDate": "15/04/2024",
+        "category":"BAIXA URGENCIA",
+        "status": "Em andamento"
+      },
+      {
+        "id": 4,
+        "name": "Comprar aveia para fazer mingau",
+        "responsible": 2,
+        "creationDate": "13/04/2024",
+        "finalizationDate": "17/04/2024",
+        "category":"URGÊNCIA MÉDIA",
+        "status": "Concluído"
+      },
+      {
+        "id": 5,
+        "name": "Criar dataset para trazer os dados de fichas abertas",
+        "responsible": 2,
+        "creationDate": "10/04/2024",
+        "finalizationDate": "25/04/2024",
+        "category":"URGENTE",
+        "status": "Atrasado"
+      }
+    ]
+  }

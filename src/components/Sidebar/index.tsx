@@ -22,7 +22,7 @@ export default function SideBar(){
             </div>
             <nav className="border-b border-black/20 space-y-2 py-2">
                     <NavLink href="/home" name="Home" icon={<IoMdHome />}/>
-                    <NavLink href="/inbox" name="Inbox" icon={<FaInbox />}/>
+                    <NavLink href="/Inbox" name="Inbox" icon={<FaInbox />}/>
                     <NavLink href="/dashboards" name="Dashboards" icon={<GiNetworkBars />}/>
                     <NavLink href="/reports" name="Reports" icon={<TbReportSearch />}/>
             </nav>
