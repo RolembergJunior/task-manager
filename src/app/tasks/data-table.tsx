@@ -1,11 +1,12 @@
 'use client'
 
+import { useRouter } from "next/navigation";
 import {
     ColumnDef,
     flexRender,
     getCoreRowModel,
     useReactTable,
-  } from "@tanstack/react-table"
+  } from "@tanstack/react-table";
    
   import {
     Table,
@@ -14,7 +15,7 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-  } from "@/components/ui/table"
+  } from "@/components/ui/table";
 
   interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[],
@@ -23,11 +24,19 @@ import {
 
 
   export function DataTable<Tdata, Tvalue>({columns, data}:DataTableProps<Tdata, Tvalue>) {
+    const router = useRouter();
     const table = useReactTable({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
-    })
+    });
+
+    function onHandleClick(id:number){
+        
+        router.push(`/task/${id}`);
+    }
+
+
 
     return(
         <div className="rounded-md border">
@@ -57,7 +66,7 @@ import {
                                 {row.getVisibleCells().map((cell) => (
                                     <TableCell 
                                         className="hover:cursor-pointer" 
-                                        key={cell.id} onClick={() => console.log(cell.row.original.id)}
+                                        key={cell.id} onClick={() => onHandleClick(cell.row.original.id)}
                                     >
                                         {flexRender(cell.column.columnDef.cell, 
                                                     cell.getContext())}

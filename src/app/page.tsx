@@ -1,11 +1,13 @@
 "use client"
 
 import SideBar from "@/components/Sidebar";
-import { useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import { DataTable } from "./tasks/data-table";
 import { columns } from "./tasks/columns";
 import AddTaskModal from "@/components/AddTaskModal";
+import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "@radix-ui/react-dialog";
+import { DialogHeader } from "@/components/ui/dialog";
 
 
 interface tasksProps{
@@ -27,7 +29,28 @@ export default function Home() {
     .then( data => setTasks(data) )
   },[])
 
-  return (
+  type TaskModalComponent = React.ReactElement;
+
+  function openTaskModal(id:number):TaskModalComponent{
+    return(
+      <Dialog>
+        <DialogTrigger>Open</DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Are you absolutely sure?</DialogTitle>
+            <DialogDescription>
+              This action cannot be undone. This will permanently delete your account
+              and remove your data from our servers.
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
+  // if(tasks.length < 0) return <h1 className="text-black text-xl">Carregando...</h1>
+  if(tasks.length > 0)
+    return (
       <div className="flex">
         <SideBar/>
           <div className="w-full">
