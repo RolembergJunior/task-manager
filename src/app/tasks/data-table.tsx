@@ -31,7 +31,7 @@ import {
         getCoreRowModel: getCoreRowModel(),
     });
 
-    function onHandleClick(id:number){
+    function onHandleClickRow(id:number){
         
         router.push(`/task/${id}`);
     }
@@ -66,7 +66,7 @@ import {
                                 {row.getVisibleCells().map((cell) => (
                                     <TableCell 
                                         className="hover:cursor-pointer" 
-                                        key={cell.id} onClick={() => onHandleClick(cell.row.original.id)}
+                                        key={cell.id} onClick={() => onHandleClickRow(cell.row.original.id)}
                                     >
                                         {flexRender(cell.column.columnDef.cell, 
                                                     cell.getContext())}
