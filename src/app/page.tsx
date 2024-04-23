@@ -1,7 +1,8 @@
 "use client"
 
+import { useEffect, useState } from "react";
+import { getTasks } from "../services/api"
 import SideBar from "@/components/Sidebar";
-import { ReactElement, useEffect, useState } from "react";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import { DataTable } from "./tasks/data-table";
 import { columns } from "./tasks/columns";
@@ -12,12 +13,15 @@ export default function Home() {
   const [tasks, setTasks] = useState<tasksProps[]>([]);
 
   useEffect(() => {
-    fetch('http://localhost:3000/tarefas')
-    .then( response => response.json() )
-    .then( data => setTasks(data) )
-  },[])
+    try {
+      getTasks().then( data => {
+        setTasks(data);
+      });
+    } catch (error) {
+      console.log('Erro ao fazer a requisição')
+    }
+  },[]);
 
-  // if(tasks.length < 0) return <h1 className="text-black text-xl">Carregando...</h1>
   if(tasks.length > 0)
     return (
       <div className="flex">
