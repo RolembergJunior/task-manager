@@ -1,7 +1,7 @@
 'use client'
 
 import NavLink from "./components/NavLink"
-import Folder from "./components/Folder"
+import Folder from "./components/Folder";
 import { GiNetworkBars } from "react-icons/gi";
 import { TbReportSearch } from "react-icons/tb";
 import { IoMdHome } from "react-icons/io";
@@ -10,10 +10,10 @@ import { FaInbox } from "react-icons/fa";
 
 export default function SideBar(){
     return(
-        <div className=" bg-[#2e4053] w-56 h-screen space-y-4 border border-black/40 p-3 ">
+        <div className="bg-[#2e4053] w-56 h-screen space-y-4 border border-black/40 p-3 ">
             <div className=" flex-col items-center w-full border-b border-black/20 gap-3 py-2">
                 <img 
-                    src="./logo.png" 
+                    src="/logo.png" 
                     alt="Logo da empresa" 
                     className="mx-auto rounded-full"
                     width={60}

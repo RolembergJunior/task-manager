@@ -5,7 +5,6 @@ import { useParams, useRouter } from "next/navigation";
 import { tasksProps } from "@/app/types/Types";
 import SideBar from "@/components/Sidebar";
 import { BiLeftArrowAlt } from 'react-icons/bi';
-import { Fullscreen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FaPlus, FaRegTrashAlt } from "react-icons/fa";
@@ -78,7 +77,9 @@ export default function Task(){
                         <div className="space-y-4">
                             <div className="flex items-center justify-between">
                                 <h1 className="text-xl font-semibold ">ChekList</h1>
-                                <FaPlus />
+                                <div className="transition-colors hover:bg-black/10 hover:cursor-pointer rounded-full p-2">
+                                    <FaPlus />
+                                </div>
                             </div>
                             <div className="bg-white rounded-lg p-3 h-52 overflow-auto scrollbar-thin scrollbar-thumb-black scrollbar-track-white" >
                                 <div className="flex items-center justify-between w-full border-b border-black/10">
