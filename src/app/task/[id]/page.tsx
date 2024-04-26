@@ -1,32 +1,23 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useFetch } from "@/hooks/useFetch";
 import { useParams, useRouter } from "next/navigation";
-import { tasksProps } from "@/app/types/Types";
 import SideBar from "@/components/Sidebar";
-import { BiLeftArrowAlt } from 'react-icons/bi';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import Loading from "@/components/Loading";
+import { tasksProps } from "@/app/types/Types";
+import { BiLeftArrowAlt } from 'react-icons/bi';
 import { FaPlus, FaRegTrashAlt } from "react-icons/fa";
-import { getOnlyTask } from "@/services/api";
 
 export default function Task(){
-    const [task, setTask] = useState<tasksProps[]>([]);
-    const route = useRouter();
     const param = useParams();
+    const route = useRouter();
+    const { data, error, isLoading } = useFetch(`http://localhost:3000/tarefas/?id=${param.id}`);
 
-    useEffect(() => {
-        try {
-            getOnlyTask(param.id).then( data => {
-                setTask(data);
-            });
-        } catch (error) {
-            console.log('Erro na requisição API')
-        }
-
-        console.log(task)
-      },[])
-
+    if(isLoading && error) return <Loading/>
+    if(!isLoading)
     return(
         <div className="flex">
             <SideBar/>
@@ -45,7 +36,7 @@ export default function Task(){
                         <div className="flex items-center gap-4" >
                             <div className="bg-red-800 w-3 h-3" />
                             <h1 className="text-3xl font-semibold">
-                                {task[0]?.name}
+                                {data?.map( task => task.name )}
                             </h1>
                         </div>
                         <div className="flex items-center gap-6">
@@ -55,19 +46,19 @@ export default function Task(){
                             </div>
                             <div>
                                 <span className="font-medium text-black/50">Data de criação</span>
-                                <p className="">{task[0]?.creationDate}</p>
+                                <p className="">{data?.map( task => task.creationDate )}</p>
                             </div>
                             <div>
                                 <span className="font-medium text-black/50">Data de finalização</span>
-                                <p className="">{task[0]?.finalizationDate}</p>
+                                <p className="">{data?.map( task => task.finalizationDate )}</p>
                             </div>
                             <div>
                                 <span className="font-medium text-black/50">Categoria</span>
-                                <p className="">{task[0]?.category}</p>
+                                <p className="">{data?.map( task => task.category )}</p>
                             </div>
                             <div>
                                 <span className="font-medium text-black/50">Status</span>
-                                <p className="">{task[0]?.status}</p>
+                                <p className="">{data?.map( task => task.status )}</p>
                             </div>
                         </div>
                         <textarea  

@@ -1,28 +1,20 @@
 "use client"
 
-import { useEffect, useState } from "react";
-import { getTasks } from "../services/api"
+import { useState } from "react";
+import { useFetch } from "@/hooks/useFetch";
 import SideBar from "@/components/Sidebar";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import { DataTable } from "./tasks/data-table";
 import { columns } from "./tasks/columns";
 import AddTaskModal from "@/components/AddTaskModal";
-import { tasksProps } from "./types/Types";
+import Loading from "@/components/Loading";
 
 export default function Home() {
-  const [tasks, setTasks] = useState<tasksProps[]>([]);
+  const { data, error, isLoading } = useFetch('http://localhost:3000/tarefas');
 
-  useEffect(() => {
-    try {
-      getTasks().then( data => {
-        setTasks(data);
-      });
-    } catch (error) {
-      console.log('Erro ao fazer a requisição')
-    }
-  },[]);
 
-  if(tasks.length > 0)
+  if(isLoading) return <Loading/>
+  if(!isLoading && !error)
     return (
       <div className="flex">
         <SideBar/>
@@ -37,7 +29,7 @@ export default function Home() {
               <AddTaskModal/>
             </div>
           </div>
-          <DataTable columns={columns} data={tasks} />
+          <DataTable columns={columns} data={data} />
         </div>
       </div>
   );
