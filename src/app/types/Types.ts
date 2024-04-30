@@ -1,11 +1,13 @@
 
 
 export interface tasksProps{
-    id: number,
+    // id: number | string | null,
     name: string,
-    responsible: number, 
-    creationDate: string,
-    finalizationDate: string,
-    category:string,
-    status: string
+    description: string | null,
+    responsible: string | null, 
+    creationDate: string | null,
+    finalizationDate: string | null,
+    category:string | null,
+    status: string,
+    folder: string | null
 }

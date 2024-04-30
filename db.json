@@ -1,49 +1,82 @@
 {
-    "tarefas": [
-      {
-        "id": 1,
-        "name": "Ajustar Dashboard por obra",
-        "responsible": 2,
-        "creationDate": "11/04/2024",
-        "finalizationDate": "13/04/2024",
-        "category":"URGENTE",
-        "status": "Não iniciado"
-      },
-      {
-        "id": 2,
-        "name": "Ajustar Table-repor",
-        "responsible": 2,
-        "creationDate": "12/04/2024",
-        "finalizationDate": "13/04/2024",
-        "category":"URGENTE",
-        "status": "Fazer"
-      },
-      {
-        "id": 3,
-        "name": "Colocar o lixo pra fora",
-        "responsible": 2,
-        "creationDate": "13/04/2024",
-        "finalizationDate": "15/04/2024",
-        "category":"BAIXA URGENCIA",
-        "status": "Em andamento"
-      },
-      {
-        "id": 4,
-        "name": "Comprar aveia para fazer mingau",
-        "responsible": 2,
-        "creationDate": "13/04/2024",
-        "finalizationDate": "17/04/2024",
-        "category":"URGÊNCIA MÉDIA",
-        "status": "Concluído"
-      },
-      {
-        "id": 5,
-        "name": "Criar dataset para trazer os dados de fichas abertas",
-        "responsible": 2,
-        "creationDate": "10/04/2024",
-        "finalizationDate": "25/04/2024",
-        "category":"URGENTE",
-        "status": "Atrasado"
-      }
-    ]
-  }
+  "tarefas": [
+    {
+      "id": "1",
+      "name": "Ajustar Dashboard por obra",
+      "responsible": 2,
+      "creationDate": "11/04/2024",
+      "finalizationDate": "13/04/2024",
+      "category": "URGENTE",
+      "status": "Não iniciado"
+    },
+    {
+      "id": "2",
+      "name": "Ajustar Table-repor",
+      "responsible": 2,
+      "creationDate": "12/04/2024",
+      "finalizationDate": "13/04/2024",
+      "category": "URGENTE",
+      "status": "Fazer"
+    },
+    {
+      "id": "3",
+      "name": "Colocar o lixo pra fora",
+      "responsible": 2,
+      "creationDate": "13/04/2024",
+      "finalizationDate": "15/04/2024",
+      "category": "BAIXA URGENCIA",
+      "status": "Em andamento"
+    },
+    {
+      "id": "4",
+      "name": "Comprar aveia para fazer mingau",
+      "responsible": 2,
+      "creationDate": "13/04/2024",
+      "finalizationDate": "17/04/2024",
+      "category": "URGÊNCIA MÉDIA",
+      "status": "Concluído"
+    },
+    {
+      "id": "5",
+      "name": "Criar dataset para trazer os dados de fichas abertas",
+      "responsible": 2,
+      "creationDate": "10/04/2024",
+      "finalizationDate": "25/04/2024",
+      "category": "URGENTE",
+      "status": "Atrasado"
+    },
+    {
+      "id": "565d",
+      "name": "Colocar lixo pra fora",
+      "description": "sdasdasd",
+      "responsible": "Rolemberg Junior",
+      "creationDate": null,
+      "finalizationDate": "2024-04-30",
+      "category": "Urgente",
+      "folder": null,
+      "status": "Não iniciado"
+    },
+    {
+      "id": "8ffa",
+      "name": "Realizar exame às 09:30",
+      "description": "Exame admissional",
+      "responsible": "Rolemberg Junior",
+      "creationDate": null,
+      "finalizationDate": "2024-04-29",
+      "category": "Baixa urgência",
+      "folder": null,
+      "status": "Em andamento"
+    },
+    {
+      "id": "a254",
+      "name": "Colocar o lixo para fora",
+      "description": "sdasdasd",
+      "responsible": null,
+      "creationDate": null,
+      "finalizationDate": "2024-04-02",
+      "category": "",
+      "folder": null,
+      "status": "Em andamento"
+    }
+  ]
+}

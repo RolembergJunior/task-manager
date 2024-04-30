@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFetch } from "@/hooks/useFetch";
 import SideBar from "@/components/Sidebar";
 import { HiMagnifyingGlass } from "react-icons/hi2";
@@ -8,11 +8,24 @@ import { DataTable } from "./tasks/data-table";
 import { columns } from "./tasks/columns";
 import AddTaskModal from "@/components/AddTaskModal";
 import Loading from "@/components/Loading";
+import { tasksProps } from "./types/Types";
 
 export default function Home() {
   const { data, error, isLoading } = useFetch('http://localhost:3000/tarefas');
+  const [ allData, setAllData ] = useState<tasksProps[]>();
 
+  useEffect(() => {
+    if(data != undefined){
+      setAllData(data);
+    }
+  },[data])
 
+  function getNewDataAndSave(newData:tasksProps){    
+      const dataArray = [...allData, newData]
+
+      setAllData(dataArray);
+  }
+  
   if(isLoading) return <Loading/>
   if(!isLoading && !error)
     return (
@@ -26,10 +39,10 @@ export default function Home() {
                 <HiMagnifyingGlass />
                 <span>Search</span>
               </div>
-              <AddTaskModal/>
+              <AddTaskModal getNewDataAndSave={getNewDataAndSave}/>
             </div>
           </div>
-          <DataTable columns={columns} data={data} />
+          <DataTable columns={columns} data={allData} />
         </div>
       </div>
   );

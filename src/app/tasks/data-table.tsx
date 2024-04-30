@@ -16,6 +16,7 @@ import {
     TableHeader,
     TableRow,
   } from "@/components/ui/table";
+import Loading from "@/components/Loading";
 
   interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[],
@@ -31,13 +32,14 @@ import {
         getCoreRowModel: getCoreRowModel(),
     });
 
+
     function onHandleClickRow(id:number){
-        
         router.push(`/task/${id}`);
     }
 
 
-
+    if(data === undefined) return <Loading/>
+    if(data != undefined)
     return(
         <div className="rounded-md border">
             <Table>
@@ -62,11 +64,11 @@ import {
                 <TableBody>
                     {table.getRowModel().rows?.length ? (
                         table.getRowModel().rows.map( (row) => (
-                            <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+                            <TableRow onClick={() => onHandleClickRow(row.id)} key={row.id} data-state={row.getIsSelected() && "selected"}>
                                 {row.getVisibleCells().map((cell) => (
                                     <TableCell 
                                         className="hover:cursor-pointer" 
-                                        key={cell.id} onClick={() => onHandleClickRow(cell.row.original.id)}
+                                        key={cell.id} 
                                     >
                                         {flexRender(cell.column.columnDef.cell, 
                                                     cell.getContext())}

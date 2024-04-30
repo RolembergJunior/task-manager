@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { ColumnDef } from "@tanstack/react-table";
+import { Rows } from "lucide-react";
 import { IoEllipsisHorizontal, IoTrashOutline } from 'react-icons/io5'
 
 export type Tasks = {
@@ -16,8 +17,10 @@ export type Tasks = {
 
 export const columns: ColumnDef<Tasks>[] = [
     {
-        accessorKey: 'id',
-        header: 'Nº'
+        header: 'Nº',
+        cell: ({ row }) => {
+            return row.id
+        }
     },
     {
         accessorKey: 'name',
@@ -40,6 +43,7 @@ export const columns: ColumnDef<Tasks>[] = [
         header: 'Status'
     },
     {
+        header: 'Ações',
         id: "actions",
         cell: ({ row }) => {
             const task = row.original
