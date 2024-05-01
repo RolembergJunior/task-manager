@@ -12,7 +12,7 @@ import { tasksProps } from "./types/Types";
 
 export default function Home() {
   const { data, error, isLoading } = useFetch('http://localhost:3000/tarefas');
-  const [ allData, setAllData ] = useState<tasksProps[]>();
+  const [ allData, setAllData ] = useState<tasksProps[]>([]);
 
   useEffect(() => {
     if(data != undefined){
@@ -20,10 +20,8 @@ export default function Home() {
     }
   },[data])
 
-  function getNewDataAndSave(newData:tasksProps){    
-      const dataArray = [...allData, newData]
-
-      setAllData(dataArray);
+  function getNewDataAndSave(newData:tasksProps){   
+      setAllData([...allData, newData]);
   }
   
   if(isLoading) return <Loading/>

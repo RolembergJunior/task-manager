@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { ColumnDef } from "@tanstack/react-table";
-import { Rows } from "lucide-react";
 import { IoEllipsisHorizontal, IoTrashOutline } from 'react-icons/io5'
 
 export type Tasks = {
@@ -11,16 +10,28 @@ export type Tasks = {
     name: string,
     creatationDate?: string,
     finalizationDate?: string,
-    category: string,
+    priority: string | number,
     status: string
+}
+const arrayRows:Object[] = []
+
+function removeDuplicateRows(row:Object){
+    arrayRows.push(row);
+    const newArrayRowsWithoutDuplicate = arrayRows.filter( (row, index) => arrayRows.indexOf(row) === index)
+
+    console.log(newArrayRowsWithoutDuplicate)
+
+    return newArrayRowsWithoutDuplicate
 }
 
 export const columns: ColumnDef<Tasks>[] = [
     {
         header: 'Nº',
-        cell: ({ row }) => {
-            return row.id
-        }
+        cell(props) {
+          const countRows = removeDuplicateRows(props.row.original);
+
+          return countRows.length
+        },
     },
     {
         accessorKey: 'name',
@@ -35,8 +46,17 @@ export const columns: ColumnDef<Tasks>[] = [
         header: 'Data de Finalização'
     },
     {
-        accessorKey: 'category',
-        header: 'Categoria'
+        header: 'Prioridade',
+        cell: ({ row }) => {
+            if( row.original.priority === 1 ){
+                return 'BAIXA URGÊNCIA'
+            } else if( row.original.priority === 2 ){
+                return 'MÉDICA URGÊNCIA'
+            } else if( row.original.priority === 3 ) {
+                return 'ALTA URGÊNCIA'
+            } else if( row.original.priority === undefined )
+                return ''
+            }
     },
     {
         accessorKey: 'status',
@@ -64,7 +84,8 @@ export const columns: ColumnDef<Tasks>[] = [
                             Copiar Link
                         </DropdownMenuItem>
                         <DropdownMenuItem className="text-black hover:cursor-pointer hover:bg-black/20 transition-all px-5 py-1">Vizualizar card</DropdownMenuItem>
-                        <DropdownMenuItem className="flex items-center gap-1 hover:cursor-pointer hover:bg-black/20 transition-all text-black px-5 py-1">
+                        <DropdownMenuItem
+                            className="flex items-center gap-1 hover:cursor-pointer hover:bg-black/20 transition-all text-black px-5 py-1">
                             <IoTrashOutline color="red" />
                             Excluir
                         </DropdownMenuItem>

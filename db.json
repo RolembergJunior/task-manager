@@ -6,7 +6,7 @@
       "responsible": 2,
       "creationDate": "11/04/2024",
       "finalizationDate": "13/04/2024",
-      "category": "URGENTE",
+      "priority": 3,
       "status": "Não iniciado"
     },
     {
@@ -15,7 +15,7 @@
       "responsible": 2,
       "creationDate": "12/04/2024",
       "finalizationDate": "13/04/2024",
-      "category": "URGENTE",
+      "priority": 3,
       "status": "Fazer"
     },
     {
@@ -24,7 +24,7 @@
       "responsible": 2,
       "creationDate": "13/04/2024",
       "finalizationDate": "15/04/2024",
-      "category": "BAIXA URGENCIA",
+      "priority": 3,
       "status": "Em andamento"
     },
     {
@@ -33,7 +33,7 @@
       "responsible": 2,
       "creationDate": "13/04/2024",
       "finalizationDate": "17/04/2024",
-      "category": "URGÊNCIA MÉDIA",
+      "priority": 3,
       "status": "Concluído"
     },
     {
@@ -42,41 +42,19 @@
       "responsible": 2,
       "creationDate": "10/04/2024",
       "finalizationDate": "25/04/2024",
-      "category": "URGENTE",
+      "priority": 3,
       "status": "Atrasado"
     },
     {
-      "id": "565d",
-      "name": "Colocar lixo pra fora",
-      "description": "sdasdasd",
-      "responsible": "Rolemberg Junior",
-      "creationDate": null,
-      "finalizationDate": "2024-04-30",
-      "category": "Urgente",
-      "folder": null,
-      "status": "Não iniciado"
-    },
-    {
-      "id": "8ffa",
+      "id": "83b3",
       "name": "Realizar exame às 09:30",
-      "description": "Exame admissional",
+      "description": "Sair antes das 08hrs para não perder o onibus",
       "responsible": "Rolemberg Junior",
-      "creationDate": null,
-      "finalizationDate": "2024-04-29",
-      "category": "Baixa urgência",
-      "folder": null,
-      "status": "Em andamento"
-    },
-    {
-      "id": "a254",
-      "name": "Colocar o lixo para fora",
-      "description": "sdasdasd",
-      "responsible": null,
-      "creationDate": null,
-      "finalizationDate": "2024-04-02",
-      "category": "",
-      "folder": null,
-      "status": "Em andamento"
+      "creationDate": "30/04/2024",
+      "finalizationDate": "2024-05-02",
+      "priority": 3,
+      "folder": "1",
+      "status": "Não iniciado"
     }
   ]
 }
