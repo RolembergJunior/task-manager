@@ -6,7 +6,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { IoEllipsisHorizontal, IoStarSharp, IoTrashOutline } from 'react-icons/io5'
 import { BsDashSquare } from "react-icons/bs";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
-import { parse, parseISO, format } from 'date-fns';
+import { parse,format } from 'date-fns';
 
 export type Tasks = {
     id: number,
@@ -19,19 +19,18 @@ export type Tasks = {
 
 const currentDate = new Date( Date.now() )
 
+
 export const columns: ColumnDef<Tasks>[] = [
     {
-        header: 'X',
+        id: '1',
         cell(props) {
-          if( format(currentDate, "dd/MM/yyyy") === format(parse(props.cell.row.original.finalizationDate, "yyyy-MM-dd", new Date()), "dd/MM/yyyy") ){
-                return "NO DIA"
-            } else if( format(currentDate, "dd/MM/yyyy") < format(parse(props.cell.row.original.finalizationDate, "yyyy-MM-dd", new Date()), "dd/MM/yyyy") ){
+          if( format(currentDate, "dd/MM/yyyy") === props.cell.row.original.finalizationDate ){
+                return <div className="bg-orange-600 w-3 h-3 mx-auto rounded-full" />
+            } else if( format(currentDate, "dd/MM/yyyy") < props.cell.row.original.finalizationDate ){
                 return <div className="bg-green-600 w-3 h-3 mx-auto rounded-full" />
-            } else if(  format(currentDate, "dd/MM/yyyy")  > format(parse(props.cell.row.original.finalizationDate, "yyyy-MM-dd", new Date()), "dd/MM/yyyy") ){
-                return "ATRASADO"
-            } else {
-                return console.log(parse(props.cell.row.original.finalizationDate, "yyyy-MM-dd", new Date()), 'pars')
-            }
+            } else if(  format(currentDate, "dd/MM/yyyy")  > props.cell.row.original.finalizationDate ){
+                return <div className="bg-red-600 w-3 h-3 mx-auto rounded-full" />
+            } 
         }
     },
     {
@@ -55,7 +54,7 @@ export const columns: ColumnDef<Tasks>[] = [
                 return <AiOutlineExclamationCircle className="ml-4" size={20} />
             } else if( row.original.priority === "3" ) {
                 return <IoStarSharp className="ml-4" size={20}/>
-            } else if( row.original.priority === undefined )
+            } else if( row.original.priority === "" )
                 return <BsDashSquare className="ml-4" size={20} />
             }
     },

@@ -20,6 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { format, parse } from 'date-fns';
 
 interface TaskModalProps{
     getNewDataAndSave: (data:tasksProps) => void
@@ -56,7 +57,7 @@ export default function AddTaskModal({ getNewDataAndSave }:TaskModalProps){
                 description: data.description,
                 responsible: data.responsible, 
                 creationDate: new Intl.DateTimeFormat('pt-BR').format(dateNow),
-                finalizationDate: data.finalizationDate,
+                finalizationDate: format(parse(data.finalizationDate, "yyyy-MM-dd", new Date()), "dd/MM/yyyy"),
                 priority: data.priority,
                 folder: data.folder,
                 status: data.status

@@ -1,48 +1,40 @@
 {
   "tarefas": [
     {
-      "id": "d2e1",
+      "id": "1281",
+      "name": "qweqweqw",
+      "description": "qweqwe",
+      "responsible": null,
+      "creationDate": "02/05/2024",
+      "finalizationDate": "2024-05-08",
+      "priority": "",
+      "folder": null,
+      "status": "Não iniciado",
+      "chekLis": []
+    },
+    {
+      "id": "c340",
+      "name": "qweqweqw",
+      "description": "qweqwewe",
+      "responsible": null,
+      "creationDate": "02/05/2024",
+      "finalizationDate": "2024-05-01",
+      "priority": "",
+      "folder": null,
+      "status": "Não iniciado",
+      "chekLis": []
+    },
+    {
+      "id": "7b0b",
       "name": "Colocar o lixo para fora",
-      "description": "Usar o saco de lixo azul",
-      "responsible": "Rolemberg Junior",
-      "creationDate": "01/05/2024",
-      "finalizationDate": "2024-05-03",
-      "priority": "1",
+      "description": "wqeqweqw",
+      "responsible": null,
+      "creationDate": "02/05/2024",
+      "finalizationDate": "2024-05-02",
+      "priority": "",
       "folder": null,
-      "status": "Não iniciado"
-    },
-    {
-      "id": "9c0a",
-      "name": "Realizar exame às 09:30",
-      "description": "Sair antes das 08hrs para conseguir pegar o ônibus",
-      "responsible": "Rolemberg Junior",
-      "creationDate": "01/05/2024",
-      "finalizationDate": "2024-05-09",
-      "priority": "3",
-      "folder": null,
-      "status": "Não iniciado"
-    },
-    {
-      "id": "7387",
-      "name": "Teste",
-      "description": "Criar teste",
-      "responsible": "Fernanda Sales",
-      "creationDate": "01/05/2024",
-      "finalizationDate": "2024-05-16",
-      "priority": "1",
-      "folder": null,
-      "status": "Concluída"
-    },
-    {
-      "id": "ac07",
-      "name": "ASDASDAS",
-      "description": "ASDASDASDD",
-      "responsible": "Rolemberg Junior",
-      "creationDate": "01/05/2024",
-      "finalizationDate": "2024-05-17",
-      "priority": "3",
-      "folder": null,
-      "status": "Não iniciado"
+      "status": "Não iniciado",
+      "chekLis": ["Pegar a sacola azul","Esperar as 14hrs","Não saír dps das 15hrs"]
     }
   ]
 }

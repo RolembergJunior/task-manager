@@ -10,6 +10,7 @@ import Loading from "@/components/Loading";
 import { tasksProps } from "@/app/types/Types";
 import { BiLeftArrowAlt } from 'react-icons/bi';
 import { FaPlus, FaRegTrashAlt } from "react-icons/fa";
+import Cheklist from "../components/ChekListContent";
 
 export default function Task(){
     const param = useParams();
@@ -54,7 +55,7 @@ export default function Task(){
                             </div>
                             <div>
                                 <span className="font-medium text-black/50">Categoria</span>
-                                <p className="">{data?.map( task => task.category )}</p>
+                                <p className="">{data?.map( task => task.priority )}</p>
                             </div>
                             <div>
                                 <span className="font-medium text-black/50">Status</span>
@@ -65,44 +66,7 @@ export default function Task(){
                             placeholder="Digite uma descrição para a tarefa"    
                             className="w-full h-10 rounded-md focus:h-52 transition-all duration-300 outline-none p-2 resize-none" 
                         />
-                        <div className="space-y-4">
-                            <div className="flex items-center justify-between">
-                                <h1 className="text-xl font-semibold ">ChekList</h1>
-                                <div className="transition-colors hover:bg-black/10 hover:cursor-pointer rounded-full p-2">
-                                    <FaPlus />
-                                </div>
-                            </div>
-                            <div className="bg-white rounded-lg p-3 h-52 overflow-auto scrollbar-thin scrollbar-thumb-black scrollbar-track-white" >
-                                <div className="flex items-center justify-between w-full border-b border-black/10">
-                                    <label htmlFor="">IR ao supermercado</label>
-                                    <Input type="checkbox" className="w-5"/>
-                                </div>
-                                <div className="flex items-center justify-between w-full border-b border-black/10">
-                                    <label htmlFor="">IR ao supermercado</label>
-                                    <Input type="checkbox" className="w-5"/>
-                                </div>
-                                <div className="flex items-center justify-between w-full border-b border-black/10">
-                                    <label htmlFor="">IR ao supermercado</label>
-                                    <Input type="checkbox" className="w-5"/>
-                                </div>
-                                <div className="flex items-center justify-between w-full border-b border-black/10">
-                                    <label htmlFor="">IR ao supermercado</label>
-                                    <Input type="checkbox" className="w-5"/>
-                                </div>
-                                <div className="flex items-center justify-between w-full border-b border-black/10">
-                                    <label htmlFor="">IR ao supermercado</label>
-                                    <Input type="checkbox" className="w-5"/>
-                                </div>
-                                <div className="flex items-center justify-between w-full border-b border-black/10">
-                                    <label htmlFor="">IR ao supermercado</label>
-                                    <Input type="checkbox" className="w-5"/>
-                                </div>
-                                <div className="flex items-center justify-between w-full border-b border-black/10">
-                                    <label htmlFor="">IR ao supermercado</label>
-                                    <Input type="checkbox" className="w-5"/>
-                                </div>
-                            </div>
-                        </div>
+                        <Cheklist id={param.id} />
                     </div>
                     <div className="mt-16 space-y-5 w-[20%] mx-auto h-full">
                         <h1 className="text-center text-xl font-semibold">Atividade</h1>
