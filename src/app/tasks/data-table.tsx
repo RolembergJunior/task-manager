@@ -33,7 +33,7 @@ import Loading from "@/components/Loading";
     });
 
 
-    function onHandleClickRow(id:number){
+    function onHandleClickRow(id:number | string){
         router.push(`/task/${id}`);
     }
 
@@ -64,7 +64,7 @@ import Loading from "@/components/Loading";
                 <TableBody>
                     {table.getRowModel().rows?.length ? (
                         table.getRowModel().rows.map( (row) => (
-                            <TableRow onClick={() => onHandleClickRow(row.id)} key={row.id} data-state={row.getIsSelected() && "selected"}>
+                            <TableRow onClick={() => onHandleClickRow(row.original.id)} key={row.id} data-state={row.getIsSelected() && "selected"}>
                                 {row.getVisibleCells().map((cell) => (
                                     <TableCell 
                                         className="hover:cursor-pointer" 

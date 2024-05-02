@@ -1,59 +1,47 @@
 {
   "tarefas": [
     {
-      "id": "1",
-      "name": "Ajustar Dashboard por obra",
-      "responsible": 2,
-      "creationDate": "11/04/2024",
-      "finalizationDate": "13/04/2024",
-      "priority": 3,
+      "id": "d2e1",
+      "name": "Colocar o lixo para fora",
+      "description": "Usar o saco de lixo azul",
+      "responsible": "Rolemberg Junior",
+      "creationDate": "01/05/2024",
+      "finalizationDate": "2024-05-03",
+      "priority": "1",
+      "folder": null,
       "status": "Não iniciado"
     },
     {
-      "id": "2",
-      "name": "Ajustar Table-repor",
-      "responsible": 2,
-      "creationDate": "12/04/2024",
-      "finalizationDate": "13/04/2024",
-      "priority": 3,
-      "status": "Fazer"
-    },
-    {
-      "id": "3",
-      "name": "Colocar o lixo pra fora",
-      "responsible": 2,
-      "creationDate": "13/04/2024",
-      "finalizationDate": "15/04/2024",
-      "priority": 3,
-      "status": "Em andamento"
-    },
-    {
-      "id": "4",
-      "name": "Comprar aveia para fazer mingau",
-      "responsible": 2,
-      "creationDate": "13/04/2024",
-      "finalizationDate": "17/04/2024",
-      "priority": 3,
-      "status": "Concluído"
-    },
-    {
-      "id": "5",
-      "name": "Criar dataset para trazer os dados de fichas abertas",
-      "responsible": 2,
-      "creationDate": "10/04/2024",
-      "finalizationDate": "25/04/2024",
-      "priority": 3,
-      "status": "Atrasado"
-    },
-    {
-      "id": "83b3",
+      "id": "9c0a",
       "name": "Realizar exame às 09:30",
-      "description": "Sair antes das 08hrs para não perder o onibus",
+      "description": "Sair antes das 08hrs para conseguir pegar o ônibus",
       "responsible": "Rolemberg Junior",
-      "creationDate": "30/04/2024",
-      "finalizationDate": "2024-05-02",
-      "priority": 3,
-      "folder": "1",
+      "creationDate": "01/05/2024",
+      "finalizationDate": "2024-05-09",
+      "priority": "3",
+      "folder": null,
+      "status": "Não iniciado"
+    },
+    {
+      "id": "7387",
+      "name": "Teste",
+      "description": "Criar teste",
+      "responsible": "Fernanda Sales",
+      "creationDate": "01/05/2024",
+      "finalizationDate": "2024-05-16",
+      "priority": "1",
+      "folder": null,
+      "status": "Concluída"
+    },
+    {
+      "id": "ac07",
+      "name": "ASDASDAS",
+      "description": "ASDASDASDD",
+      "responsible": "Rolemberg Junior",
+      "creationDate": "01/05/2024",
+      "finalizationDate": "2024-05-17",
+      "priority": "3",
+      "folder": null,
       "status": "Não iniciado"
     }
   ]

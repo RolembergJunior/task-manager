@@ -3,35 +3,36 @@
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { ColumnDef } from "@tanstack/react-table";
-import { IoEllipsisHorizontal, IoTrashOutline } from 'react-icons/io5'
+import { IoEllipsisHorizontal, IoStarSharp, IoTrashOutline } from 'react-icons/io5'
+import { BsDashSquare } from "react-icons/bs";
+import { AiOutlineExclamationCircle } from "react-icons/ai";
+import { parse, parseISO, format } from 'date-fns';
 
 export type Tasks = {
     id: number,
     name: string,
-    creatationDate?: string,
-    finalizationDate?: string,
+    creatationDate: string,
+    finalizationDate: string,
     priority: string | number,
     status: string
 }
-const arrayRows:Object[] = []
 
-function removeDuplicateRows(row:Object){
-    arrayRows.push(row);
-    const newArrayRowsWithoutDuplicate = arrayRows.filter( (row, index) => arrayRows.indexOf(row) === index)
-
-    console.log(newArrayRowsWithoutDuplicate)
-
-    return newArrayRowsWithoutDuplicate
-}
+const currentDate = new Date( Date.now() )
 
 export const columns: ColumnDef<Tasks>[] = [
     {
-        header: 'Nº',
+        header: 'X',
         cell(props) {
-          const countRows = removeDuplicateRows(props.row.original);
-
-          return countRows.length
-        },
+          if( format(currentDate, "dd/MM/yyyy") === format(parse(props.cell.row.original.finalizationDate, "yyyy-MM-dd", new Date()), "dd/MM/yyyy") ){
+                return "NO DIA"
+            } else if( format(currentDate, "dd/MM/yyyy") < format(parse(props.cell.row.original.finalizationDate, "yyyy-MM-dd", new Date()), "dd/MM/yyyy") ){
+                return <div className="bg-green-600 w-3 h-3 mx-auto rounded-full" />
+            } else if(  format(currentDate, "dd/MM/yyyy")  > format(parse(props.cell.row.original.finalizationDate, "yyyy-MM-dd", new Date()), "dd/MM/yyyy") ){
+                return "ATRASADO"
+            } else {
+                return console.log(parse(props.cell.row.original.finalizationDate, "yyyy-MM-dd", new Date()), 'pars')
+            }
+        }
     },
     {
         accessorKey: 'name',
@@ -48,14 +49,14 @@ export const columns: ColumnDef<Tasks>[] = [
     {
         header: 'Prioridade',
         cell: ({ row }) => {
-            if( row.original.priority === 1 ){
-                return 'BAIXA URGÊNCIA'
-            } else if( row.original.priority === 2 ){
-                return 'MÉDICA URGÊNCIA'
-            } else if( row.original.priority === 3 ) {
-                return 'ALTA URGÊNCIA'
+            if( row.original.priority === "1" ){
+                return <BsDashSquare className="ml-4" size={20} />
+            } else if( row.original.priority === "2"){
+                return <AiOutlineExclamationCircle className="ml-4" size={20} />
+            } else if( row.original.priority === "3" ) {
+                return <IoStarSharp className="ml-4" size={20}/>
             } else if( row.original.priority === undefined )
-                return ''
+                return <BsDashSquare className="ml-4" size={20} />
             }
     },
     {
