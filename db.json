@@ -10,7 +10,7 @@
       "priority": "",
       "folder": null,
       "status": "Não iniciado",
-      "chekLis": []
+      "checklist": []
     },
     {
       "id": "c340",
@@ -22,7 +22,7 @@
       "priority": "",
       "folder": null,
       "status": "Não iniciado",
-      "chekLis": []
+      "checklist": []
     },
     {
       "id": "7b0b",
@@ -34,7 +34,43 @@
       "priority": "",
       "folder": null,
       "status": "Não iniciado",
-      "chekLis": ["Pegar a sacola azul","Esperar as 14hrs","Não saír dps das 15hrs"]
+      "checklist": [
+        "Pegar a sacola azul",
+        "Esperar as 14hrs",
+        "Não saír dps das 15hrs"
+      ]
+    },
+    {
+      "id": "eaa9",
+      "name": "TEsteeee",
+      "description": "TEstando a data de finalização",
+      "responsible": "Rolemberg Junior",
+      "creationDate": "03/05/2024",
+      "finalizationDate": "2024-05-02",
+      "priority": "2",
+      "folder": null,
+      "status": "Não iniciado",
+      "checklist": [
+        "Pegar a sacola azul",
+        "Esperar as 14hrs",
+        "Não saír dps das 15hrs"
+      ]
+    },
+    {
+      "id": "ca63",
+      "name": "aSasAasdasd",
+      "description": "asdasdasd",
+      "responsible": null,
+      "creationDate": "03/05/2024",
+      "finalizationDate": "02/05/2024",
+      "priority": "",
+      "folder": null,
+      "status": "Não iniciado",
+      "checklist": [
+        "Pegar a sacola azul",
+        "Esperar as 14hrs",
+        "Não saír dps das 15hrs"
+      ]
     }
   ]
 }

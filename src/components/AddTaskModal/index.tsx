@@ -57,7 +57,7 @@ export default function AddTaskModal({ getNewDataAndSave }:TaskModalProps){
                 description: data.description,
                 responsible: data.responsible, 
                 creationDate: new Intl.DateTimeFormat('pt-BR').format(dateNow),
-                finalizationDate: format(parse(data.finalizationDate, "yyyy-MM-dd", new Date()), "dd/MM/yyyy"),
+                finalizationDate: data.finalizationDate,
                 priority: data.priority,
                 folder: data.folder,
                 status: data.status
@@ -117,7 +117,7 @@ export default function AddTaskModal({ getNewDataAndSave }:TaskModalProps){
                             <div className='w-40'>
                                 <label htmlFor="date">Data de finalização</label>
                                 <Input 
-                                    onChange={(e) => setData({...data,finalizationDate:e.target.value})} 
+                                    onChange={(e) => setData({...data,finalizationDate:format(parse(e.target.value, "yyyy-MM-dd", new Date()), "dd/MM/yyyy")})} 
                                     id="date" 
                                     type="date"/>
                             </div>

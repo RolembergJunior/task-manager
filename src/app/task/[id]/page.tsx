@@ -1,15 +1,12 @@
 'use client'
 
-import { useState } from "react";
 import { useFetch } from "@/hooks/useFetch";
 import { useParams, useRouter } from "next/navigation";
 import SideBar from "@/components/Sidebar";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import Loading from "@/components/Loading";
-import { tasksProps } from "@/app/types/Types";
 import { BiLeftArrowAlt } from 'react-icons/bi';
-import { FaPlus, FaRegTrashAlt } from "react-icons/fa";
+import { FaRegTrashAlt } from "react-icons/fa";
 import Cheklist from "../components/ChekListContent";
 
 export default function Task(){
@@ -54,7 +51,7 @@ export default function Task(){
                                 <p className="">{data?.map( task => task.finalizationDate )}</p>
                             </div>
                             <div>
-                                <span className="font-medium text-black/50">Categoria</span>
+                                <span className="font-medium text-black/50">Prioridade</span>
                                 <p className="">{data?.map( task => task.priority )}</p>
                             </div>
                             <div>
@@ -63,10 +60,11 @@ export default function Task(){
                             </div>
                         </div>
                         <textarea  
+                            value={ data?.map( task => task.description ) }
                             placeholder="Digite uma descrição para a tarefa"    
                             className="w-full h-10 rounded-md focus:h-52 transition-all duration-300 outline-none p-2 resize-none" 
                         />
-                        <Cheklist id={param.id} />
+                        <Cheklist data={data} />
                     </div>
                     <div className="mt-16 space-y-5 w-[20%] mx-auto h-full">
                         <h1 className="text-center text-xl font-semibold">Atividade</h1>
