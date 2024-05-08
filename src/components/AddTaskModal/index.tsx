@@ -22,6 +22,8 @@ import {
 } from "@/components/ui/select";
 import { format, parse } from 'date-fns';
 
+
+
 interface TaskModalProps{
     getNewDataAndSave: (data:tasksProps) => void
 }
@@ -35,7 +37,8 @@ export default function AddTaskModal({ getNewDataAndSave }:TaskModalProps){
         finalizationDate: '',
         priority: '',
         folder: null,
-        status: ''
+        status: '',
+        checklist:[]
     });
 
     let dateNow = new Date(Date.now());
@@ -60,7 +63,8 @@ export default function AddTaskModal({ getNewDataAndSave }:TaskModalProps){
                 finalizationDate: data.finalizationDate,
                 priority: data.priority,
                 folder: data.folder,
-                status: data.status
+                status: data.status,
+                checklist:[]
             });
     
             setData({
@@ -71,13 +75,15 @@ export default function AddTaskModal({ getNewDataAndSave }:TaskModalProps){
                     finalizationDate: '',
                     priority: '',
                     folder: null,
-                    status: ''
+                    status: '',
+                    checklist:[]
             });
 
             fetch(url, options)
             .then(response => response.json())
             // .then(data => console.log(data, 'Postando dado'))
             .catch(error => console.error('ERRO:',error))
+
         } else
         alert('Adicione o nome, a data de finalização e o status da tarefa')
     }
@@ -165,9 +171,9 @@ export default function AddTaskModal({ getNewDataAndSave }:TaskModalProps){
                                     </SelectTrigger>
                                     <SelectContent>
                                     <SelectGroup>
-                                        <SelectItem value="3" >Urgente</SelectItem>
-                                        <SelectItem value="2" >Média urgência</SelectItem>
-                                        <SelectItem value="1" >Baixa urgência</SelectItem>
+                                        <SelectItem value="ALTA PRIORIDADE" >Urgente</SelectItem>
+                                        <SelectItem value="MÉDIA PRIORIDADE" >Média urgência</SelectItem>
+                                        <SelectItem value="BAIXA PRIORIDADE" >Baixa urgência</SelectItem>
                                     </SelectGroup>
                                     </SelectContent>
                                 </Select>

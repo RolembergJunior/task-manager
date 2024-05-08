@@ -48,11 +48,11 @@ export const columns: ColumnDef<Tasks>[] = [
     {
         header: 'Prioridade',
         cell: ({ row }) => {
-            if( row.original.priority === "1" ){
+            if( row.original.priority === "BAIXA PRIORIDADE" ){
                 return <BsDashSquare className="ml-4" size={20} />
-            } else if( row.original.priority === "2"){
+            } else if( row.original.priority === "MÉDIA PRIORIDADE"){
                 return <AiOutlineExclamationCircle className="ml-4" size={20} />
-            } else if( row.original.priority === "3" ) {
+            } else if( row.original.priority === "ALTA PRIORIDADE" ) {
                 return <IoStarSharp className="ml-4" size={20}/>
             } else if( row.original.priority === "" )
                 return <BsDashSquare className="ml-4" size={20} />

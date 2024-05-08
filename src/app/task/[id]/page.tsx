@@ -8,11 +8,27 @@ import Loading from "@/components/Loading";
 import { BiLeftArrowAlt } from 'react-icons/bi';
 import { FaRegTrashAlt } from "react-icons/fa";
 import Cheklist from "../components/ChekListContent";
+import { Dialog, DialogClose, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 
 export default function Task(){
     const param = useParams();
     const route = useRouter();
     const { data, error, isLoading } = useFetch(`http://localhost:3000/tarefas/?id=${param.id}`);
+
+    const url = `http://localhost:3000/tarefas/${param.id}`;
+
+    const options = {
+        method: 'DELETE'
+    }
+
+    function onHandleRemoveTask(){
+        
+        fetch(url, options)
+        .then(response => response.json())
+        .catch(error => console.error('ERRO:',error));
+
+        route.push('/');
+    }
 
     if(isLoading && error) return <Loading/>
     if(!isLoading)
@@ -25,9 +41,37 @@ export default function Task(){
                         onClick={() => route.push('/')} 
                         className="hover:cursor-pointer"
                         size={30} />
-                    <Button>
-                        <FaRegTrashAlt />
-                    </Button>
+                <Dialog>
+                  <DialogTrigger>
+                        <Button>
+                            <FaRegTrashAlt/>
+                        </Button>
+                  </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                          <DialogTitle>
+                              Excluir tarefa
+                          </DialogTitle>
+                          <DialogDescription>
+                            Tem certeza que deseja limpar as tarefas da caixa de entrada?
+                          </DialogDescription>
+                          <div className="flex items-center justify-end gap-3">
+                            <DialogClose
+                                className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors hover:bg-black/10 p-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+                            >
+                                Cancelar
+                            </DialogClose>
+                            <DialogClose>
+                                <Button
+                                    onClick={() => onHandleRemoveTask()} 
+                                >
+                                    Limpar
+                                </Button>
+                            </DialogClose>
+                          </div>
+                      </DialogHeader>
+                    </DialogContent>
+                </Dialog>
                 </div>
                 <div className="flex">
                     <div className="mt-16 px-10 space-y-10 w-[70%]">
@@ -35,7 +79,7 @@ export default function Task(){
                             <div className="bg-red-800 w-3 h-3" />
                             <h1 className="text-3xl font-semibold">
                                 {data?.map( task => task.name )}
-                            </h1>
+                            </h1> 
                         </div>
                         <div className="flex items-center gap-6">
                             <div>

@@ -1,30 +1,6 @@
 {
   "tarefas": [
     {
-      "id": "1281",
-      "name": "qweqweqw",
-      "description": "qweqwe",
-      "responsible": null,
-      "creationDate": "02/05/2024",
-      "finalizationDate": "2024-05-08",
-      "priority": "",
-      "folder": null,
-      "status": "Não iniciado",
-      "checklist": []
-    },
-    {
-      "id": "c340",
-      "name": "qweqweqw",
-      "description": "qweqwewe",
-      "responsible": null,
-      "creationDate": "02/05/2024",
-      "finalizationDate": "2024-05-01",
-      "priority": "",
-      "folder": null,
-      "status": "Não iniciado",
-      "checklist": []
-    },
-    {
       "id": "7b0b",
       "name": "Colocar o lixo para fora",
       "description": "wqeqweqw",
@@ -32,22 +8,6 @@
       "creationDate": "02/05/2024",
       "finalizationDate": "2024-05-02",
       "priority": "",
-      "folder": null,
-      "status": "Não iniciado",
-      "checklist": [
-        "Pegar a sacola azul",
-        "Esperar as 14hrs",
-        "Não saír dps das 15hrs"
-      ]
-    },
-    {
-      "id": "eaa9",
-      "name": "TEsteeee",
-      "description": "TEstando a data de finalização",
-      "responsible": "Rolemberg Junior",
-      "creationDate": "03/05/2024",
-      "finalizationDate": "2024-05-02",
-      "priority": "2",
       "folder": null,
       "status": "Não iniciado",
       "checklist": [
@@ -71,6 +31,42 @@
         "Esperar as 14hrs",
         "Não saír dps das 15hrs"
       ]
+    },
+    {
+      "id": "363d",
+      "name": "Teste de responsibilidade",
+      "description": "TESTE",
+      "responsible": "Rolemberg Junior",
+      "creationDate": "07/05/2024",
+      "finalizationDate": "09/05/2024",
+      "priority": "3",
+      "folder": null,
+      "status": "Fazer",
+      "checklist": []
+    },
+    {
+      "id": "9174",
+      "name": "prioridade alta",
+      "description": "testando prioridade",
+      "responsible": "Rolemberg Junior",
+      "creationDate": "07/05/2024",
+      "finalizationDate": "08/05/2024",
+      "priority": "ALTA PRIORIDADE",
+      "folder": null,
+      "status": "Fazer",
+      "checklist": []
+    },
+    {
+      "id": "5256",
+      "name": "Testando o mutate",
+      "description": "PASSANDO O REVALIDATE",
+      "responsible": "Fernanda Sales",
+      "creationDate": "08/05/2024",
+      "finalizationDate": "09/05/2024",
+      "priority": "MÉDIA PRIORIDADE",
+      "folder": null,
+      "status": "Fazer",
+      "checklist": []
     }
   ]
 }

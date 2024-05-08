@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from "react";
-import { getTasks } from "@/services/api";
 import { Dialog, DialogContent, DialogTrigger, DialogClose, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import MenuFilter from "./components/MenuFilters";
@@ -10,17 +9,7 @@ import { HiMagnifyingGlass } from "react-icons/hi2";
 import SideBar from "@/components/Sidebar";
 
 export default function Inbox(){
-  const [tasks, setTasks] = useState<tasksProps>()
-
-  useEffect(() => {
-    try {
-      getTasks().then( data => {
-        setTasks(data);
-      });
-    } catch (error) {
-      console.log('Erro ao fazer a requisição')
-    }
-  },[])
+  const [tasks, setTasks] = useState<tasksProps>();
     
     return(
         <div className="flex">
