@@ -3,13 +3,11 @@
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { FaPlus } from "react-icons/fa";
-import { tasksProps } from '@/app/types/Types';
 import { Button } from '@/components/ui/button';
 
 interface dataProps{
     data:[
         {
-                // id: number | string | null,
             name: string,
             description: string | null,
             responsible: string | null, 
@@ -48,7 +46,7 @@ export default function Cheklist(data:dataProps){
                     <FaPlus />
                 </div>
             </div>
-            <div className="bg-white rounded-lg p-3 h-52 overflow-auto scrollbar-thin scrollbar-thumb-black scrollbar-track-white" >
+            <div className="bg-white rounded-lg p-3 max-h-52 overflow-auto scrollbar-thin scrollbar-thumb-black scrollbar-track-white" >
                 {isOpenInput ? (
                     <div className="flex gap-2">
                         <Input 

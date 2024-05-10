@@ -1,72 +1,36 @@
 {
   "tarefas": [
     {
-      "id": "7b0b",
       "name": "Colocar o lixo para fora",
-      "description": "wqeqweqw",
+      "description": [
+        "TESTANDO O UPDATE"
+      ],
       "responsible": null,
       "creationDate": "02/05/2024",
       "finalizationDate": "2024-05-02",
       "priority": "",
-      "folder": null,
       "status": "Não iniciado",
+      "folder": null,
       "checklist": [
         "Pegar a sacola azul",
         "Esperar as 14hrs",
         "Não saír dps das 15hrs"
-      ]
+      ],
+      "id": "7b0b"
     },
     {
-      "id": "ca63",
-      "name": "aSasAasdasd",
-      "description": "asdasdasd",
-      "responsible": null,
-      "creationDate": "03/05/2024",
-      "finalizationDate": "02/05/2024",
-      "priority": "",
-      "folder": null,
-      "status": "Não iniciado",
-      "checklist": [
-        "Pegar a sacola azul",
-        "Esperar as 14hrs",
-        "Não saír dps das 15hrs"
-      ]
-    },
-    {
-      "id": "363d",
-      "name": "Teste de responsibilidade",
-      "description": "TESTE",
+      "name": "Colocar comida para o cachorro",
+      "description": [
+        "A ração está no pote AZUL dentro do armário "
+      ],
       "responsible": "Rolemberg Junior",
-      "creationDate": "07/05/2024",
-      "finalizationDate": "09/05/2024",
-      "priority": "3",
-      "folder": null,
-      "status": "Fazer",
-      "checklist": []
-    },
-    {
-      "id": "9174",
-      "name": "prioridade alta",
-      "description": "testando prioridade",
-      "responsible": "Rolemberg Junior",
-      "creationDate": "07/05/2024",
-      "finalizationDate": "08/05/2024",
-      "priority": "ALTA PRIORIDADE",
-      "folder": null,
-      "status": "Fazer",
-      "checklist": []
-    },
-    {
-      "id": "5256",
-      "name": "Testando o mutate",
-      "description": "PASSANDO O REVALIDATE",
-      "responsible": "Fernanda Sales",
-      "creationDate": "08/05/2024",
+      "creationDate": "09/05/2024",
       "finalizationDate": "09/05/2024",
       "priority": "MÉDIA PRIORIDADE",
-      "folder": null,
       "status": "Fazer",
-      "checklist": []
+      "folder": null,
+      "checklist": [],
+      "id": "a759"
     }
   ]
 }

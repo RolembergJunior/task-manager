@@ -1,7 +1,8 @@
 'use client'
 
-import { useFetch } from "@/hooks/useFetch";
+import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import { useFetch } from "@/hooks/useFetch";
 import SideBar from "@/components/Sidebar";
 import { Button } from "@/components/ui/button";
 import Loading from "@/components/Loading";
@@ -11,9 +12,16 @@ import Cheklist from "../components/ChekListContent";
 import { Dialog, DialogClose, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 
 export default function Task(){
+    const [ inputText, setInputText ] = useState< string | string[] | undefined>('')
     const param = useParams();
     const route = useRouter();
     const { data, error, isLoading } = useFetch(`http://localhost:3000/tarefas/?id=${param.id}`);
+
+    useEffect(() => {
+        if( !error ){
+            setInputText(data?.map( task => task.description ))
+        }
+    },[data])
 
     const url = `http://localhost:3000/tarefas/${param.id}`;
 
@@ -28,6 +36,34 @@ export default function Task(){
         .catch(error => console.error('ERRO:',error));
 
         route.push('/');
+    }
+
+    function onHandleChangeInputDescription(){
+
+        if( data ){
+            const dataObejct = data[0]
+
+            fetch( url, {
+                method: 'PUT',
+                headers: {
+                "content-type": "application-json"
+                },
+                body: JSON.stringify({
+                    "name": dataObejct?.name,
+                    "description": inputText,
+                    "responsible": dataObejct?.responsible, 
+                    "creationDate": dataObejct?.creationDate,
+                    "finalizationDate": dataObejct?.finalizationDate,
+                    "priority": dataObejct?.priority,
+                    "status": dataObejct?.status,
+                    "folder": dataObejct?.folder,
+                    "checklist": dataObejct?.checklist
+                })
+            })
+            .then( response => response.json() )
+            .then( data => console.log( data ) )
+        }
+
     }
 
     if(isLoading && error) return <Loading/>
@@ -84,7 +120,7 @@ export default function Task(){
                         <div className="flex items-center gap-6">
                             <div>
                                 <span className="font-medium text-black/50">Responsável</span>
-                                <p className="">Rolemberg junior</p>
+                                <p className="">{data?.map( task => task.responsible )}</p>
                             </div>
                             <div>
                                 <span className="font-medium text-black/50">Data de criação</span>
@@ -104,7 +140,9 @@ export default function Task(){
                             </div>
                         </div>
                         <textarea  
-                            value={ data?.map( task => task.description ) }
+                            value={ inputText }
+                            onChange={(e) => setInputText(e.target.value)}
+                            onBlur={ () => onHandleChangeInputDescription() }
                             placeholder="Digite uma descrição para a tarefa"    
                             className="w-full h-10 rounded-md focus:h-52 transition-all duration-300 outline-none p-2 resize-none" 
                         />
