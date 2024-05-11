@@ -27,10 +27,10 @@ export default function Home() {
   if(isLoading) return <Loading/>
   if(!isLoading && !error)
     return (
-      <div className="flex">
+      <div className="flex bg-[#F5F6FA]">
         <SideBar/>
-          <div className="w-full">
-          <div className="fxed flex items-center justify-between border border-black/10 w-full h-20 p-4">
+          <div className="w-[90%]">
+          <div className="flex items-center justify-between bg-white border border-black/10 w-full h-20 p-4">
             <h1 className="text-xl font-semibold">Todas as Tarefas</h1>
             <div className="flex gap-3">
               <div className="flex items-center gap-2 p-2 hover:cursor-pointer hover:bg-gray-400 rounded-xl transition-all">
@@ -40,7 +40,7 @@ export default function Home() {
               <AddTaskModal getNewDataAndSave={getNewDataAndSave}/>
             </div>
           </div>
-          <DataTable columns={columns} data={allData} />
+          <DataTable  columns={columns} data={allData} />
         </div>
       </div>
   );

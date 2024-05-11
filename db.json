@@ -3,7 +3,19 @@
     {
       "name": "Colocar o lixo para fora",
       "description": [
-        "TESTANDO O UPDATE"
+        [
+          [
+            [
+              [
+                [
+                  [
+                    "TESTANDO O UPDATE"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
       ],
       "responsible": null,
       "creationDate": "02/05/2024",
@@ -21,7 +33,11 @@
     {
       "name": "Colocar comida para o cachorro",
       "description": [
-        "A ração está no pote AZUL dentro do armário "
+        [
+          [
+            "A ração está no pote AZUL dentro do armário "
+          ]
+        ]
       ],
       "responsible": "Rolemberg Junior",
       "creationDate": "09/05/2024",

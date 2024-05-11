@@ -46,7 +46,7 @@ export default function Cheklist(data:dataProps){
                     <FaPlus />
                 </div>
             </div>
-            <div className="bg-white rounded-lg p-3 max-h-52 overflow-auto scrollbar-thin scrollbar-thumb-black scrollbar-track-white" >
+            <div className="bg-[#F5F6FA] rounded-lg p-3 max-h-52 overflow-auto scrollbar-thin scrollbar-thumb-black scrollbar-track-white" >
                 {isOpenInput ? (
                     <div className="flex gap-2">
                         <Input 

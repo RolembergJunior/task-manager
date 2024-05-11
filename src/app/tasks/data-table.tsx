@@ -41,7 +41,7 @@ import Loading from "@/components/Loading";
     if(data === undefined) return <Loading/>
     if(data != undefined)
     return(
-        <div className="rounded-md border">
+        <div className="bg-white rounded-md border w-[90%] mx-auto my-5">
             <Table>
                 <TableHeader>
                     {table?.getHeaderGroups().map( (headerGroup) => (
