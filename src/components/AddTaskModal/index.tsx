@@ -81,7 +81,6 @@ export default function AddTaskModal({ getNewDataAndSave }:TaskModalProps){
 
             fetch(url, options)
             .then(response => response.json())
-            // .then(data => console.log(data, 'Postando dado'))
             .catch(error => console.error('ERRO:',error))
 
         } else

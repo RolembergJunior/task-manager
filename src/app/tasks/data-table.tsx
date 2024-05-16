@@ -23,7 +23,6 @@ import Loading from "@/components/Loading";
     data: TData[]
   }
 
-
   export function DataTable<Tdata, Tvalue>({columns, data}:DataTableProps<Tdata, Tvalue>) {
     const router = useRouter();
     const table = useReactTable({

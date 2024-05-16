@@ -10,16 +10,50 @@ import { BiLeftArrowAlt } from 'react-icons/bi';
 import { FaRegTrashAlt } from "react-icons/fa";
 import Cheklist from "../components/ChekListContent";
 import { Dialog, DialogClose, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogContent } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { tasksProps } from "@/app/types/Types";
+import { format, parse, parseISO } from "date-fns";
+
 
 export default function Task(){
-    const [ inputText, setInputText ] = useState< string | string[] | undefined>('')
     const param = useParams();
-    const route = useRouter();
     const { data, error, isLoading } = useFetch(`http://localhost:3000/tarefas/?id=${param.id}`);
+    const [ dataProps, setDataProps ] = useState<tasksProps>(
+        {
+            name: '',
+            description:'',
+            responsible: '', 
+            creationDate: '',
+            finalizationDate: '',
+            priority: '',
+            folder: null,
+            status: '',
+            checklist: ['']
+        }
+    )
+    const route = useRouter();
 
     useEffect(() => {
-        if( !error ){
-            setInputText(data?.map( task => task.description ))
+
+
+        if( !error && data != undefined){
+        
+            const dataObejct = data[0]
+            
+            setDataProps(
+                {
+                    name: dataObejct.name ,
+                    description:dataObejct.description ,
+                    responsible: dataObejct.responsible , 
+                    creationDate: dataObejct.creationDate ,
+                    finalizationDate: dataObejct.finalizationDate ,
+                    priority: dataObejct.priority ,
+                    folder: dataObejct.folder ,
+                    status: dataObejct.status ,
+                    checklist: dataObejct.checklist.map( list => list ) 
+                }
+            )
         }
     },[data])
 
@@ -38,26 +72,24 @@ export default function Task(){
         route.push('/');
     }
 
-    function onHandleChangeInputDescription(){
+    function onEditTask(){
 
         if( data ){
-            const dataObejct = data[0]
-
             fetch( url, {
                 method: 'PUT',
                 headers: {
                 "content-type": "application-json"
                 },
                 body: JSON.stringify({
-                    "name": dataObejct?.name,
-                    "description": inputText,
-                    "responsible": dataObejct?.responsible, 
-                    "creationDate": dataObejct?.creationDate,
-                    "finalizationDate": dataObejct?.finalizationDate,
-                    "priority": dataObejct?.priority,
-                    "status": dataObejct?.status,
-                    "folder": dataObejct?.folder,
-                    "checklist": dataObejct?.checklist
+                    "name": dataProps.name,
+                    "description": dataProps.description,
+                    "responsible": dataProps.responsible, 
+                    "creationDate": dataProps.creationDate,
+                    "finalizationDate": dataProps.finalizationDate,
+                    "priority": dataProps.priority,
+                    "status": dataProps.status,
+                    "folder": dataProps.folder,
+                    "checklist": dataProps.checklist
                 })
             })
             .then( response => response.json() )
@@ -65,6 +97,10 @@ export default function Task(){
         }
 
     }
+
+    useEffect(() => {
+        onEditTask();
+    }, [dataProps])
 
     if(isLoading && error) return <Loading/>
     if(!isLoading)
@@ -114,36 +150,79 @@ export default function Task(){
                         <div className="mt-16 px-10 space-y-10 w-[70%]">
                             <div className="flex items-center bg-[#F5F6FA] gap-4 p-2 rounded-md" >
                                 <div className="bg-red-800 w-3 h-3 rounded-md" />
-                                <h1 className="text-3xl font-semibold">
-                                    {data?.map( task => task.name )}
-                                </h1> 
+                                <textarea 
+                                    onChange={(e) => setDataProps({ ...dataProps, name: e.target.value })}
+                                    value={dataProps.name} 
+                                    className="bg-transparent h-10 w-full text-3xl font-semibold focus:outline-none resize-none overflow-auto" 
+                                />
                             </div>
                             <div className="flex items-center gap-6">
                                 <div>
                                     <span className="font-medium text-black/50">Responsável</span>
-                                    <p className="">{data?.map( task => task.responsible )}</p>
+                                    <Select onValueChange={(value) => setDataProps({ ...dataProps, responsible: value })}>
+                                        <SelectTrigger className="w-34 border-none focus:outline-none">
+                                            <SelectValue placeholder={dataProps.responsible} />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                <SelectItem value="Rolemberg Junior" >Rolemberg Junior</SelectItem>
+                                                <SelectItem value="Pitter Antonio" >Pitter Antonio</SelectItem>
+                                                <SelectItem value="Fernanda Sales" >Fernanda Sales</SelectItem>
+                                                <SelectItem value="Ruan Pabli" >Ruan Pablo</SelectItem>
+                                                <SelectItem value="Luan Carlos" >Luan Carlos</SelectItem>
+                                                </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
                                 </div>
                                 <div>
                                     <span className="font-medium text-black/50">Data de criação</span>
-                                    <p className="">{data?.map( task => task.creationDate )}</p>
+                                    <p className="">{dataProps.creationDate}</p>
                                 </div>
                                 <div>
                                     <span className="font-medium text-black/50">Data de finalização</span>
-                                    <p className="">{data?.map( task => task.finalizationDate )}</p>
+                                    <Input 
+                                        onChange={(e) => setDataProps({ ...dataProps, finalizationDate:e.target.value })}
+                                        type="date" 
+                                        className="border-none focus:outline-none"
+                                        value={dataProps.finalizationDate} 
+                                    />
                                 </div>
                                 <div>
                                     <span className="font-medium text-black/50">Prioridade</span>
-                                    <p className="">{data?.map( task => task.priority )}</p>
+                                    <Select onValueChange={(value) => setDataProps({ ...dataProps, priority: value })}>
+                                        <SelectTrigger className="w-34 border-none ">
+                                            <SelectValue placeholder={dataProps.priority} />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                <SelectItem value="ALTA PRIORIDADE" >URGENTE</SelectItem>
+                                                <SelectItem value="MÉDIA PRIORIDADE" >MÉDIA URGÊNCIA</SelectItem>
+                                                <SelectItem value="BAIXA PRIORIDADE" >BAIXA URGÊNCIA</SelectItem>
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
                                 </div>
                                 <div>
                                     <span className="font-medium text-black/50">Status</span>
-                                    <p className="">{data?.map( task => task.status )}</p>
+                                    <Select onValueChange={(value) => setDataProps({ ...dataProps, status: value })} >
+                                        <SelectTrigger className="w-34 border-none">
+                                            <SelectValue placeholder={dataProps.status} />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                            <SelectItem value="Não iniciado" >Não inciado</SelectItem>
+                                            <SelectItem value="Fazer" >Fazer</SelectItem>
+                                            <SelectItem value="Em andamento" >Em andamento</SelectItem>
+                                            <SelectItem value="Concluída" >Concluído</SelectItem>
+                                            <SelectItem value="Atrasada" >Atrasado</SelectItem>
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
                                 </div>
                             </div>
                             <textarea  
-                                value={ inputText }
-                                onChange={(e) => setInputText(e.target.value)}
-                                onBlur={ () => onHandleChangeInputDescription() }
+                                value={ dataProps.description }
+                                onChange={(e) => setDataProps({ ...dataProps, description: e.target.value })}
                                 placeholder="Digite uma descrição para a tarefa"    
                                 className="bg-[#F5F6FA] w-full h-10 rounded-md focus:h-52 transition-all duration-300 outline-none p-2 resize-none" 
                             />

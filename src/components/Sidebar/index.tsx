@@ -6,10 +6,11 @@ import Folder from "./components/Folder";
 import { GiNetworkBars } from "react-icons/gi";
 import { TbReportSearch } from "react-icons/tb";
 import { IoMdHome } from "react-icons/io";
-import { FaInbox, FaRegBell, FaRegFolder } from "react-icons/fa";
+import { FaInbox, FaPowerOff, FaRegBell, FaRegFolder } from "react-icons/fa";
 import { FaEllipsisVertical } from "react-icons/fa6";
 import { IoMoonOutline, IoSettingsOutline } from "react-icons/io5";
 import { LuSun } from "react-icons/lu";
+import { Button } from "../ui/button";
 
 
 export default function SideBar(){
@@ -40,13 +41,16 @@ export default function SideBar(){
                             <p className="text-[#5C5E64] font-semibold">Pastas</p>
                         </div>
                 </nav>
-                <div className="space-y-4 p-3">
-                    <h2 className="text-[#5C5E64] text-md font-medium">Configurações</h2>
-                    <nav className="border-black/20 space-y-2">
-                        <NavLink href="/" name="Notificações" icon={<FaRegBell color="gray" />}/>
+                <hr className="w-[80%] mx-auto mb-2"/>
+                    <nav className="border-black/20 space-y-7 p-3">
                         <NavLink href="/Inbox" name="Configurações" icon={<IoSettingsOutline color="gray"/>}/>
+                        <Button className="bg-red-700 hover:bg-red-800 w-full h-14 transition-all">
+                            <div className="flex items-center justify-between gap-5">
+                                <span>DESCONECTAR</span>
+                                <FaPowerOff />
+                            </div>
+                        </Button>
                     </nav>
-                </div>
             </div>
             <div className="bg-white border-t border-black/20 p-3">
                 <div className="flex justify-between bg-[#D9D9D9] w-[85%] h-10 mx-auto gap-1 p-1 rounded-md transition-all" >
