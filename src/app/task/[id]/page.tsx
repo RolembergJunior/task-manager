@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useFetch } from "@/hooks/useFetch";
+import { mutate } from "swr";
 import SideBar from "@/components/Sidebar";
 import { Button } from "@/components/ui/button";
 import Loading from "@/components/Loading";
@@ -13,12 +14,9 @@ import { Dialog, DialogClose, DialogDescription, DialogHeader, DialogTitle, Dial
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { tasksProps } from "@/app/types/Types";
-import { format, parse, parseISO } from "date-fns";
 
 
 export default function Task(){
-    const param = useParams();
-    const { data, error, isLoading } = useFetch(`http://localhost:3000/tarefas/?id=${param.id}`);
     const [ dataProps, setDataProps ] = useState<tasksProps>(
         {
             name: '',
@@ -33,31 +31,30 @@ export default function Task(){
         }
     )
     const route = useRouter();
+    const param = useParams();
+    const url = `http://localhost:3000/tarefas/${param.id}`;
+    const { data, error, isLoading } = useFetch(url);
 
     useEffect(() => {
 
-
         if( !error && data != undefined){
-        
-            const dataObejct = data[0]
             
             setDataProps(
                 {
-                    name: dataObejct.name ,
-                    description:dataObejct.description ,
-                    responsible: dataObejct.responsible , 
-                    creationDate: dataObejct.creationDate ,
-                    finalizationDate: dataObejct.finalizationDate ,
-                    priority: dataObejct.priority ,
-                    folder: dataObejct.folder ,
-                    status: dataObejct.status ,
-                    checklist: dataObejct.checklist.map( list => list ) 
+                    name: data.name ,
+                    description:data.description ,
+                    responsible: data.responsible , 
+                    creationDate: data.creationDate ,
+                    finalizationDate: data.finalizationDate ,
+                    priority: data.priority ,
+                    folder: data.folder ,
+                    status: data.status ,
+                    checklist: data.checklist?.map( list => list ) 
                 }
             )
-        }
+        } 
     },[data])
 
-    const url = `http://localhost:3000/tarefas/${param.id}`;
 
     const options = {
         method: 'DELETE'
@@ -93,7 +90,9 @@ export default function Task(){
                 })
             })
             .then( response => response.json() )
-            .then( data => console.log( data ) )
+            .then( data => console.log( data ) );
+
+            mutate(url);
         }
 
     }
@@ -226,7 +225,7 @@ export default function Task(){
                                 placeholder="Digite uma descrição para a tarefa"    
                                 className="bg-[#F5F6FA] w-full h-10 rounded-md focus:h-52 transition-all duration-300 outline-none p-2 resize-none" 
                             />
-                            <Cheklist data={data} />
+                            <Cheklist dataProps={dataProps} />
                         </div>
                         <div className="mt-16 space-y-5 w-[20%] mx-auto h-full">
                             <h1 className="text-center text-xl font-semibold">Atividade</h1>

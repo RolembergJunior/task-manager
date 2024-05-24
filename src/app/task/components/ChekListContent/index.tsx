@@ -1,34 +1,42 @@
 'use client'
 
 import { useState } from 'react';
+import { useParams } from 'next/navigation';
 import { Input } from '@/components/ui/input';
 import { FaPlus } from "react-icons/fa";
 import { Button } from '@/components/ui/button';
+import { tasksProps } from '@/app/types/Types';
 
-interface dataProps{
-    data:[
-        {
-            name: string,
-            description: string | null,
-            responsible: string | null, 
-            creationDate: string | null,
-            finalizationDate: string,
-            priority: string | number,
-            status: string,
-            folder: string | null,
-            checklist: string[]
-        }
-    ]
-}
-
-export default function Cheklist(data:dataProps){
+export default function Cheklist(dataProps:tasksProps){
     const [isOpenInput, setIsOpenInput] = useState(false);
     const [inputText, setInputText] = useState('');
-    const [newArrayItems, setNewArrayItems] = useState<string[]>([])
+    const [newArrayItems, setNewArrayItems] = useState<string[]>([]);
+    const param = useParams();
+    const url = `http://localhost:3000/tarefas/${param.id}`;
 
     function onHandleSaveInputList(){
         if(inputText != ''){
             setNewArrayItems([ inputText,...newArrayItems]);
+
+            // fetch( url, {
+            //     method: 'PUT',
+            //     headers: {
+            //     "content-type": "application-json"
+            //     },
+            //     body: JSON.stringify({
+            //         "name": dataProps.name,
+            //         "description": dataProps.description,
+            //         "responsible": dataProps.responsible, 
+            //         "creationDate": dataProps.creationDate,
+            //         "finalizationDate": dataProps.finalizationDate,
+            //         "priority": dataProps.priority,
+            //         "status": dataProps.status,
+            //         "folder": dataProps.folder,
+            //         "checklist": dataProps.checklist
+            //     })
+            // })
+            // .then( response => response.json() )
+            // .then( data => console.log( data ) )
 
             setInputText('');
             setIsOpenInput(false);
@@ -62,12 +70,12 @@ export default function Cheklist(data:dataProps){
                         <Input type="checkbox" className="w-5"/>
                     </div>
                 ))}
-                {data.data.map( task => task?.checklist?.map( ( chek, index ) => (
+                {dataProps.checklist?.map( ( chek, index ) => (
                     <div key={index} className="flex items-center justify-between w-full border-b border-black/10">
                         <label htmlFor="">{chek}</label>
                         <Input type="checkbox" className="w-5"/>
                     </div>
-                )))}
+                ))}
             </div>
         </div>
     );
