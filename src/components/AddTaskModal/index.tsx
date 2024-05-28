@@ -21,6 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { format, parse } from 'date-fns';
+import { mutate } from 'swr';
 
 
 
@@ -122,7 +123,7 @@ export default function AddTaskModal({ getNewDataAndSave }:TaskModalProps){
                             <div className='w-40'>
                                 <label htmlFor="date">Data de finalização</label>
                                 <Input 
-                                    onChange={(e) => setData({...data,finalizationDate:format(parse(e.target.value, "yyyy-MM-dd", new Date()), "dd/MM/yyyy")})} 
+                                    onChange={(e) => setData({...data,finalizationDate:e.target.value})} 
                                     id="date" 
                                     type="date"/>
                             </div>

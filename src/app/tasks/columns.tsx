@@ -43,7 +43,12 @@ export const columns: ColumnDef<Tasks>[] = [
     },
     {
         accessorKey: 'finalizationDate',
-        header: 'Data de Finalização'
+        cell: ({ row }) => {
+            return format(parse(row.original.finalizationDate, "yyyy-MM-dd", new Date()), "dd/MM/yyyy")
+            console.log(row.original.finalizationDate, 'DATA FORMATADA')
+        }
+        
+        // header: 'Data de Finalização'
     },
     {
         header: 'Prioridade',

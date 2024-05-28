@@ -6,7 +6,7 @@ export interface tasksProps{
     description: string ,
     responsible: string | null, 
     creationDate: string | null,
-    finalizationDate: string,
+    finalizationDate: string ,
     priority: string | number,
     status: string,
     folder: string | null,
