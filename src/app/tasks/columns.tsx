@@ -26,9 +26,9 @@ export const columns: ColumnDef<Tasks>[] = [
         cell(props) {
           if( format(currentDate, "dd/MM/yyyy") === props.cell.row.original.finalizationDate ){
                 return <div className="bg-orange-600 w-3 h-3 mx-auto rounded-full" />
-            } else if( format(currentDate, "dd/MM/yyyy") < props.cell.row.original.finalizationDate ){
+            } else if( format(currentDate, "dd/MM/yyyy") < format(props.cell.row.original.finalizationDate, "dd/MM/yyyy") ){
                 return <div className="bg-green-600 w-3 h-3 mx-auto rounded-full" />
-            } else if(  format(currentDate, "dd/MM/yyyy")  > props.cell.row.original.finalizationDate ){
+            } else if(  format(currentDate, "dd/MM/yyyy")  > format(props.cell.row.original.finalizationDate, "dd/MM/yyyy") ){
                 return <div className="bg-red-600 w-3 h-3 mx-auto rounded-full" />
             } 
         }

@@ -73,10 +73,11 @@ export default function Task(){
     function onEditTask(){
 
         if( data ){
+
             fetch( url, {
                 method: 'PUT',
                 headers: {
-                "content-type": "application-json"
+                "content-type": "application/json"
                 },
                 body: JSON.stringify({
                     "name": dataProps.name,
@@ -100,7 +101,17 @@ export default function Task(){
 
     useEffect(() => {
         onEditTask();
-    }, [dataProps])
+    }, [
+            dataProps.name, 
+            dataProps.description, 
+            dataProps.responsible, 
+            dataProps.creationDate, 
+            dataProps.finalizationDate, 
+            dataProps.priority, 
+            dataProps.status, 
+            dataProps.folder, 
+            dataProps.checklist
+        ])
 
     if(isLoading && error) return <Loading/>
     if(!isLoading)
@@ -168,7 +179,7 @@ export default function Task(){
                                                 <SelectItem value="Rolemberg Junior" >Rolemberg Junior</SelectItem>
                                                 <SelectItem value="Pitter Antonio" >Pitter Antonio</SelectItem>
                                                 <SelectItem value="Fernanda Sales" >Fernanda Sales</SelectItem>
-                                                <SelectItem value="Ruan Pabli" >Ruan Pablo</SelectItem>
+                                                <SelectItem value="Ruan Pablo" >Ruan Pablo</SelectItem>
                                                 <SelectItem value="Luan Carlos" >Luan Carlos</SelectItem>
                                                 </SelectGroup>
                                         </SelectContent>

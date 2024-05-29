@@ -1,16 +1,3 @@
 {
-  "tarefas": [
-    {
-      "name": "Atualizando a task para o vídeo",
-      "description": "Testando o método PUT",
-      "responsible": "Rolemberg Junior",
-      "creationDate": "27/05/2024",
-      "finalizationDate": "2024-05-27",
-      "priority": "MÉDIA PRIORIDADE",
-      "status": "Em andamento",
-      "folder": null,
-      "checklist": [],
-      "id": "59fd"
-    }
-  ]
+  "tarefas": []
 }
