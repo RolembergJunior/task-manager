@@ -14,7 +14,7 @@ import { Dialog, DialogClose, DialogDescription, DialogHeader, DialogTitle, Dial
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { tasksProps } from "@/app/types/Types";
-import { format, parse } from 'date-fns';
+import { parse,format } from 'date-fns';
 
 
 export default function Task(){
@@ -35,8 +35,23 @@ export default function Task(){
     const param = useParams();
     const url = `http://localhost:3000/tarefas/${param.id}`;
     const { data, error, isLoading } = useFetch(url);
+    
+    let currentDate = new Date( Date.now() );
+    let inputedDate = new Date( dataProps?.finalizationDate );
+
+    function verifyDateAndStylize(){
+
+        if( currentDate === inputedDate ){
+                return <div className="bg-orange-500 w-3 h-3 mx-auto rounded-full" />
+            } else if( currentDate < inputedDate ){
+                return <div className="bg-green-600 w-3 h-3 mx-auto rounded-full" />
+            } else if(  currentDate  > inputedDate ){
+                return <div className="bg-red-700 w-3 h-3 mx-auto rounded-full" />
+            } 
+}
 
     useEffect(() => {
+        verifyDateAndStylize();
 
         if( !error && data != undefined){
             
@@ -54,12 +69,12 @@ export default function Task(){
                 }
             )
         } 
-    },[data])
+    },[data]);
 
 
     const options = {
         method: 'DELETE'
-    }
+    };
 
     function onHandleRemoveTask(){
         
@@ -68,7 +83,7 @@ export default function Task(){
         .catch(error => console.error('ERRO:',error));
 
         route.push('/');
-    }
+    };
 
     function onEditTask(){
 
@@ -92,12 +107,12 @@ export default function Task(){
                 })
             })
             .then( response => response.json() )
-            .then( data => console.log( data ) );
 
             mutate(url);
-        }
+        };
 
-    }
+    };
+
 
     useEffect(() => {
         onEditTask();
@@ -111,7 +126,8 @@ export default function Task(){
             dataProps.status, 
             dataProps.folder, 
             dataProps.checklist
-        ])
+        ]);
+
 
     if(isLoading && error) return <Loading/>
     if(!isLoading)
@@ -160,7 +176,9 @@ export default function Task(){
                     <div className="flex">
                         <div className="mt-16 px-10 space-y-10 w-[70%]">
                             <div className="flex items-center bg-[#F5F6FA] gap-4 p-2 rounded-md" >
-                                <div className="bg-red-800 w-3 h-3 rounded-md" />
+                                <div className="w-3 h-3 mx-auto rounded-full">
+                                    {verifyDateAndStylize()}
+                                </div>
                                 <textarea 
                                     onChange={(e) => setDataProps({ ...dataProps, name: e.target.value })}
                                     value={dataProps.name} 
@@ -192,7 +210,7 @@ export default function Task(){
                                 <div>
                                     <span className="font-medium text-black/50">Data de finalização</span>
                                     <Input 
-                                        onChange={(e) => setDataProps({ ...dataProps, finalizationDate:e.target.value })}
+                                        onChange={(e) => setDataProps({ ...dataProps, finalizationDate: e.target.value })}
                                         type="date" 
                                         className="border-none focus:outline-none"
                                         value={dataProps.finalizationDate} 

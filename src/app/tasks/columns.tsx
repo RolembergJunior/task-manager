@@ -17,7 +17,7 @@ export type Tasks = {
     status: string
 }
 
-const currentDate = new Date( Date.now() )
+const currentDate = new Date( Date.now() );
 
 
 export const columns: ColumnDef<Tasks>[] = [

@@ -20,10 +20,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { format, parse } from 'date-fns';
-import { mutate } from 'swr';
-
-
 
 interface TaskModalProps{
     getNewDataAndSave: (data:tasksProps) => void
@@ -67,21 +63,11 @@ export default function AddTaskModal({ getNewDataAndSave }:TaskModalProps){
                 status: data.status,
                 checklist:[]
             });
-    
-            setData({
-                    name: '',
-                    description:'',
-                    responsible: null, 
-                    creationDate: null,
-                    finalizationDate: '',
-                    priority: '',
-                    folder: null,
-                    status: '',
-                    checklist:[]
-            });
+
 
             fetch(url, options)
             .then(response => response.json())
+            .then( data => console.log( data, 'DADOS ADICIONADOS' ) )
             .catch(error => console.error('ERRO:',error))
 
         } else
