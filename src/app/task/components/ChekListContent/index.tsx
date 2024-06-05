@@ -1,22 +1,38 @@
 'use client'
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { Input } from '@/components/ui/input';
 import { FaPlus } from "react-icons/fa";
 import { Button } from '@/components/ui/button';
 import { tasksProps } from '@/app/types/Types';
 
+interface NewArrayItemsTypes{
+    name: string | null,
+    checked: boolean | null
+}
+
 export default function Cheklist(dataProps:tasksProps){
     const [isOpenInput, setIsOpenInput] = useState(false);
     const [inputText, setInputText] = useState('');
-    const [newArrayItems, setNewArrayItems] = useState<string[]>([]);
+    const [newArrayItems, setNewArrayItems] = useState<NewArrayItemsTypes[]>(
+        [
+            {
+                name: null,
+                checked: null
+            }
+        ]
+    );
     const param = useParams();
     const url = `http://localhost:3000/tarefas/${param.id}`;
 
+    useEffect( () => {
+
+    }, [])
+
     function onHandleSaveInputList(){
         if(inputText != ''){
-            setNewArrayItems([ inputText,...newArrayItems]);
+            setNewArrayItems([{name:inputText, checked: false},...newArrayItems]);
 
             // fetch( url, {
             //     method: 'PUT',
@@ -66,8 +82,22 @@ export default function Cheklist(dataProps:tasksProps){
                 ) : null}
                 {newArrayItems.map( ( newItem, index ) => (
                     <div key={index} className="flex items-center justify-between w-full border-b border-black/10">
-                        <label htmlFor="">{newItem}</label>
-                        <Input type="checkbox" className="w-5"/>
+                        { newItem.checked 
+                            ?   (
+                                    <div className='relative'>
+                                        <label>{newItem.name}</label>
+                                        <hr className='absolute top-[43%] bg-black w-full h-[2px]' />
+                                    </div>
+                                ) 
+                            : <label>{newItem.name}</label> }
+                         <Input onClick={() => {
+                                const updateItems = newArrayItems.map( item => item.name === newItem.name ? {...item, checked: !item.checked } : item );
+
+                                setNewArrayItems(updateItems);
+                            }} 
+                            type="checkbox" 
+                            className="w-5"
+                        /> 
                     </div>
                 ))}
                 {dataProps.checklist?.map( ( chek, index ) => (

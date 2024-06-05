@@ -1,28 +1,40 @@
 {
   "tarefas": [
     {
-      "name": "Testando o state",
-      "description": "wqewqeqweqweqw",
+      "id": "f4d7",
+      "name": "Ajustar o relatório Gerencial da Passarelli",
+      "description": "Chamar um dos DEV's para realizar esses ajustes",
       "responsible": "Rolemberg Junior",
-      "creationDate": "03/06/2024",
-      "finalizationDate": "2024-06-03",
-      "priority": "ALTA PRIORIDADE",
-      "status": "Fazer",
+      "creationDate": "05/06/2024",
+      "finalizationDate": "2024-06-07",
+      "priority": "MÉDIA PRIORIDADE",
       "folder": null,
-      "checklist": [],
-      "id": "51ec"
+      "status": "Fazer",
+      "checklist": []
     },
     {
-      "name": "e",
-      "description": "e",
+      "id": "0d4e",
+      "name": "Revisar o Mapa de Inspeções",
+      "description": "Gabi relatou que existe status não conformes",
       "responsible": "Rolemberg Junior",
-      "creationDate": "03/06/2024",
-      "finalizationDate": "2024-06-13",
+      "creationDate": "05/06/2024",
+      "finalizationDate": "2024-06-05",
       "priority": "MÉDIA PRIORIDADE",
-      "status": "Não iniciado",
       "folder": null,
-      "checklist": [],
-      "id": "3159"
+      "status": "Fazer",
+      "checklist": []
+    },
+    {
+      "id": "26cc",
+      "name": "Verificar o relatório da Passarelli pro Victor",
+      "description": "Valor de serviço orçamento não está batendo com a hierarquia acima",
+      "responsible": "Rolemberg Junior",
+      "creationDate": "05/06/2024",
+      "finalizationDate": "2024-06-05",
+      "priority": "ALTA PRIORIDADE",
+      "folder": null,
+      "status": "Fazer",
+      "checklist": []
     }
   ]
 }
