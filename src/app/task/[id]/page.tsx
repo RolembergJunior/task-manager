@@ -28,7 +28,7 @@ export default function Task(){
             priority: '',
             folder: null,
             status: '',
-            checklist: ['']
+            checklist: []
         }
     )
     const route = useRouter();
@@ -36,19 +36,25 @@ export default function Task(){
     const url = `http://localhost:3000/tarefas/${param.id}`;
     const { data, error, isLoading } = useFetch(url);
     
-    let currentDate = new Date( Date.now() );
-    let inputedDate = new Date( dataProps?.finalizationDate );
 
     function verifyDateAndStylize(){
 
-        if( currentDate === inputedDate ){
-                return <div className="bg-orange-500 w-3 h-3 mx-auto rounded-full" />
-            } else if( currentDate < inputedDate ){
-                return <div className="bg-green-600 w-3 h-3 mx-auto rounded-full" />
-            } else if(  currentDate  > inputedDate ){
-                return <div className="bg-red-700 w-3 h-3 mx-auto rounded-full" />
-            } 
-}
+        if( dataProps.creationDate != undefined && dataProps.finalizationDate ){
+
+            let createDate = new Date(format(dataProps.creationDate, 'yyyy-dd-MM'));
+            let inputedDate = new Date( dataProps?.finalizationDate );
+    
+                    if( createDate.getTime() === inputedDate.getTime() ){
+                          return <div className="bg-orange-600 w-3 h-3 mx-auto rounded-full" />
+                      } else if( createDate.getTime() < inputedDate.getTime() ){
+                          return <div className="bg-green-600 w-3 h-3 mx-auto rounded-full" />
+                      } else if( createDate.getTime() > inputedDate.getTime() ){
+                          return <div className="bg-red-600 w-3 h-3 mx-auto rounded-full" />
+                      } 
+            }
+
+        }
+
 
     useEffect(() => {
         verifyDateAndStylize();

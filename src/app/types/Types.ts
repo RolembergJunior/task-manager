@@ -1,4 +1,8 @@
 
+export interface CheckListProps{
+    name:string,
+    checked: boolean
+}
 
 export interface tasksProps{
     // id: number | string | null,
@@ -10,5 +14,5 @@ export interface tasksProps{
     priority: string | number,
     status: string,
     folder: string | null,
-    checklist: string[]
+    checklist: CheckListProps[]
 }

@@ -11,7 +11,7 @@ import { parse,format } from 'date-fns';
 export type Tasks = {
     id: number,
     name: string,
-    creatationDate: string,
+    creationDate: string,
     finalizationDate: string,
     priority: string | number,
     status: string
@@ -24,13 +24,17 @@ export const columns: ColumnDef<Tasks>[] = [
     {
         id: '1',
         cell(props) {
-          if( format(currentDate, "dd/MM/yyyy") === props.cell.row.original.finalizationDate ){
-                return <div className="bg-orange-600 w-3 h-3 mx-auto rounded-full" />
-            } else if( format(currentDate, "dd/MM/yyyy") < format(props.cell.row.original.finalizationDate, "dd/MM/yyyy") ){
-                return <div className="bg-green-600 w-3 h-3 mx-auto rounded-full" />
-            } else if(  format(currentDate, "dd/MM/yyyy")  > format(props.cell.row.original.finalizationDate, "dd/MM/yyyy") ){
-                return <div className="bg-red-600 w-3 h-3 mx-auto rounded-full" />
-            } 
+
+            let creationDateStringToDate = new Date(format(props.cell.row.original.creationDate, 'yyyy-dd-MM'));
+            let finalizationDateStringToDate = new Date(props.cell.row.original.finalizationDate);
+
+                if( creationDateStringToDate.getTime() === finalizationDateStringToDate.getTime() ){
+                      return <div className="bg-orange-600 w-3 h-3 mx-auto rounded-full" />
+                  } else if( creationDateStringToDate.getTime() < finalizationDateStringToDate.getTime() ){
+                      return <div className="bg-green-600 w-3 h-3 mx-auto rounded-full" />
+                  } else if( creationDateStringToDate.getTime() > finalizationDateStringToDate.getTime() ){
+                      return <div className="bg-red-600 w-3 h-3 mx-auto rounded-full" />
+                  } 
         }
     },
     {
@@ -44,11 +48,10 @@ export const columns: ColumnDef<Tasks>[] = [
     {
         accessorKey: 'finalizationDate',
         cell: ({ row }) => {
-            return format(parse(row.original.finalizationDate, "yyyy-MM-dd", new Date()), "dd/MM/yyyy")
-            console.log(row.original.finalizationDate, 'DATA FORMATADA')
+            const validateDate = row.original.finalizationDate === '' ? format(currentDate, "yyyy-MM-dd") : row.original.finalizationDate
+            return format(parse(validateDate, "yyyy-MM-dd", new Date()), "dd/MM/yyyy")
+
         }
-        
-        // header: 'Data de Finalização'
     },
     {
         header: 'Prioridade',
