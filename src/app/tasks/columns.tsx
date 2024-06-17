@@ -25,14 +25,14 @@ export const columns: ColumnDef<Tasks>[] = [
         id: '1',
         cell(props) {
 
-            let creationDateStringToDate = new Date(format(props.cell.row.original.creationDate, 'yyyy-dd-MM'));
+            let currentDate = new Date(format(Date.now(), 'yyyy-MM-dd'));
             let finalizationDateStringToDate = new Date(props.cell.row.original.finalizationDate);
 
-                if( creationDateStringToDate.getTime() === finalizationDateStringToDate.getTime() ){
+                if( currentDate.getTime() === finalizationDateStringToDate.getTime() ){
                       return <div className="bg-orange-600 w-3 h-3 mx-auto rounded-full" />
-                  } else if( creationDateStringToDate.getTime() < finalizationDateStringToDate.getTime() ){
+                  } else if( currentDate.getTime() < finalizationDateStringToDate.getTime() ){
                       return <div className="bg-green-600 w-3 h-3 mx-auto rounded-full" />
-                  } else if( creationDateStringToDate.getTime() > finalizationDateStringToDate.getTime() ){
+                  } else if( currentDate.getTime() > finalizationDateStringToDate.getTime() ){
                       return <div className="bg-red-600 w-3 h-3 mx-auto rounded-full" />
                   } 
         }

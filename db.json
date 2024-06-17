@@ -1,40 +1,186 @@
 {
   "tarefas": [
     {
-      "id": "f4d7",
       "name": "Ajustar o relatório Gerencial da Passarelli",
       "description": "Chamar um dos DEV's para realizar esses ajustes",
       "responsible": "Rolemberg Junior",
       "creationDate": "05/06/2024",
-      "finalizationDate": "2024-06-07",
+      "finalizationDate": "2024-06-14",
       "priority": "MÉDIA PRIORIDADE",
-      "folder": null,
       "status": "Fazer",
-      "checklist": []
+      "folder": null,
+      "checklist": [
+        {
+          "name": "CRIAR CHECKLIST",
+          "isCheck": false
+        }
+      ],
+      "id": "f4d7"
     },
     {
-      "name": "Testando datas de comparação",
-      "description": "DATAS COMPARADAS",
+      "name": "Ajustar DASHBOARD DE FVS",
+      "description": "Conversar com a INDIE sobre os problemas dos fornecedores e responsáveis das NC's. As colunas referentes a esses filtros não estão sendo preenchidas corretamente e por isso os filtros não trazem nenhum dado no componente.",
       "responsible": "Rolemberg Junior",
-      "creationDate": "11/06/2024",
-      "finalizationDate": "2024-06-11",
+      "creationDate": "12/06/2024",
+      "finalizationDate": "2024-06-14",
       "priority": "ALTA PRIORIDADE",
-      "status": "Não iniciado",
+      "status": "Em andamento",
       "folder": null,
-      "checklist": [],
-      "id": "2822"
+      "checklist": [
+        {
+          "name": "Filtro de 'RESPONSÁVEL' e 'FORNECEDOR' não estão sensibilizando os contadores de inspeções",
+          "isCheck": true
+        },
+        {
+          "name": "Verificar a lista de fornecedores",
+          "isCheck": true
+        },
+        {
+          "name": "Filtro de mês não está sensibilizando os contadores de NC's abertas",
+          "isCheck": true
+        },
+        {
+          "name": "Verificar o filtro de fornecedor e ranking",
+          "isCheck": true
+        },
+        {
+          "name": "Ordernar o tempo de médio de fechamento das fichas da maior pra menor",
+          "isCheck": true
+        },
+        {
+          "name": "Número de NC's abertas informadas np Dash não corresponde com a quantidade de NC's no modal",
+          "isCheck": true
+        },
+        {
+          "name": "Quando selecionado GERAL o DASH não carrega",
+          "isCheck": false
+        },
+        {
+          "name": "Trazer no modal de NC's o campo \"OBRA\" ",
+          "isCheck": true
+        },
+        {
+          "name": "Verificar o filtro de setor( sensibilizar pelo de ficha )",
+          "isCheck": true
+        },
+        {
+          "name": "Apresentar a lista de obras relacionadas com o usuário",
+          "isCheck": true
+        }
+      ],
+      "id": "54f5"
+    },
+    {
+      "name": "Card para teste de CheckBox",
+      "description": "Preciso criar chekcbox e ajustar no código a condição de verificação se ela foi checkada(TRUE) ou não(FALSE) ",
+      "responsible": "Rolemberg Junior",
+      "creationDate": "17/06/2024",
+      "finalizationDate": "2024-06-18",
+      "priority": "MÉDIA PRIORIDADE",
+      "status": "Em andamento",
+      "folder": null,
+      "checklist": [
+        {
+          "name": "555555555555555555555",
+          "isCheck": false
+        },
+        {
+          "name": "123123123123",
+          "isCheck": false
+        },
+        {
+          "name": "1231231231",
+          "isCheck": false
+        },
+        {
+          "name": "222222222222222222",
+          "isCheck": false
+        },
+        {
+          "name": "asdasdasdasd",
+          "isCheck": false
+        },
+        [
+          {
+            "0": {
+              "0": {
+                "0": {
+                  "0": {
+                    "name": "asdasdasd",
+                    "isCheck": true
+                  },
+                  "1": {
+                    "name": "asdasdasd",
+                    "isCheck": false
+                  },
+                  "isCheck": true
+                },
+                "isCheck": true
+              },
+              "isCheck": true
+            },
+            "isCheck": true
+          }
+        ]
+      ],
+      "id": "a38d"
+    },
+    {
+      "name": "TESTANDO CHACK BOX",
+      "description": "TESTE",
+      "responsible": "Rolemberg Junior",
+      "creationDate": "17/06/2024",
+      "finalizationDate": "2024-06-17",
+      "priority": "ALTA PRIORIDADE",
+      "status": "Fazer",
+      "folder": null,
+      "checklist": [
+        {
+          "name": "TESTANDO DENOVO",
+          "isCheck": false
+        },
+        {
+          "name": "TESTEEE",
+          "isCheck": true
+        },
+        {
+          "name": "66666666666666666666666666666666666666666",
+          "isCheck": true
+        },
+        {
+          "name": "5555555555555555555555555555555555",
+          "isCheck": true
+        },
+        {
+          "name": "444444444444444444444444444444",
+          "isCheck": true
+        },
+        {
+          "name": "333333333333333333333333",
+          "isCheck": true
+        },
+        {
+          "name": "22222222222222222222",
+          "isCheck": true
+        },
+        {
+          "name": "1111111111111111111",
+          "isCheck": true
+        }
+      ],
+      "id": "a9bb"
     },
     {
       "name": "TESTE",
-      "description": "TESTE",
-      "responsible": "Rolemberg Junior",
-      "creationDate": "11/06/2024",
-      "finalizationDate": "2024-06-12",
+      "description": "TESTANDO",
+      "responsible": "Pitter Antonio",
+      "creationDate": "17/06/2024",
+      "finalizationDate": "2024-06-19",
       "priority": "ALTA PRIORIDADE",
-      "status": "Não iniciado",
+      "status": "Fazer",
       "folder": null,
       "checklist": [],
-      "id": "e28c"
+      "id": "2082"
     }
   ]
 }

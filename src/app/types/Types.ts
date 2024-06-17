@@ -1,7 +1,7 @@
 
 export interface CheckListProps{
     name:string,
-    checked: boolean
+    isCheck: boolean
 }
 
 export interface tasksProps{

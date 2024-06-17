@@ -8,13 +8,12 @@ import SideBar from "@/components/Sidebar";
 import { Button } from "@/components/ui/button";
 import Loading from "@/components/Loading";
 import { BiLeftArrowAlt } from 'react-icons/bi';
-import { FaRegTrashAlt } from "react-icons/fa";
-import Cheklist from "../components/ChekListContent";
+import { FaPlus, FaRegTrashAlt } from "react-icons/fa";
 import { Dialog, DialogClose, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { tasksProps } from "@/app/types/Types";
-import { parse,format } from 'date-fns';
+import { format } from 'date-fns';
 
 
 export default function Task(){
@@ -30,7 +29,9 @@ export default function Task(){
             status: '',
             checklist: []
         }
-    )
+    );
+    const [isOpenInput, setIsOpenInput] = useState(false);
+    const [inputText, setInputText] = useState('');
     const route = useRouter();
     const param = useParams();
     const url = `http://localhost:3000/tarefas/${param.id}`;
@@ -38,17 +39,16 @@ export default function Task(){
     
 
     function verifyDateAndStylize(){
-
         if( dataProps.creationDate != undefined && dataProps.finalizationDate ){
 
-            let createDate = new Date(format(dataProps.creationDate, 'yyyy-dd-MM'));
+            let currentDate = new Date( format(Date.now(), 'yyyy-MM-dd') );
             let inputedDate = new Date( dataProps?.finalizationDate );
     
-                    if( createDate.getTime() === inputedDate.getTime() ){
+                    if( currentDate.getTime() === inputedDate.getTime() ){
                           return <div className="bg-orange-600 w-3 h-3 mx-auto rounded-full" />
-                      } else if( createDate.getTime() < inputedDate.getTime() ){
+                      } else if( currentDate.getTime() < inputedDate.getTime() ){
                           return <div className="bg-green-600 w-3 h-3 mx-auto rounded-full" />
-                      } else if( createDate.getTime() > inputedDate.getTime() ){
+                      } else if( currentDate.getTime() > inputedDate.getTime() ){
                           return <div className="bg-red-600 w-3 h-3 mx-auto rounded-full" />
                       } 
             }
@@ -73,10 +73,11 @@ export default function Task(){
                     status: data.status ,
                     checklist: data.checklist?.map( list => list ) 
                 }
-            )
+            );
+
+            
         } 
     },[data]);
-
 
     const options = {
         method: 'DELETE'
@@ -113,10 +114,8 @@ export default function Task(){
                 })
             })
             .then( response => response.json() )
-
             mutate(url);
         };
-
     };
 
 
@@ -261,7 +260,64 @@ export default function Task(){
                                 placeholder="Digite uma descrição para a tarefa"    
                                 className="bg-[#F5F6FA] w-full h-10 rounded-md focus:h-52 transition-all duration-300 outline-none p-2 resize-none" 
                             />
-                            <Cheklist dataProps={dataProps} />
+                            <div className="space-y-4">
+                            <div className="flex items-center justify-between">
+                                <h1 className="text-xl font-semibold ">ChekList</h1>
+                                <div
+                                    onClick={() => setIsOpenInput(!isOpenInput)} 
+                                    className="transition-colors hover:bg-black/10 hover:cursor-pointer rounded-full p-2">
+                                    <FaPlus />
+                                </div>
+                            </div>
+                            {dataProps.checklist?.length || isOpenInput ? (
+                                <div className="bg-[#F5F6FA] rounded-lg p-3 max-h-52 overflow-auto scrollbar-thin scrollbar-thumb-black scrollbar-track-white" >
+                                    {isOpenInput 
+                                        ? (
+                                            <div className="flex gap-2">
+                                                <Input 
+                                                    onChange={(e) => setInputText(e.target.value)} 
+                                                    type='text' 
+                                                    placeholder='Digite aqui...' 
+                                                />
+                                                <Button onClick={() => {
+                                                    if(inputText != ''){
+                                                        setInputText('');
+                                                        setIsOpenInput(false);
+
+                                                        setDataProps({ ...dataProps, checklist: [ { name: inputText, isCheck: false }, ...dataProps.checklist?.map( item => item ) ] })
+                                                    }
+                                                }}
+                                                >
+                                                    Salvar
+                                                </Button>
+                                            </div>
+                                        ) 
+                                        : null}
+                                    {dataProps.checklist?.map( ( item, index ) => (
+                                    <div key={index} className="flex items-center justify-between w-full border-b border-black/10">
+                                        { item.isCheck 
+                                            ?   (
+                                                    <div className='relative'>
+                                                        <label>{item.name}</label>
+                                                        <hr className='absolute top-[43%] bg-black w-full h-[2px]' />
+                                                    </div>
+                                                ) 
+                                            :   <label>{item.name}</label> }
+                                            <Input 
+                                                checked={ item.isCheck ? true : false } 
+                                                onClick={() => {
+                                                    const updateItems = dataProps.checklist.map( items => items.name === item.name ? {...item, isCheck: !item.isCheck } : items );
+
+                                                    setDataProps({ ...dataProps, checklist: updateItems });
+                                            }} 
+                                            type="checkbox" 
+                                            className="w-5"
+                                        /> 
+                                    </div>
+                                ))}
+                                </div>
+                            ) : null}
+                        </div>
                         </div>
                         <div className="mt-16 space-y-5 w-[20%] mx-auto h-full">
                             <h1 className="text-center text-xl font-semibold">Atividade</h1>
