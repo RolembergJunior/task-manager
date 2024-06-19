@@ -126,61 +126,28 @@
       "id": "a38d"
     },
     {
-      "name": "TESTANDO CHACK BOX",
-      "description": "TESTE",
+      "name": "Ajustar dyamic columns na ordenação correta",
+      "description": "O dataset está ordenando pela \"SEQ\" dos setores. Revisar a ordenação dos setores na tbl",
       "responsible": "Rolemberg Junior",
       "creationDate": "17/06/2024",
       "finalizationDate": "2024-06-17",
       "priority": "ALTA PRIORIDADE",
-      "status": "Fazer",
+      "status": "Concluída",
       "folder": null,
-      "checklist": [
-        {
-          "name": "TESTANDO DENOVO",
-          "isCheck": false
-        },
-        {
-          "name": "TESTEEE",
-          "isCheck": true
-        },
-        {
-          "name": "66666666666666666666666666666666666666666",
-          "isCheck": true
-        },
-        {
-          "name": "5555555555555555555555555555555555",
-          "isCheck": true
-        },
-        {
-          "name": "444444444444444444444444444444",
-          "isCheck": true
-        },
-        {
-          "name": "333333333333333333333333",
-          "isCheck": true
-        },
-        {
-          "name": "22222222222222222222",
-          "isCheck": true
-        },
-        {
-          "name": "1111111111111111111",
-          "isCheck": true
-        }
-      ],
-      "id": "a9bb"
+      "checklist": [],
+      "id": "7a32"
     },
     {
-      "name": "TESTE",
-      "description": "TESTANDO",
-      "responsible": "Pitter Antonio",
-      "creationDate": "17/06/2024",
-      "finalizationDate": "2024-06-19",
-      "priority": "ALTA PRIORIDADE",
+      "name": "Qual banco de dados escolher quando for subir pra VERCEL",
+      "description": "MongoDB, SQL Lite, PostGreSQL ou SupaBase ",
+      "responsible": "Rolemberg Junior",
+      "creationDate": "18/06/2024",
+      "finalizationDate": "2024-06-30",
+      "priority": "MÉDIA PRIORIDADE",
       "status": "Fazer",
       "folder": null,
       "checklist": [],
-      "id": "2082"
+      "id": "9253"
     }
   ]
 }

@@ -9,6 +9,7 @@ import { columns } from "./tasks/columns";
 import AddTaskModal from "@/components/AddTaskModal";
 import Loading from "@/components/Loading";
 import { tasksProps } from "./types/Types";
+import { mutate } from "swr";
 
 export default function Home() {
   const { data, error, isLoading } = useFetch('http://localhost:3000/tarefas');
@@ -18,10 +19,13 @@ export default function Home() {
     if(data != undefined){
       setAllData(data);
     }
-  },[data])
+
+    mutate( 'http://localhost:3000/tarefas' );
+
+  },[data, allData])
 
   function getNewDataAndSave(newData:tasksProps){   
-      setAllData([...allData, newData]);
+    setAllData([...allData, newData]);
   }
   
   if(isLoading) return <Loading/>

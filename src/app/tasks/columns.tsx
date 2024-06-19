@@ -46,7 +46,7 @@ export const columns: ColumnDef<Tasks>[] = [
         header: 'Data de Criação'
     },
     {
-        accessorKey: 'finalizationDate',
+        header: 'Data de Finalização',
         cell: ({ row }) => {
             const validateDate = row.original.finalizationDate === '' ? format(currentDate, "yyyy-MM-dd") : row.original.finalizationDate
             return format(parse(validateDate, "yyyy-MM-dd", new Date()), "dd/MM/yyyy")
