@@ -148,6 +148,54 @@
       "folder": null,
       "checklist": [],
       "id": "9253"
+    },
+    {
+      "id": "e7a1",
+      "name": "Criar um documento para o Saba dos filtros e os componentes sensibilizados",
+      "description": "Criar um mapa mental ou ppt",
+      "responsible": "Rolemberg Junior",
+      "creationDate": "21/06/2024",
+      "finalizationDate": "2024-06-21",
+      "priority": "ALTA PRIORIDADE",
+      "folder": null,
+      "status": "Fazer",
+      "checklist": []
+    },
+    {
+      "id": "ac7d",
+      "name": "Adicionar a atualização na tela de Análise de Relatórios",
+      "description": "Adicionar uma coluna de tables/vw's que estão relacionadas nos datasets do relatórios ",
+      "responsible": "Rolemberg Junior",
+      "creationDate": "21/06/2024",
+      "finalizationDate": "2024-06-30",
+      "priority": "ALTA PRIORIDADE",
+      "folder": null,
+      "status": "Fazer",
+      "checklist": []
+    },
+    {
+      "id": "f20d",
+      "name": "Validar as alterações do relatório Gerencial da Passarelli",
+      "description": "Validar com o Jojo",
+      "responsible": "Rolemberg Junior",
+      "creationDate": "21/06/2024",
+      "finalizationDate": "2024-06-21",
+      "priority": "ALTA PRIORIDADE",
+      "folder": null,
+      "status": "Em andamento",
+      "checklist": []
+    },
+    {
+      "id": "1ee8",
+      "name": "Mostrar a nova tela criada para o pessoal na dayli",
+      "description": "Validar com o Jojo",
+      "responsible": "Rolemberg Junior",
+      "creationDate": "21/06/2024",
+      "finalizationDate": "2024-06-21",
+      "priority": "ALTA PRIORIDADE",
+      "folder": null,
+      "status": "Fazer",
+      "checklist": []
     }
   ]
 }
