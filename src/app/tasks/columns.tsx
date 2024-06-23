@@ -7,6 +7,7 @@ import { IoEllipsisHorizontal, IoStarSharp, IoTrashOutline } from 'react-icons/i
 import { BsDashSquare } from "react-icons/bs";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
 import { parse,format } from 'date-fns';
+import { ArrowUpDown } from "lucide-react";
 
 export type Tasks = {
     id: number,
@@ -43,10 +44,32 @@ export const columns: ColumnDef<Tasks>[] = [
     },
     {
         accessorKey: 'creationDate',
-        header: 'Data de Criação'
+        id: 'dataCreation',
+        header: ({ column }) => {
+            return(
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting( column.getIsSorted() === 'asc' )}
+                >
+                    Data de criação
+                    <ArrowUpDown className="ml-2 h-4 w-4"/>
+                </Button>
+            );
+        }
     },
     {
-        header: 'Data de Finalização',
+        accessorKey: 'finalizationDate',
+        header: ({ column }) => {
+            return(
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting( column.getIsSorted() === 'asc' )}
+                >
+                    Data de Finalização
+                    <ArrowUpDown className="ml-2 h-4 w-4"/>
+                </Button>
+            );
+        },
         cell: ({ row }) => {
             const validateDate = row.original.finalizationDate === '' ? format(currentDate, "yyyy-MM-dd") : row.original.finalizationDate
             return format(parse(validateDate, "yyyy-MM-dd", new Date()), "dd/MM/yyyy")

@@ -1,11 +1,14 @@
 'use client'
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import {
     ColumnDef,
     flexRender,
     getCoreRowModel,
     useReactTable,
+    SortingState,
+    getSortedRowModel
   } from "@tanstack/react-table";
    
   import {
@@ -24,13 +27,18 @@ import Loading from "@/components/Loading";
   }
 
   export function DataTable<Tdata, Tvalue>({columns, data}:DataTableProps<Tdata, Tvalue>) {
+    const [ sorting, setSorting ] = useState<SortingState>([]);
     const router = useRouter();
     const table = useReactTable({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
+        onSortingChange: setSorting,
+        getSortedRowModel: getSortedRowModel(),
+        state: {
+            sorting
+        }
     });
-
 
     function onHandleClickRow(id:number | string){
         router.push(`/task/${id}`);
