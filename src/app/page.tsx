@@ -34,8 +34,8 @@ export default function Home() {
   const [ allData, setAllData ] = useState<tasksProps[]>([]);
   const [ filters, setFilters ] = useState<FiltersProps>({
     search: '',
-    priority: null,
-    status: null,
+    priority: 'Todos',
+    status: 'Todos',
     date: null
   });
 
@@ -43,7 +43,7 @@ export default function Home() {
     if(data != undefined){
       setAllData(data);
     }
-
+    
     mutate( 'http://localhost:3000/tarefas' );
 
   },[data, allData]);
@@ -56,15 +56,11 @@ export default function Home() {
   const filteredArray = () => { 
 
     const normalizeToLowerCase = filters.search.toLowerCase();
-
     const sensitiveDataBySearch = allData.filter( task => task.name.toLowerCase().includes( normalizeToLowerCase ) );
-    const sensitiveDataByPriority = filters.priority != null ? allData.filter( taskFiltered => taskFiltered.priority === filters.priority ) : allData;
-    const sensitiveDataByStatus = filters.status != null ? allData.filter( taskFiltered => taskFiltered.status === filters.status ) : allData;
+    const sensitiveDataByPriority = filters.priority != 'Todos' ? sensitiveDataBySearch.filter( taskFiltered => taskFiltered.priority === filters.priority ) : sensitiveDataBySearch;
+    const sensitiveDataByStatus = filters.status != 'Todos' ? sensitiveDataByPriority.filter( taskFiltered => taskFiltered.status === filters.status ) : sensitiveDataByPriority;
 
-
-    const dataFiltered = [...sensitiveDataBySearch, ...sensitiveDataByPriority, ...sensitiveDataByStatus]
-
-    console.log( dataFiltered, 'testandooooo' )
+    const dataFiltered = [...sensitiveDataByStatus]
 
     return dataFiltered
   }
@@ -72,14 +68,8 @@ export default function Home() {
   const sensitiveDataByFilters = filteredArray();
   
   useEffect(() => {
-    filteredArray()
-  }, [filters])
-
-  // console.log( filteredArray, 'Arrayfiltrado' )
-
-  
-
-  
+    filteredArray();
+  }, [filters]);  
 
   if(isLoading) return <Loading/>
   if(!isLoading && !error)
@@ -134,7 +124,7 @@ export default function Home() {
                       <SelectItem value="Não inciado">
                           Não inciada
                       </SelectItem>
-                      <SelectItem value="fazer">
+                      <SelectItem value="Fazer">
                           Fazer
                       </SelectItem>
                       <SelectItem value="Em andamento">
