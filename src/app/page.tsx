@@ -1,8 +1,8 @@
 "use client"
 
-import { useEffect, useState } from "react";
-import { useFetch } from "@/hooks/useFetch";
-import { mutate } from "swr";
+import { useEffect } from "react";
+import { useAtom } from "jotai";
+import { filtersAtom, taskAtom } from "./Atoms";
 import { tasksProps } from "./types/Types";
 import { DataTable } from "./tasks/data-table";
 import { columns } from "./tasks/columns";
@@ -11,9 +11,7 @@ import { CiCalendarDate, CiSearch } from "react-icons/ci";
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
@@ -22,48 +20,38 @@ import SideBar from "@/components/Sidebar";
 import AddTaskModal from "@/components/AddTaskModal";
 import Loading from "@/components/Loading";
 
-interface FiltersProps{
-  search: string,
-  priority: string | null,
-  status: string | null,
-  date: string | null
-}
-
 export default function Home() {
-  const { data, error, isLoading } = useFetch('http://localhost:3000/tarefas');
-  const [ allData, setAllData ] = useState<tasksProps[]>([]);
-  const [ filters, setFilters ] = useState<FiltersProps>({
-    search: '',
-    priority: 'Todos',
-    status: 'Todos',
-    date: null
-  });
+  const [ atomData, setAtomData ] = useAtom( taskAtom );
+  const [ filters, setFilters ] = useAtom( filtersAtom );
 
   useEffect(() => {
-    if(data != undefined){
-      setAllData(data);
-    }
-    
-    mutate( 'http://localhost:3000/tarefas' );
+    const fetchTasks = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/tarefas');
+        const data = await response.json();
 
-  },[data, allData]);
+        setAtomData({ task: data, loading: false, error:null });
+      } catch (error) {
+        console.log('Houve um problema com o fetch dos dados', error)
+        setAtomData({ task: [], error: error, loading: false });
+      }
+    };
+    fetchTasks();
+  },[setAtomData]);
 
   function getNewDataAndSave(newData:tasksProps){   
-    setAllData([...allData, newData]);
+    setAtomData({ task: [...atomData.task, newData], loading: false, error: null });
   }
-
   
   const filteredArray = () => { 
 
     const normalizeToLowerCase = filters.search.toLowerCase();
-    const sensitiveDataBySearch = allData.filter( task => task.name.toLowerCase().includes( normalizeToLowerCase ) );
+    const sensitiveDataBySearch = atomData.task.filter( task => task.name?.toLowerCase().includes( normalizeToLowerCase ) );
     const sensitiveDataByPriority = filters.priority != 'Todos' ? sensitiveDataBySearch.filter( taskFiltered => taskFiltered.priority === filters.priority ) : sensitiveDataBySearch;
     const sensitiveDataByStatus = filters.status != 'Todos' ? sensitiveDataByPriority.filter( taskFiltered => taskFiltered.status === filters.status ) : sensitiveDataByPriority;
 
-    const dataFiltered = [...sensitiveDataByStatus]
-
-    return dataFiltered
-  }
+    return sensitiveDataByStatus;
+  };
 
   const sensitiveDataByFilters = filteredArray();
   
@@ -71,8 +59,8 @@ export default function Home() {
     filteredArray();
   }, [filters]);  
 
-  if(isLoading) return <Loading/>
-  if(!isLoading && !error)
+  if(atomData.loading) return <Loading/>;
+  if(!atomData.loading && !atomData.error)
     return (
       <div className="flex bg-[#F5F6FA]">
         <SideBar/>
@@ -113,7 +101,7 @@ export default function Home() {
                   </Select>
                 </div>
                 <div>
-                <Select onValueChange={(value) => setFilters({...filters, status: value})}>
+                  <Select onValueChange={(value) => setFilters({...filters, status: value})}>
                     <SelectTrigger>
                       <SelectValue placeholder="Status" />
                     </SelectTrigger>

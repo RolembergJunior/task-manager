@@ -37,18 +37,8 @@ export default function AddTaskModal({ getNewDataAndSave }:TaskModalProps){
         status: '',
         checklist:[]
     });
-
-    let dateNow = new Date(Date.now());
-
     const url = 'http://localhost:3000/tarefas';
-
-    const options = {
-        method: 'POST',
-        headers: {
-            'content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    }
+    let dateNow = new Date(Date.now());
 
     function onHandleAddTask(){
         if(data.name != "", data.finalizationDate != "", data.status != ""){
@@ -64,11 +54,18 @@ export default function AddTaskModal({ getNewDataAndSave }:TaskModalProps){
                 checklist:[]
             });
 
-
-            fetch(url, options)
-            .then(response => response.json())
-            .catch(error => console.error('ERRO:',error))
-
+            try {
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                }).then( response => response.json() );
+                
+            } catch (error) {
+                console.error( 'Hoube um erro ao adicionar uma task', error );
+            }
         } else
         alert('Adicione o nome, a data de finalização e o status da tarefa')
     }

@@ -1,20 +1,22 @@
 {
   "tarefas": [
     {
-      "name": "Ajustar o relatório Gerencial da Passarelli",
-      "description": "Chamar um dos DEV's para realizar esses ajustes",
-      "responsible": "Rolemberg Junior",
-      "creationDate": "05/06/2024",
-      "finalizationDate": "2024-06-14",
-      "priority": "MÉDIA PRIORIDADE",
-      "status": "Fazer",
-      "folder": null,
-      "checklist": [
-        {
-          "name": "CRIAR CHECKLIST",
-          "isCheck": false
-        }
-      ],
+      "dataTask": {
+        "name": "Ajustar o relatório Gerencial da Passarelli",
+        "description": "Chamar um dos DEV's para realizar esses ajustes",
+        "responsible": "Rolemberg Junior",
+        "creationDate": "05/06/2024",
+        "finalizationDate": "2024-06-14",
+        "priority": "MÉDIA PRIORIDADE",
+        "folder": null,
+        "status": "Fazer",
+        "checklist": [
+          {
+            "name": "CRIAR CHECKLIST",
+            "isCheck": false
+          }
+        ]
+      },
       "id": "f4d7"
     },
     {
@@ -71,73 +73,6 @@
       "id": "54f5"
     },
     {
-      "name": "Card para teste de CheckBox",
-      "description": "Preciso criar chekcbox e ajustar no código a condição de verificação se ela foi checkada(TRUE) ou não(FALSE) ",
-      "responsible": "Rolemberg Junior",
-      "creationDate": "17/06/2024",
-      "finalizationDate": "2024-06-18",
-      "priority": "MÉDIA PRIORIDADE",
-      "status": "Em andamento",
-      "folder": null,
-      "checklist": [
-        {
-          "name": "555555555555555555555",
-          "isCheck": false
-        },
-        {
-          "name": "123123123123",
-          "isCheck": false
-        },
-        {
-          "name": "1231231231",
-          "isCheck": false
-        },
-        {
-          "name": "222222222222222222",
-          "isCheck": false
-        },
-        {
-          "name": "asdasdasdasd",
-          "isCheck": false
-        },
-        [
-          {
-            "0": {
-              "0": {
-                "0": {
-                  "0": {
-                    "name": "asdasdasd",
-                    "isCheck": true
-                  },
-                  "1": {
-                    "name": "asdasdasd",
-                    "isCheck": false
-                  },
-                  "isCheck": true
-                },
-                "isCheck": true
-              },
-              "isCheck": true
-            },
-            "isCheck": true
-          }
-        ]
-      ],
-      "id": "a38d"
-    },
-    {
-      "name": "Ajustar dyamic columns na ordenação correta",
-      "description": "O dataset está ordenando pela \"SEQ\" dos setores. Revisar a ordenação dos setores na tbl",
-      "responsible": "Rolemberg Junior",
-      "creationDate": "17/06/2024",
-      "finalizationDate": "2024-06-17",
-      "priority": "ALTA PRIORIDADE",
-      "status": "Concluída",
-      "folder": null,
-      "checklist": [],
-      "id": "7a32"
-    },
-    {
       "name": "Qual banco de dados escolher quando for subir pra VERCEL",
       "description": "MongoDB, SQL Lite, PostGreSQL ou SupaBase ",
       "responsible": "Rolemberg Junior",
@@ -148,18 +83,6 @@
       "folder": null,
       "checklist": [],
       "id": "9253"
-    },
-    {
-      "id": "e7a1",
-      "name": "Criar um documento para o Saba dos filtros e os componentes sensibilizados",
-      "description": "Criar um mapa mental ou ppt",
-      "responsible": "Rolemberg Junior",
-      "creationDate": "21/06/2024",
-      "finalizationDate": "2024-06-21",
-      "priority": "ALTA PRIORIDADE",
-      "folder": null,
-      "status": "Fazer",
-      "checklist": []
     },
     {
       "id": "ac7d",
@@ -174,28 +97,32 @@
       "checklist": []
     },
     {
-      "id": "f20d",
-      "name": "Validar as alterações do relatório Gerencial da Passarelli",
-      "description": "Validar com o Jojo",
+      "id": "a36d",
+      "name": "qweqweqw",
+      "description": "eqweqwe",
       "responsible": "Rolemberg Junior",
-      "creationDate": "21/06/2024",
-      "finalizationDate": "2024-06-21",
-      "priority": "ALTA PRIORIDADE",
-      "folder": null,
-      "status": "Em andamento",
-      "checklist": []
-    },
-    {
-      "id": "1ee8",
-      "name": "Mostrar a nova tela criada para o pessoal na dayli",
-      "description": "Validar com o Jojo",
-      "responsible": "Rolemberg Junior",
-      "creationDate": "21/06/2024",
-      "finalizationDate": "2024-06-21",
+      "creationDate": "27/06/2024",
+      "finalizationDate": "2024-06-28",
       "priority": "ALTA PRIORIDADE",
       "folder": null,
       "status": "Fazer",
       "checklist": []
+    },
+    {
+      "name": "TESTANDO",
+      "description": "asdasd",
+      "responsible": "Rolemberg Junior",
+      "creationDate": "27/06/2024",
+      "finalizationDate": "2024-06-11",
+      "priority": "ALTA PRIORIDADE",
+      "status": "Não iniciado",
+      "folder": null,
+      "checklist": [],
+      "id": "6ff0"
+    },
+    {
+      "dataTask": {},
+      "id": "299b"
     }
   ]
 }

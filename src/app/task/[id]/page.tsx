@@ -17,7 +17,7 @@ import { format } from 'date-fns';
 
 
 export default function Task(){
-    const [ dataProps, setDataProps ] = useState<tasksProps>(
+    const [ dataTask, setDataTask ] = useState<tasksProps>(
         {
             name: '',
             description:'',
@@ -39,10 +39,10 @@ export default function Task(){
     
 
     function verifyDateAndStylize(){
-        if( dataProps.creationDate != undefined && dataProps.finalizationDate ){
+        if( dataTask.creationDate != undefined && dataTask.finalizationDate ){
 
             let currentDate = new Date( format(Date.now(), 'yyyy-MM-dd') );
-            let inputedDate = new Date( dataProps?.finalizationDate );
+            let inputedDate = new Date( dataTask?.finalizationDate );
     
                     if( currentDate.getTime() === inputedDate.getTime() ){
                           return <div className="bg-orange-600 w-3 h-3 mx-auto rounded-full" />
@@ -60,8 +60,7 @@ export default function Task(){
         verifyDateAndStylize();
 
         if( !error && data != undefined){
-            
-            setDataProps(
+            setDataTask(
                 {
                     name: data.name ,
                     description:data.description ,
@@ -102,15 +101,15 @@ export default function Task(){
                 "content-type": "application/json"
                 },
                 body: JSON.stringify({
-                    "name": dataProps.name,
-                    "description": dataProps.description,
-                    "responsible": dataProps.responsible, 
-                    "creationDate": dataProps.creationDate,
-                    "finalizationDate": dataProps.finalizationDate,
-                    "priority": dataProps.priority,
-                    "status": dataProps.status,
-                    "folder": dataProps.folder,
-                    "checklist": dataProps.checklist
+                    "name": dataTask.name,
+                    "description": dataTask.description,
+                    "responsible": dataTask.responsible, 
+                    "creationDate": dataTask.creationDate,
+                    "finalizationDate": dataTask.finalizationDate,
+                    "priority": dataTask.priority,
+                    "status": dataTask.status,
+                    "folder": dataTask.folder,
+                    "checklist": dataTask.checklist
                 })
             })
             .then( response => response.json() )
@@ -122,15 +121,15 @@ export default function Task(){
     useEffect(() => {
         onEditTask();
     }, [
-            dataProps.name, 
-            dataProps.description, 
-            dataProps.responsible, 
-            dataProps.creationDate, 
-            dataProps.finalizationDate, 
-            dataProps.priority, 
-            dataProps.status, 
-            dataProps.folder, 
-            dataProps.checklist
+            dataTask.name, 
+            dataTask.description, 
+            dataTask.responsible, 
+            dataTask.creationDate, 
+            dataTask.finalizationDate, 
+            dataTask.priority, 
+            dataTask.status, 
+            dataTask.folder, 
+            dataTask.checklist
         ]);
 
 
@@ -185,17 +184,17 @@ export default function Task(){
                                     {verifyDateAndStylize()}
                                 </div>
                                 <textarea 
-                                    onChange={(e) => setDataProps({ ...dataProps, name: e.target.value })}
-                                    value={dataProps.name} 
+                                    onChange={(e) => setDataTask({ ...dataTask, name: e.target.value })}
+                                    value={dataTask.name} 
                                     className="bg-transparent h-10 w-full text-3xl font-semibold focus:outline-none resize-none overflow-auto" 
                                 />
                             </div>
                             <div className="flex items-center gap-6">
                                 <div>
                                     <span className="font-medium text-black/50">Responsável</span>
-                                    <Select onValueChange={(value) => setDataProps({ ...dataProps, responsible: value })}>
+                                    <Select onValueChange={(value) => setDataTask({ ...dataTask, responsible: value })}>
                                         <SelectTrigger className="w-34 border-none focus:outline-none">
-                                            <SelectValue placeholder={dataProps.responsible} />
+                                            <SelectValue placeholder={dataTask.responsible} />
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
@@ -210,22 +209,22 @@ export default function Task(){
                                 </div>
                                 <div>
                                     <span className="font-medium text-black/50">Data de criação</span>
-                                    <p className="">{dataProps.creationDate}</p>
+                                    <p className="">{dataTask.creationDate}</p>
                                 </div>
                                 <div>
                                     <span className="font-medium text-black/50">Data de finalização</span>
                                     <Input 
-                                        onChange={(e) => setDataProps({ ...dataProps, finalizationDate: e.target.value })}
+                                        onChange={(e) => setDataTask({ ...dataTask, finalizationDate: e.target.value })}
                                         type="date" 
                                         className="border-none focus:outline-none"
-                                        value={dataProps.finalizationDate} 
+                                        value={dataTask.finalizationDate} 
                                     />
                                 </div>
                                 <div>
                                     <span className="font-medium text-black/50">Prioridade</span>
-                                    <Select onValueChange={(value) => setDataProps({ ...dataProps, priority: value })}>
+                                    <Select onValueChange={(value) => setDataTask({ ...dataTask, priority: value })}>
                                         <SelectTrigger className="w-34 border-none ">
-                                            <SelectValue placeholder={dataProps.priority} />
+                                            <SelectValue placeholder={dataTask.priority} />
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
@@ -238,9 +237,9 @@ export default function Task(){
                                 </div>
                                 <div>
                                     <span className="font-medium text-black/50">Status</span>
-                                    <Select onValueChange={(value) => setDataProps({ ...dataProps, status: value })} >
+                                    <Select onValueChange={(value) => setDataTask({ ...dataTask, status: value })} >
                                         <SelectTrigger className="w-34 border-none">
-                                            <SelectValue placeholder={dataProps.status} />
+                                            <SelectValue placeholder={dataTask.status} />
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
@@ -255,8 +254,8 @@ export default function Task(){
                                 </div>
                             </div>
                             <textarea  
-                                value={ dataProps.description }
-                                onChange={(e) => setDataProps({ ...dataProps, description: e.target.value })}
+                                value={ dataTask.description }
+                                onChange={(e) => setDataTask({ ...dataTask, description: e.target.value })}
                                 placeholder="Digite uma descrição para a tarefa"    
                                 className="bg-[#F5F6FA] w-full h-10 rounded-md focus:h-52 transition-all duration-300 outline-none p-2 resize-none" 
                             />
@@ -269,7 +268,7 @@ export default function Task(){
                                     <FaPlus />
                                 </div>
                             </div>
-                            {dataProps.checklist?.length || isOpenInput ? (
+                            {dataTask.checklist?.length || isOpenInput ? (
                                 <div className="bg-[#F5F6FA] rounded-lg p-3 max-h-52 overflow-auto scrollbar-thin scrollbar-thumb-black scrollbar-track-white" >
                                     {isOpenInput 
                                         ? (
@@ -284,7 +283,7 @@ export default function Task(){
                                                         setInputText('');
                                                         setIsOpenInput(false);
 
-                                                        setDataProps({ ...dataProps, checklist: [ { name: inputText, isCheck: false }, ...dataProps.checklist?.map( item => item ) ] })
+                                                        setDataTask({ ...dataTask, checklist: [ { name: inputText, isCheck: false }, ...dataTask.checklist?.map( item => item ) ] })
                                                     }
                                                 }}
                                                 >
@@ -293,7 +292,7 @@ export default function Task(){
                                             </div>
                                         ) 
                                         : null}
-                                    {dataProps.checklist?.map( ( item, index ) => (
+                                    {dataTask.checklist?.map( ( item, index ) => (
                                     <div key={index} className="flex items-center justify-between w-full border-b border-black/10">
                                         { item.isCheck 
                                             ?   (
@@ -306,9 +305,9 @@ export default function Task(){
                                             <Input 
                                                 checked={ item.isCheck ? true : false } 
                                                 onClick={() => {
-                                                    const updateItems = dataProps.checklist.map( items => items.name === item.name ? {...item, isCheck: !item.isCheck } : items );
+                                                    const updateItems = dataTask.checklist.map( items => items.name === item.name ? {...item, isCheck: !item.isCheck } : items );
 
-                                                    setDataProps({ ...dataProps, checklist: updateItems });
+                                                    setDataTask({ ...dataTask, checklist: updateItems });
                                             }} 
                                             type="checkbox" 
                                             className="w-5"

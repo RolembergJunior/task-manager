@@ -66,7 +66,7 @@ export default function SideBar(){
                         className={`${isDark ? "bg-black" : "bg-transparent"}  flex items-center gap-2 p-4 rounded-md hover:cursor-pointer`} 
                     >
                         <IoMoonOutline />
-                        <p>Escuro</p>
+                        <p className={` ${isDark ? "text-white" : null} z-10 `}>Escuro</p>
                     </div>
                 </div>
             </div>
