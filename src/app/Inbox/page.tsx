@@ -9,16 +9,19 @@ import { HiMagnifyingGlass } from "react-icons/hi2";
 import MenuFilter from "./components/MenuFilters";
 import SideBar from "@/components/Sidebar";
 import Loading from "@/components/Loading";
+import { useAtom } from "jotai";
+import { taskAtom } from "../Atoms";
 
 export default function Inbox(){
-  const { data, error, isLoading } = useFetch('http://localhost:3000/tarefas');
+  // const { data, error, isLoading } = useFetch('http://localhost:3000/tarefas');
+  const [atomData, setAtomData] = useAtom( taskAtom );
   const [ allTasks, setAllTasks ] = useState<tasksProps[]>([]);
 
-  console.log(isLoading, error, ' DADOS')
+  console.log(atomData.task, ' DADOS')
 
 
-  if(isLoading) return <Loading/>  
-  if(!error && !isLoading)  
+  // if(isLoading) return <Loading/>  
+  // if(!error && !isLoading)  
     return(
         <div className="flex">
           <SideBar/>

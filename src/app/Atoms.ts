@@ -1,4 +1,5 @@
 import { atom } from "jotai";
+import { atomWithStorage } from 'jotai/utils'
 import { tasksProps } from "./types/Types";
 
 interface TaskState {
@@ -26,3 +27,5 @@ export const filtersAtom = atom<FiltersProps>({
     status: 'Todos',
     date: null
   });
+
+export const darkModeAtom = atomWithStorage( 'dark', false )

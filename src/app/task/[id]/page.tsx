@@ -14,6 +14,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 import { Input } from "@/components/ui/input";
 import { tasksProps } from "@/app/types/Types";
 import { format } from 'date-fns';
+import { useTheme } from "next-themes";
 
 
 export default function Task(){
@@ -32,6 +33,7 @@ export default function Task(){
     );
     const [isOpenInput, setIsOpenInput] = useState(false);
     const [inputText, setInputText] = useState('');
+    const { theme } = useTheme();
     const route = useRouter();
     const param = useParams();
     const url = `http://localhost:3000/tarefas/${param.id}`;
@@ -136,7 +138,7 @@ export default function Task(){
     if(isLoading && error) return <Loading/>
     if(!isLoading)
     return(
-        <div className="flex bg-[#F5F6FA]">
+        <div className="flex bg-[#F5F6FA] dark:bg-black/70">
             <SideBar/>
             <div className="w-[90%] my-auto">
                 <div className="bg-white mx-auto w-[95%] h-[95vh] rounded-xl shadow-md shadow-black/20 p-5">
@@ -179,7 +181,7 @@ export default function Task(){
                     </div>
                     <div className="flex">
                         <div className="mt-16 px-10 space-y-10 w-[70%]">
-                            <div className="flex items-center bg-[#F5F6FA] gap-4 p-2 rounded-md" >
+                            <div className="flex items-center bg-[#F5F6FA] dark:bg-black/20 gap-4 p-2 rounded-md" >
                                 <div className="w-3 h-3 mx-auto rounded-full">
                                     {verifyDateAndStylize()}
                                 </div>
@@ -216,14 +218,15 @@ export default function Task(){
                                     <Input 
                                         onChange={(e) => setDataTask({ ...dataTask, finalizationDate: e.target.value })}
                                         type="date" 
+                                        color="white"
                                         className="border-none focus:outline-none"
                                         value={dataTask.finalizationDate} 
                                     />
                                 </div>
                                 <div>
                                     <span className="font-medium text-black/50">Prioridade</span>
-                                    <Select onValueChange={(value) => setDataTask({ ...dataTask, priority: value })}>
-                                        <SelectTrigger className="w-34 border-none ">
+                                    <Select onValueChange={(value) => setDataTask({ ...dataTask, priority: value })} >
+                                        <SelectTrigger className="w-34 border-none " color="white">
                                             <SelectValue placeholder={dataTask.priority} />
                                         </SelectTrigger>
                                         <SelectContent>
@@ -238,7 +241,7 @@ export default function Task(){
                                 <div>
                                     <span className="font-medium text-black/50">Status</span>
                                     <Select onValueChange={(value) => setDataTask({ ...dataTask, status: value })} >
-                                        <SelectTrigger className="w-34 border-none">
+                                        <SelectTrigger className="w-34 border-none" color="white">
                                             <SelectValue placeholder={dataTask.status} />
                                         </SelectTrigger>
                                         <SelectContent>
@@ -256,6 +259,7 @@ export default function Task(){
                             <textarea  
                                 value={ dataTask.description }
                                 onChange={(e) => setDataTask({ ...dataTask, description: e.target.value })}
+                                color={`${ theme === 'dark' ? 'white' : 'default' }`}
                                 placeholder="Digite uma descrição para a tarefa"    
                                 className="bg-[#F5F6FA] w-full h-10 rounded-md focus:h-52 transition-all duration-300 outline-none p-2 resize-none" 
                             />

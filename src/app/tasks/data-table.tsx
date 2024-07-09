@@ -48,11 +48,11 @@ import Loading from "@/components/Loading";
     if(data === undefined) return <Loading/>
     if(data != undefined)
     return(
-        <div className="bg-white rounded-md border w-[90%] mx-auto my-5">
+        <div className="bg-white dark:bg-black/80 rounded-md border w-[90%] mx-auto my-5">
             <Table>
                 <TableHeader>
                     {table?.getHeaderGroups().map( (headerGroup) => (
-                        <TableRow key={headerGroup.id}>
+                        <TableRow className="dark:text-white/50" key={headerGroup.id}>
                             {headerGroup.headers.map( (headerTable) => {
                                 return(
                                     <TableHead key={headerTable.id} >
@@ -74,7 +74,7 @@ import Loading from "@/components/Loading";
                             <TableRow onClick={() => onHandleClickRow(row.original.id)} key={row.id} data-state={row.getIsSelected() && "selected"}>
                                 {row.getVisibleCells().map((cell) => (
                                     <TableCell 
-                                        className="hover:cursor-pointer" 
+                                        className="dark:text-white hover:cursor-pointer" 
                                         key={cell.id} 
                                     >
                                         {flexRender(cell.column.columnDef.cell, 
@@ -85,7 +85,7 @@ import Loading from "@/components/Loading";
                         ))
                     ) : (
                         <TableRow>
-                            <TableCell colSpan={columns.length} className="h-24 text-center">
+                            <TableCell colSpan={columns.length} className="dark:text-white/50 h-24 text-center">
                                 Sem resultados.
                             </TableCell>
                         </TableRow>

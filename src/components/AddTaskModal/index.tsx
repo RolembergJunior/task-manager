@@ -72,12 +72,12 @@ export default function AddTaskModal({ getNewDataAndSave }:TaskModalProps){
 
     return(
         <Dialog>
-                <DialogTrigger>
+                <DialogTrigger color='white' >
                   <Button>Adicionar Tarefa</Button>
                 </DialogTrigger>
-                <DialogContent>
+                <DialogContent className='dark:bg-black/80'>
                   <DialogHeader className='space-y-3'>
-                    <DialogTitle className='text-center'>TAREFA</DialogTitle>
+                    <DialogTitle className='text-center dark:text-white'>TAREFA</DialogTitle>
                   </DialogHeader>
                     <div className='space-y-3'>
                         <div className='space-y-3'>

@@ -1,8 +1,7 @@
 "use client"
 
-import { useEffect } from "react";
-import { useAtom } from "jotai";
-import { filtersAtom, taskAtom } from "./Atoms";
+import { useEffect, useState } from "react";
+import { useFetch } from "@/hooks/useFetch";
 import { tasksProps } from "./types/Types";
 import { DataTable } from "./tasks/data-table";
 import { columns } from "./tasks/columns";
@@ -19,39 +18,53 @@ import { Button } from "@/components/ui/button";
 import SideBar from "@/components/Sidebar";
 import AddTaskModal from "@/components/AddTaskModal";
 import Loading from "@/components/Loading";
+import { mutate } from "swr";
+import { useTheme } from "next-themes";
+
+
+interface FiltersProps{
+  search: string,
+  priority: string | null,
+  status: string | null,
+  date: string | null
+}
 
 export default function Home() {
-  const [ atomData, setAtomData ] = useAtom( taskAtom );
-  const [ filters, setFilters ] = useAtom( filtersAtom );
+  const { data, error, isLoading } = useFetch('http://localhost:3000/tarefas');
+  const [ allData, setAllData ] = useState<tasksProps[]>([]);
+  const [ filters, setFilters ] = useState<FiltersProps>({
+    search: '',
+    priority: 'Todos',
+    status: 'Todos',
+    date: null
+  });
+  const { theme, setTheme } = useTheme();
+
 
   useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const response = await fetch('http://localhost:3000/tarefas');
-        const data = await response.json();
+    if(data != undefined){
+      setAllData(data);
+    }
+    mutate( 'http://localhost:3000/tarefas' );
 
-        setAtomData({ task: data, loading: false, error:null });
-      } catch (error) {
-        console.log('Houve um problema com o fetch dos dados', error)
-        setAtomData({ task: [], error: error, loading: false });
-      }
-    };
-    fetchTasks();
-  },[setAtomData]);
+  },[data, allData]);
 
   function getNewDataAndSave(newData:tasksProps){   
-    setAtomData({ task: [...atomData.task, newData], loading: false, error: null });
+    setAllData([...allData, newData]);
   }
+
   
   const filteredArray = () => { 
 
     const normalizeToLowerCase = filters.search.toLowerCase();
-    const sensitiveDataBySearch = atomData.task.filter( task => task.name?.toLowerCase().includes( normalizeToLowerCase ) );
+    const sensitiveDataBySearch = allData.filter( task => task.name?.toLowerCase().includes( normalizeToLowerCase ) );
     const sensitiveDataByPriority = filters.priority != 'Todos' ? sensitiveDataBySearch.filter( taskFiltered => taskFiltered.priority === filters.priority ) : sensitiveDataBySearch;
     const sensitiveDataByStatus = filters.status != 'Todos' ? sensitiveDataByPriority.filter( taskFiltered => taskFiltered.status === filters.status ) : sensitiveDataByPriority;
 
-    return sensitiveDataByStatus;
-  };
+    const dataFiltered = [...sensitiveDataByStatus]
+
+    return dataFiltered
+  }
 
   const sensitiveDataByFilters = filteredArray();
   
@@ -59,13 +72,13 @@ export default function Home() {
     filteredArray();
   }, [filters]);  
 
-  if(atomData.loading) return <Loading/>;
-  if(!atomData.loading && !atomData.error)
+  if(isLoading && theme != localStorage.getItem( 'theme' )) return <Loading/>;
+  if(!isLoading && !error)
     return (
-      <div className="flex bg-[#F5F6FA]">
+      <div className="flex bg-[#F5F6FA] dark:bg-black/20">
         <SideBar/>
           <div className="w-[90%]">
-          <div className="flex items-center justify-between bg-white border border-black/10 w-full h-20 p-4">
+          <div className="flex items-center justify-between bg-white dark:bg-black/70 border border-black/10 w-full h-20 p-4">
             <div className="flex items-center gap-3">
               <h1 className="text-xl font-semibold">Todas as Tarefas</h1>
               <div className="relative flex items-center">
