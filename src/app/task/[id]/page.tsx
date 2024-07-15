@@ -138,10 +138,10 @@ export default function Task(){
     if(isLoading && error) return <Loading/>
     if(!isLoading)
     return(
-        <div className="flex bg-[#F5F6FA] dark:bg-black/70">
+        <div className="flex bg-[#F5F6FA] dark:bg-black/20">
             <SideBar/>
             <div className="w-[90%] my-auto">
-                <div className="bg-white mx-auto w-[95%] h-[95vh] rounded-xl shadow-md shadow-black/20 p-5">
+                <div className="bg-white dark:bg-black/70 mx-auto w-[95%] h-[95vh] rounded-xl shadow-md shadow-black/20 p-5">
                     <div className="flex justify-between">
                         <BiLeftArrowAlt 
                             onClick={() => route.push('/')} 
@@ -181,19 +181,19 @@ export default function Task(){
                     </div>
                     <div className="flex">
                         <div className="mt-16 px-10 space-y-10 w-[70%]">
-                            <div className="flex items-center bg-[#F5F6FA] dark:bg-black/20 gap-4 p-2 rounded-md" >
+                            <div className="flex items-center bg-[#F5F6FA] dark:bg-black/10 gap-4 p-2 rounded-md" >
                                 <div className="w-3 h-3 mx-auto rounded-full">
                                     {verifyDateAndStylize()}
                                 </div>
                                 <textarea 
                                     onChange={(e) => setDataTask({ ...dataTask, name: e.target.value })}
                                     value={dataTask.name} 
-                                    className="bg-transparent h-10 w-full text-3xl font-semibold focus:outline-none resize-none overflow-auto" 
+                                    className="bg-transparent dark:bg-black/50 h-10 w-full text-3xl font-semibold focus:outline-none resize-none overflow-auto" 
                                 />
                             </div>
                             <div className="flex items-center gap-6">
                                 <div>
-                                    <span className="font-medium text-black/50">Responsável</span>
+                                    <span className="font-medium text-black/50 dark:text-white/70">Responsável</span>
                                     <Select onValueChange={(value) => setDataTask({ ...dataTask, responsible: value })}>
                                         <SelectTrigger className="w-34 border-none focus:outline-none">
                                             <SelectValue placeholder={dataTask.responsible} />
@@ -210,11 +210,11 @@ export default function Task(){
                                     </Select>
                                 </div>
                                 <div>
-                                    <span className="font-medium text-black/50">Data de criação</span>
+                                    <span className="font-medium text-black/50 dark:text-white/70">Data de criação</span>
                                     <p className="">{dataTask.creationDate}</p>
                                 </div>
                                 <div>
-                                    <span className="font-medium text-black/50">Data de finalização</span>
+                                    <span className="font-medium text-black/50 dark:text-white/70">Data de finalização</span>
                                     <Input 
                                         onChange={(e) => setDataTask({ ...dataTask, finalizationDate: e.target.value })}
                                         type="date" 
@@ -224,7 +224,7 @@ export default function Task(){
                                     />
                                 </div>
                                 <div>
-                                    <span className="font-medium text-black/50">Prioridade</span>
+                                    <span className="font-medium text-black/50 dark:text-white/70">Prioridade</span>
                                     <Select onValueChange={(value) => setDataTask({ ...dataTask, priority: value })} >
                                         <SelectTrigger className="w-34 border-none " color="white">
                                             <SelectValue placeholder={dataTask.priority} />
@@ -239,7 +239,7 @@ export default function Task(){
                                     </Select>
                                 </div>
                                 <div>
-                                    <span className="font-medium text-black/50">Status</span>
+                                    <span className="font-medium text-black/50 dark:text-white/70">Status</span>
                                     <Select onValueChange={(value) => setDataTask({ ...dataTask, status: value })} >
                                         <SelectTrigger className="w-34 border-none" color="white">
                                             <SelectValue placeholder={dataTask.status} />
@@ -261,7 +261,7 @@ export default function Task(){
                                 onChange={(e) => setDataTask({ ...dataTask, description: e.target.value })}
                                 color={`${ theme === 'dark' ? 'white' : 'default' }`}
                                 placeholder="Digite uma descrição para a tarefa"    
-                                className="bg-[#F5F6FA] w-full h-10 rounded-md focus:h-52 transition-all duration-300 outline-none p-2 resize-none" 
+                                className="bg-[#F5F6FA] dark:bg-black/50 w-full h-10 rounded-md focus:h-52 transition-all duration-300 outline-none p-2 resize-none" 
                             />
                             <div className="space-y-4">
                             <div className="flex items-center justify-between">
@@ -272,8 +272,8 @@ export default function Task(){
                                     <FaPlus />
                                 </div>
                             </div>
-                            {dataTask.checklist?.length || isOpenInput ? (
-                                <div className="bg-[#F5F6FA] rounded-lg p-3 max-h-52 overflow-auto scrollbar-thin scrollbar-thumb-black scrollbar-track-white" >
+                            {dataTask.checklist?.length || isOpenInput ? 
+                                <div className="bg-[#F5F6FA] dark:bg-black/20 rounded-lg p-3 max-h-52 overflow-auto scrollbar-thin scrollbar-thumb-black scrollbar-track-white" >
                                     {isOpenInput 
                                         ? (
                                             <div className="flex gap-2">
@@ -282,55 +282,56 @@ export default function Task(){
                                                     type='text' 
                                                     placeholder='Digite aqui...' 
                                                 />
-                                                <Button onClick={() => {
-                                                    if(inputText != ''){
-                                                        setInputText('');
-                                                        setIsOpenInput(false);
+                                                <Button 
+                                                    onClick={() => {
+                                                        if(inputText != ''){
+                                                            setInputText('');
+                                                            setIsOpenInput(false);
 
-                                                        setDataTask({ ...dataTask, checklist: [ { name: inputText, isCheck: false }, ...dataTask.checklist?.map( item => item ) ] })
-                                                    }
-                                                }}
+                                                            setDataTask({ ...dataTask, checklist: [ { name: inputText, isCheck: false }, ...dataTask.checklist?.map( item => item ) ] })
+                                                        }
+                                                    }}
                                                 >
                                                     Salvar
                                                 </Button>
                                             </div>
                                         ) 
                                         : null}
-                                    {dataTask.checklist?.map( ( item, index ) => (
-                                    <div key={index} className="flex items-center justify-between w-full border-b border-black/10">
-                                        { item.isCheck 
-                                            ?   (
-                                                    <div className='relative'>
-                                                        <label>{item.name}</label>
-                                                        <hr className='absolute top-[43%] bg-black w-full h-[2px]' />
-                                                    </div>
-                                                ) 
-                                            :   <label>{item.name}</label> }
+                                    {dataTask.checklist?.map( ( item, indexItem ) => (
+                                        <div key={indexItem} className="flex items-center justify-between w-full border-b border-black/10 dark:border-white/20">
+                                            { item.isCheck 
+                                                ?   (
+                                                        <div className='relative'>
+                                                            <label>{item.name}</label>
+                                                            <hr className='absolute top-[43%] bg-black dark:bg-white w-full h-[2px]' />
+                                                        </div>
+                                                    ) 
+                                                :   <label>{item.name}</label> }
                                             <Input 
-                                                checked={ item.isCheck ? true : false } 
-                                                onClick={() => {
-                                                    const updateItems = dataTask.checklist.map( items => items.name === item.name ? {...item, isCheck: !item.isCheck } : items );
+                                                    checked={ item.isCheck ? true : false } 
+                                                    onClick={() => {
+                                                        const updateItems = dataTask.checklist.map( (itemIsChecked, index) => itemIsChecked.name === item.name && index === indexItem ? {...item, isCheck: !item.isCheck } : itemIsChecked );
 
-                                                    setDataTask({ ...dataTask, checklist: updateItems });
-                                            }} 
-                                            type="checkbox" 
-                                            className="w-5"
-                                        /> 
-                                    </div>
-                                ))}
+                                                        setDataTask({ ...dataTask, checklist: updateItems });
+                                                    }} 
+                                                    type="checkbox" 
+                                                    className="w-5"
+                                            /> 
+                                        </div>
+                                    ))}
                                 </div>
-                            ) : null}
+                             : null}
                         </div>
                         </div>
                         <div className="mt-16 space-y-5 w-[20%] mx-auto h-full">
                             <h1 className="text-center text-xl font-semibold">Atividade</h1>
-                            <div className="bg-[#F5F6FA] h-[62vh] w-full rounded-md">
+                            <div className="bg-[#F5F6FA] dark:bg-black/50 h-[62vh] w-full rounded-md">
                                 <p className="text-center text-black/50"></p>
                             </div>
                             <div className="flex items-center justify-between gap-1">
                                 <textarea 
                                     placeholder="Digite aqui"
-                                    className="bg-[#F5F6FA] h-10 px-4 py-2 w-full resize-none focus:outline-none scrollbar-none"
+                                    className="bg-[#F5F6FA] dark:bg-black/50 h-10 px-4 py-2 w-full resize-none focus:outline-none scrollbar-none"
                                 />
                                 <Button>Enviar</Button>
                             </div>

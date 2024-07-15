@@ -75,7 +75,7 @@ export default function Home() {
   if(isLoading && theme != localStorage.getItem( 'theme' )) return <Loading/>;
   if(!isLoading && !error)
     return (
-      <div className="flex bg-[#F5F6FA] dark:bg-black/20">
+      <div className="flex bg-[#F5F6FA] dark:bg-black/20 transition-colors durantion-100">
         <SideBar/>
           <div className="w-[90%]">
           <div className="flex items-center justify-between bg-white dark:bg-black/70 border border-black/10 w-full h-20 p-4">

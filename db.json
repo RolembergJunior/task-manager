@@ -20,81 +20,33 @@
       "id": "f4d7"
     },
     {
-      "name": "Ajustar DASHBOARD DE FVS",
-      "description": "Conversar com a INDIE sobre os problemas dos fornecedores e responsáveis das NC's. As colunas referentes a esses filtros não estão sendo preenchidas corretamente e por isso os filtros não trazem nenhum dado no componente.",
-      "responsible": "Rolemberg Junior",
-      "creationDate": "12/06/2024",
-      "finalizationDate": "2024-06-14",
-      "priority": "ALTA PRIORIDADE",
-      "status": "Em andamento",
-      "folder": null,
-      "checklist": [
-        {
-          "name": "Filtro de 'RESPONSÁVEL' e 'FORNECEDOR' não estão sensibilizando os contadores de inspeções",
-          "isCheck": true
-        },
-        {
-          "name": "Verificar a lista de fornecedores",
-          "isCheck": true
-        },
-        {
-          "name": "Filtro de mês não está sensibilizando os contadores de NC's abertas",
-          "isCheck": true
-        },
-        {
-          "name": "Verificar o filtro de fornecedor e ranking",
-          "isCheck": true
-        },
-        {
-          "name": "Ordernar o tempo de médio de fechamento das fichas da maior pra menor",
-          "isCheck": true
-        },
-        {
-          "name": "Número de NC's abertas informadas np Dash não corresponde com a quantidade de NC's no modal",
-          "isCheck": true
-        },
-        {
-          "name": "Quando selecionado GERAL o DASH não carrega",
-          "isCheck": false
-        },
-        {
-          "name": "Trazer no modal de NC's o campo \"OBRA\" ",
-          "isCheck": true
-        },
-        {
-          "name": "Verificar o filtro de setor( sensibilizar pelo de ficha )",
-          "isCheck": true
-        },
-        {
-          "name": "Apresentar a lista de obras relacionadas com o usuário",
-          "isCheck": true
-        }
-      ],
-      "id": "54f5"
-    },
-    {
-      "name": "Qual banco de dados escolher quando for subir pra VERCEL",
-      "description": "MongoDB, SQL Lite, PostGreSQL ou SupaBase ",
-      "responsible": "Rolemberg Junior",
-      "creationDate": "18/06/2024",
-      "finalizationDate": "2024-06-30",
-      "priority": "MÉDIA PRIORIDADE",
-      "status": "Fazer",
-      "folder": null,
-      "checklist": [],
-      "id": "9253"
-    },
-    {
-      "id": "ac7d",
       "name": "Adicionar a atualização na tela de Análise de Relatórios",
       "description": "Adicionar uma coluna de tables/vw's que estão relacionadas nos datasets do relatórios ",
       "responsible": "Rolemberg Junior",
       "creationDate": "21/06/2024",
       "finalizationDate": "2024-06-30",
       "priority": "ALTA PRIORIDADE",
-      "folder": null,
       "status": "Fazer",
-      "checklist": []
+      "folder": null,
+      "checklist": [
+        {
+          "name": "asdasdasdasdasd",
+          "isCheck": false
+        },
+        {
+          "name": "asdasdasdasdasd",
+          "isCheck": false
+        },
+        {
+          "name": "asdasdasdasdasd",
+          "isCheck": false
+        },
+        {
+          "name": "asdasdasdasdasd",
+          "isCheck": false
+        }
+      ],
+      "id": "ac7d"
     },
     {
       "name": "qweqweqw",
@@ -105,7 +57,24 @@
       "priority": "ALTA PRIORIDADE",
       "status": "Fazer",
       "folder": null,
-      "checklist": [],
+      "checklist": [
+        {
+          "name": "TESTANDO O CHECKBOX",
+          "isCheck": false
+        },
+        {
+          "name": "TESTANDO O CHECKBOX",
+          "isCheck": false
+        },
+        {
+          "name": "TESTANDO O CHECKBOX",
+          "isCheck": false
+        },
+        {
+          "name": "TESTANDO O CHECKBOX",
+          "isCheck": false
+        }
+      ],
       "id": "a36d"
     },
     {
@@ -117,7 +86,20 @@
       "priority": "ALTA PRIORIDADE",
       "status": "Não iniciado",
       "folder": null,
-      "checklist": [],
+      "checklist": [
+        {
+          "name": "TESTANDO DE NOVO",
+          "isCheck": false
+        },
+        {
+          "name": "TESTANDO DE NOVO",
+          "isCheck": false
+        },
+        {
+          "name": "Testando,.....",
+          "isCheck": false
+        }
+      ],
       "id": "6ff0"
     },
     {

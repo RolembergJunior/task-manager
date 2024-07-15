@@ -19,7 +19,7 @@ export default function SideBar(){
     const { theme, setTheme } = useTheme();
 
     return(
-        <div className="flex flex-col justify-between bg-[#ffff] dark:bg-black/70 w-[15%] h-screen space-y-4 shadow-lg">
+        <div className="flex flex-col justify-between bg-[#ffff] dark:bg-black/70 w-[15%] h-screen space-y-4 shadow-lg transition-all">
             <div>
                 <div className=" flex items-center justify-between bg-white dark:bg-black/70 border-b p-5">
                     <div className="flex items-center gap-1">
@@ -38,7 +38,7 @@ export default function SideBar(){
                         <NavLink href="/Inbox" name="Sobre" icon={<FaInbox color="gray"/>}/>
                         <NavLink href="/dashboards" name="Dashboards" icon={<GiNetworkBars color="gray"/>}/>
                         <NavLink href="/reports" name="Relatórios" icon={<TbReportSearch color="gray"/>}/>
-                        <div className="flex items-center gap-3 px-3 py-2 hover:cursor-pointer hover:bg-[#F6F6F6] hover:rounded-lg transition-all">
+                        <div className="flex items-center gap-3 px-3 py-2 hover:cursor-pointer hover:bg-[#F6F6F6] hover:dark:bg-black hover:rounded-lg transition-all">
                             <FaRegFolder color="gray" />
                             <p className="text-[#5C5E64] dark:text-white/80 font-semibold">Pastas</p>
                         </div>
