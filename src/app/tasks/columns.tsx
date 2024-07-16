@@ -8,6 +8,7 @@ import { BsDashSquare } from "react-icons/bs";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
 import { parse,format } from 'date-fns';
 import { ArrowUpDown } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@radix-ui/react-tooltip";
 
 export type Tasks = {
     id: number,
@@ -30,11 +31,44 @@ export const columns: ColumnDef<Tasks>[] = [
             let finalizationDateStringToDate = new Date(props.cell.row.original.finalizationDate);
 
                 if( currentDate.getTime() === finalizationDateStringToDate.getTime() ){
-                      return <div className="bg-orange-600 w-3 h-3 mx-auto rounded-full" />
+                      return (
+                                <TooltipProvider>
+                                    <Tooltip>
+                                        <TooltipTrigger className="hover:cursor-default">
+                                            <div className="bg-orange-600 w-3 h-3 mx-auto rounded-full" /> 
+                                        </TooltipTrigger>
+                                        <TooltipContent sideOffset={10} className="bg-gray-600 text-white p-2 rounded-sm transition-all">
+                                            <p>Último dia</p>
+                                        </TooltipContent>
+                                    </Tooltip>
+                                </TooltipProvider>
+                        );
                   } else if( currentDate.getTime() < finalizationDateStringToDate.getTime() ){
-                      return <div className="bg-green-600 w-3 h-3 mx-auto rounded-full" />
+                      return (
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger className="hover:cursor-default">
+                                    <div className="bg-green-600 w-3 h-3 mx-auto rounded-full" /> 
+                                </TooltipTrigger>
+                                <TooltipContent sideOffset={10} className="bg-gray-600 text-white p-2 rounded-sm transition-all">
+                                    <p>No prazo</p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+                );
                   } else if( currentDate.getTime() > finalizationDateStringToDate.getTime() ){
-                      return <div className="bg-red-600 w-3 h-3 mx-auto rounded-full" />
+                    return (
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger className="hover:cursor-default">
+                                    <div className="bg-red-600 w-3 h-3 mx-auto rounded-full" /> 
+                                </TooltipTrigger>
+                                <TooltipContent sideOffset={10} className="bg-gray-600 text-white p-2 rounded-sm transition-all">
+                                    <p>Atrasado</p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+                );
                   } 
         }
     },

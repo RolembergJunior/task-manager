@@ -20,32 +20,15 @@
       "id": "f4d7"
     },
     {
-      "name": "Adicionar a atualização na tela de Análise de Relatórios",
-      "description": "Adicionar uma coluna de tables/vw's que estão relacionadas nos datasets do relatórios ",
-      "responsible": "Rolemberg Junior",
-      "creationDate": "21/06/2024",
-      "finalizationDate": "2024-06-30",
-      "priority": "ALTA PRIORIDADE",
-      "status": "Fazer",
+      "name": "",
+      "description": "",
+      "responsible": "",
+      "creationDate": "",
+      "finalizationDate": "",
+      "priority": "",
+      "status": "",
       "folder": null,
-      "checklist": [
-        {
-          "name": "asdasdasdasdasd",
-          "isCheck": false
-        },
-        {
-          "name": "asdasdasdasdasd",
-          "isCheck": false
-        },
-        {
-          "name": "asdasdasdasdasd",
-          "isCheck": false
-        },
-        {
-          "name": "asdasdasdasdasd",
-          "isCheck": false
-        }
-      ],
+      "checklist": [],
       "id": "ac7d"
     },
     {
@@ -105,6 +88,30 @@
     {
       "dataTask": {},
       "id": "299b"
+    },
+    {
+      "id": "4dc8",
+      "name": "Criar o filtro de idDatasets no Análise de relatórios ",
+      "description": "Criar um campo de filtro para idDatasets",
+      "responsible": "Rolemberg Junior",
+      "creationDate": "15/07/2024",
+      "finalizationDate": "2024-07-15",
+      "priority": "ALTA PRIORIDADE",
+      "folder": null,
+      "status": "Fazer",
+      "checklist": []
+    },
+    {
+      "id": "e98d",
+      "name": "Crair proc que libera relatórios por módulos",
+      "description": "Criar um campo de filtro para idDatasets",
+      "responsible": "Rolemberg Junior",
+      "creationDate": "15/07/2024",
+      "finalizationDate": "2024-07-19",
+      "priority": "MÉDIA PRIORIDADE",
+      "folder": null,
+      "status": "Não iniciado",
+      "checklist": []
     }
   ]
 }

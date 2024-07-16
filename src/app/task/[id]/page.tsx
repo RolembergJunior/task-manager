@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { tasksProps } from "@/app/types/Types";
 import { format } from 'date-fns';
 import { useTheme } from "next-themes";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@radix-ui/react-tooltip";
 
 
 export default function Task(){
@@ -46,16 +47,48 @@ export default function Task(){
             let currentDate = new Date( format(Date.now(), 'yyyy-MM-dd') );
             let inputedDate = new Date( dataTask?.finalizationDate );
     
-                    if( currentDate.getTime() === inputedDate.getTime() ){
-                          return <div className="bg-orange-600 w-3 h-3 mx-auto rounded-full" />
-                      } else if( currentDate.getTime() < inputedDate.getTime() ){
-                          return <div className="bg-green-600 w-3 h-3 mx-auto rounded-full" />
-                      } else if( currentDate.getTime() > inputedDate.getTime() ){
-                          return <div className="bg-red-600 w-3 h-3 mx-auto rounded-full" />
-                      } 
-            }
-
+            if( currentDate.getTime() === inputedDate.getTime() ){
+                return (
+                          <TooltipProvider>
+                              <Tooltip>
+                                  <TooltipTrigger className="hover:cursor-default">
+                                      <div className="bg-orange-600 w-3 h-3 mx-auto rounded-full" /> 
+                                  </TooltipTrigger>
+                                  <TooltipContent sideOffset={10} className="bg-gray-600 text-white p-2 rounded-sm transition-all">
+                                      <p>Último dia</p>
+                                  </TooltipContent>
+                              </Tooltip>
+                          </TooltipProvider>
+                  );
+            } else if( currentDate.getTime() < inputedDate.getTime() ){
+                return (
+                  <TooltipProvider>
+                      <Tooltip>
+                          <TooltipTrigger className="hover:cursor-default">
+                              <div className="bg-green-600 w-3 h-3 mx-auto rounded-full" /> 
+                          </TooltipTrigger>
+                          <TooltipContent sideOffset={10} className="bg-gray-600 text-white p-2 rounded-sm transition-all">
+                              <p>No prazo</p>
+                          </TooltipContent>
+                      </Tooltip>
+                  </TooltipProvider>
+                );
+            } else if( currentDate.getTime() > inputedDate.getTime() ){
+              return (
+                  <TooltipProvider>
+                      <Tooltip>
+                          <TooltipTrigger className="hover:cursor-default">
+                              <div className="bg-red-600 w-3 h-3 mx-auto rounded-full" /> 
+                          </TooltipTrigger>
+                          <TooltipContent sideOffset={10} className="bg-gray-600 text-white p-2 rounded-sm transition-all">
+                              <p>Atrasado</p>
+                          </TooltipContent>
+                      </Tooltip>
+                  </TooltipProvider>
+                );
+            } 
         }
+    }
 
 
     useEffect(() => {
@@ -135,7 +168,7 @@ export default function Task(){
         ]);
 
 
-    if(isLoading && error) return <Loading/>
+    if(isLoading && error && theme != localStorage.getItem( 'theme' )) return <Loading/>
     if(!isLoading)
     return(
         <div className="flex bg-[#F5F6FA] dark:bg-black/20">
@@ -182,7 +215,7 @@ export default function Task(){
                     <div className="flex">
                         <div className="mt-16 px-10 space-y-10 w-[70%]">
                             <div className="flex items-center bg-[#F5F6FA] dark:bg-black/10 gap-4 p-2 rounded-md" >
-                                <div className="w-3 h-3 mx-auto rounded-full">
+                                <div className="w-3 h-3 mx-auto rounded-full" >
                                     {verifyDateAndStylize()}
                                 </div>
                                 <textarea 
@@ -273,7 +306,7 @@ export default function Task(){
                                 </div>
                             </div>
                             {dataTask.checklist?.length || isOpenInput ? 
-                                <div className="bg-[#F5F6FA] dark:bg-black/20 rounded-lg p-3 max-h-52 overflow-auto scrollbar-thin scrollbar-thumb-black scrollbar-track-white" >
+                                <div className="bg-[#F5F6FA] dark:bg-black/50 rounded-lg p-3 max-h-52 overflow-auto scrollbar-thin scrollbar-thumb-black scrollbar-track-white" >
                                     {isOpenInput 
                                         ? (
                                             <div className="flex gap-2">
