@@ -114,13 +114,57 @@ export const columns: ColumnDef<Tasks>[] = [
         header: 'Prioridade',
         cell: ({ row }) => {
             if( row.original.priority === "BAIXA PRIORIDADE" ){
-                return <BsDashSquare className="ml-4" size={20} />
+                return (
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger className="hover:cursor-default">
+                                <BsDashSquare className="ml-4" size={20} />
+                            </TooltipTrigger>
+                            <TooltipContent sideOffset={10} className="bg-gray-600 text-white p-2 rounded-sm transition-all">
+                                <p>Baixa Prioridade</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                );
             } else if( row.original.priority === "MÉDIA PRIORIDADE"){
-                return <AiOutlineExclamationCircle className="ml-4" size={20} />
+                return (
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger className="hover:cursor-default">
+                                <AiOutlineExclamationCircle className="ml-4" size={20} />
+                            </TooltipTrigger>
+                            <TooltipContent sideOffset={10} className="bg-gray-600 text-white p-2 rounded-sm transition-all">
+                                <p>Média Prioridade</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                );
             } else if( row.original.priority === "ALTA PRIORIDADE" ) {
-                return <IoStarSharp className="ml-4" size={20}/>
+                return (
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger className="hover:cursor-default">
+                                <IoStarSharp className="ml-4" size={20}/>
+                            </TooltipTrigger>
+                            <TooltipContent sideOffset={10} className="bg-gray-600 text-white p-2 rounded-sm transition-all">
+                                <p>Alta Prioridade</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                );
             } else if( row.original.priority === "" )
-                return <BsDashSquare className="ml-4" size={20} />
+                return (
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger className="hover:cursor-default">
+                                <BsDashSquare className="ml-4" size={20} />
+                            </TooltipTrigger>
+                            <TooltipContent sideOffset={10} className="bg-gray-600 text-white p-2 rounded-sm transition-all">
+                                <p>Baixa Prioridade</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                );
             }
     },
     {

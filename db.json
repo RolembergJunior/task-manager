@@ -20,18 +20,6 @@
       "id": "f4d7"
     },
     {
-      "name": "",
-      "description": "",
-      "responsible": "",
-      "creationDate": "",
-      "finalizationDate": "",
-      "priority": "",
-      "status": "",
-      "folder": null,
-      "checklist": [],
-      "id": "ac7d"
-    },
-    {
       "name": "qweqweqw",
       "description": "eqweqwe",
       "responsible": "Rolemberg Junior",
@@ -40,24 +28,7 @@
       "priority": "ALTA PRIORIDADE",
       "status": "Fazer",
       "folder": null,
-      "checklist": [
-        {
-          "name": "TESTANDO O CHECKBOX",
-          "isCheck": false
-        },
-        {
-          "name": "TESTANDO O CHECKBOX",
-          "isCheck": false
-        },
-        {
-          "name": "TESTANDO O CHECKBOX",
-          "isCheck": false
-        },
-        {
-          "name": "TESTANDO O CHECKBOX",
-          "isCheck": false
-        }
-      ],
+      "checklist": [],
       "id": "a36d"
     },
     {

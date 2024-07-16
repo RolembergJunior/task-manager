@@ -16,6 +16,7 @@ import { tasksProps } from "@/app/types/Types";
 import { format } from 'date-fns';
 import { useTheme } from "next-themes";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@radix-ui/react-tooltip";
+import { IoIosClose } from "react-icons/io";
 
 
 export default function Task(){
@@ -340,16 +341,27 @@ export default function Task(){
                                                         </div>
                                                     ) 
                                                 :   <label>{item.name}</label> }
-                                            <Input 
-                                                    checked={ item.isCheck ? true : false } 
-                                                    onClick={() => {
-                                                        const updateItems = dataTask.checklist.map( (itemIsChecked, index) => itemIsChecked.name === item.name && index === indexItem ? {...item, isCheck: !item.isCheck } : itemIsChecked );
+                                            <div className="flex items-center gap-3">
+                                                <Input 
+                                                        checked={ item.isCheck ? true : false } 
+                                                        onClick={() => {
+                                                            const updateCheckboxItems = dataTask.checklist.map( (itemIsChecked, index) => index === indexItem ? {...item, isCheck: !item.isCheck } : itemIsChecked );
 
-                                                        setDataTask({ ...dataTask, checklist: updateItems });
-                                                    }} 
-                                                    type="checkbox" 
-                                                    className="w-5"
-                                            /> 
+                                                            setDataTask({ ...dataTask, checklist: updateCheckboxItems });
+                                                        }} 
+                                                        type="checkbox" 
+                                                        className="w-5"
+                                                /> 
+                                                <div 
+                                                    onClick={() => {
+                                                        const deleteItemCheckList = dataTask.checklist.filter( (_, index) =>  index != indexItem );
+
+                                                        setDataTask({ ...dataTask, checklist: deleteItemCheckList });
+                                                    }}
+                                                >
+                                                    <IoIosClose size={25} />
+                                                </div>
+                                            </div>
                                         </div>
                                     ))}
                                 </div>
