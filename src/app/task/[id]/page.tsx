@@ -175,7 +175,7 @@ export default function Task(){
         <div className="flex bg-[#F5F6FA] dark:bg-black/20">
             <SideBar/>
             <div className="w-[90%] my-auto">
-                <div className="bg-white dark:bg-black/70 mx-auto w-[95%] h-[95vh] rounded-xl shadow-md shadow-black/20 p-5">
+                <div className="bg-white dark:bg-[#1e293b] mx-auto w-[95%] h-[95vh] rounded-xl shadow-md shadow-black/20 p-5">
                     <div className="flex justify-between">
                         <BiLeftArrowAlt 
                             onClick={() => route.push('/')} 
@@ -215,14 +215,14 @@ export default function Task(){
                     </div>
                     <div className="flex">
                         <div className="mt-16 px-10 space-y-10 w-[70%]">
-                            <div className="flex items-center bg-[#F5F6FA] dark:bg-black/10 gap-4 p-2 rounded-md" >
+                            <div className="flex items-center bg-[#F5F6FA] dark:bg-black/50 gap-4 p-2 rounded-md" >
                                 <div className="w-3 h-3 mx-auto rounded-full" >
                                     {verifyDateAndStylize()}
                                 </div>
                                 <textarea 
                                     onChange={(e) => setDataTask({ ...dataTask, name: e.target.value })}
                                     value={dataTask.name} 
-                                    className="bg-transparent dark:bg-black/50 h-10 w-full text-3xl font-semibold focus:outline-none resize-none overflow-auto" 
+                                    className="bg-transparent h-10 w-full text-3xl font-semibold focus:outline-none resize-none overflow-auto" 
                                 />
                             </div>
                             <div className="flex items-center gap-6">

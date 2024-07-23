@@ -78,7 +78,7 @@ export default function Home() {
       <div className="flex bg-[#F5F6FA] dark:bg-black/20 transition-colors durantion-100">
         <SideBar/>
           <div className="w-[90%]">
-          <div className="flex items-center justify-between bg-white dark:bg-black/70 border border-black/10 w-full h-20 p-4">
+          <div className="flex items-center justify-between bg-white dark:bg-[#1e293b] border border-black/10 w-full h-20 p-4">
             <div className="flex items-center gap-3">
               <h1 className="text-xl font-semibold">Todas as Tarefas</h1>
               <div className="relative flex items-center">

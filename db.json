@@ -83,6 +83,51 @@
       "folder": null,
       "status": "Não iniciado",
       "checklist": []
+    },
+    {
+      "name": "Cronograma EAP Excel",
+      "description": "Criar tela de cronograma EAP para subir por excel",
+      "responsible": "Rolemberg Junior",
+      "creationDate": "19/07/2024",
+      "finalizationDate": "2024-07-19",
+      "priority": "ALTA PRIORIDADE",
+      "status": "Em andamento",
+      "folder": null,
+      "checklist": [
+        {
+          "name": "Quando criasse uma ocorrência ela aparece um campo acima",
+          "isCheck": true
+        },
+        {
+          "name": "Ajustar o período do relatório",
+          "isCheck": false
+        },
+        {
+          "name": "Validar o fluxo do código e as tabelas que são preenchidas, pois o campo de peso não está sendo atualizado quando subimos o excel",
+          "isCheck": true
+        },
+        {
+          "name": "Colunas de Fornecedor e Responsável não estão sendo preenchidas na planilha quando é feito o download do excel",
+          "isCheck": true
+        },
+        {
+          "name": "Incluir formatter de criação de novo serviço",
+          "isCheck": true
+        },
+        {
+          "name": "Os formatters da tela estão funcionando corretamente??",
+          "isCheck": true
+        },
+        {
+          "name": "Datas estão sendo atualizadas???",
+          "isCheck": true
+        },
+        {
+          "name": "Upload está funcionando???",
+          "isCheck": true
+        }
+      ],
+      "id": "1dc1"
     }
   ]
 }
