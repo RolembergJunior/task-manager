@@ -12,6 +12,7 @@ interface FiltersProps{
     search: string,
     priority: string | null,
     status: string | null,
+    folder: string | null,
     date: string | null
 }
 
@@ -25,6 +26,7 @@ export const filtersAtom = atom<FiltersProps>({
     search: '',
     priority: 'Todos',
     status: 'Todos',
+    folder: null,
     date: null
   });
 

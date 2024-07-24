@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react";
+import { useAtom } from "jotai";
 import { useFetch } from "@/hooks/useFetch";
 import { tasksProps } from "./types/Types";
 import { DataTable } from "./tasks/data-table";
@@ -20,24 +21,13 @@ import AddTaskModal from "@/components/AddTaskModal";
 import Loading from "@/components/Loading";
 import { mutate } from "swr";
 import { useTheme } from "next-themes";
+import { filtersAtom } from "./Atoms";
 
-
-interface FiltersProps{
-  search: string,
-  priority: string | null,
-  status: string | null,
-  date: string | null
-}
 
 export default function Home() {
   const { data, error, isLoading } = useFetch('http://localhost:3000/tarefas');
   const [ allData, setAllData ] = useState<tasksProps[]>([]);
-  const [ filters, setFilters ] = useState<FiltersProps>({
-    search: '',
-    priority: 'Todos',
-    status: 'Todos',
-    date: null
-  });
+  const [ filters, setFilters ] = useAtom(filtersAtom)
   const { theme, setTheme } = useTheme();
 
 
@@ -60,8 +50,10 @@ export default function Home() {
     const sensitiveDataBySearch = allData.filter( task => task.name?.toLowerCase().includes( normalizeToLowerCase ) );
     const sensitiveDataByPriority = filters.priority != 'Todos' ? sensitiveDataBySearch.filter( taskFiltered => taskFiltered.priority === filters.priority ) : sensitiveDataBySearch;
     const sensitiveDataByStatus = filters.status != 'Todos' ? sensitiveDataByPriority.filter( taskFiltered => taskFiltered.status === filters.status ) : sensitiveDataByPriority;
+    const sensitiveDataByFolders = filters.folder != null ? sensitiveDataByPriority.filter( taskFiltered => taskFiltered.folder === filters.folder ) : sensitiveDataByStatus;
 
-    const dataFiltered = [...sensitiveDataByStatus]
+
+    const dataFiltered = [...sensitiveDataByFolders]
 
     return dataFiltered
   }
