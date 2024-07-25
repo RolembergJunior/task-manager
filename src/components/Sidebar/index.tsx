@@ -10,20 +10,21 @@ import { IoMoonOutline, IoSettingsOutline } from "react-icons/io5";
 import { LuSun } from "react-icons/lu";
 import { Button } from "../ui/button";
 import { useTheme } from 'next-themes';
-import { FaPlus } from "react-icons/fa6";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import NavLink from "./components/NavLink"
 import { useAtom } from "jotai";
 import { filtersAtom } from "@/app/Atoms";
+import { useFetchFolder } from "@/hooks/useFetch";
 
 
 export default function SideBar(){
     const [ isOpenFolder, setIsOpenFolder ] = useState(false);
-    const [ filters, setFilters ] = useAtom(filtersAtom)
+    const { data } = useFetchFolder('http://localhost:3000/pastas');
+    const [ filters, setFilters ] = useAtom(filtersAtom);
     const { theme, setTheme } = useTheme();
 
-    function onHandleFilterFolder( value:string ){
+    function onHandleFilterFolder( value:number ){
         if(filters.folder === value ){
             setFilters({...filters, folder: null});
         } else {
@@ -61,17 +62,25 @@ export default function SideBar(){
                             </div>
                             { isOpenFolder ? <MdOutlineKeyboardArrowDown/> : <MdOutlineKeyboardArrowRight/>}
                         </div>
-                        <div className={`${isOpenFolder ? 'flex' : 'hidden'} w-full`}>
+                        <div 
+                                style={{
+                                    visibility: isOpenFolder ? 'visible' : 'hidden',
+                                    overflow: isOpenFolder ? 'visible' : 'hidden',
+                                    opacity: isOpenFolder ? '1' : '0',
+                                    transition: 'opacity 1s ease-in-out, visibility 1s ease-in-out, max-height 1s ease-in-out',
+                                    maxHeight: isOpenFolder ? '1000px' : '0', 
+                                    width: '100%'
+                                }}
+                            >
                             <ul>
-                                <p 
-                                    onClick={() => onHandleFilterFolder('1')}
-                                    className={`px-10 py-2 hover:cursor-pointer hover:bg-[#F6F6F6] ${filters.folder === '1' ? 'bg-black rounded-lg' : null} hover:dark:bg-black hover:rounded-lg transition-all`}>Trabalho</p>
-                                <p 
-                                    onClick={() => onHandleFilterFolder('2')}
-                                    className={`px-10 py-2 hover:cursor-pointer hover:bg-[#F6F6F6] ${filters.folder === '2' ? 'bg-black rounded-lg' : null} hover:dark:bg-black hover:rounded-lg transition-all`}>Tasks para mês que vem</p>
-                                <p 
-                                    onClick={() => onHandleFilterFolder('3')}
-                                    className={`px-10 py-2 hover:cursor-pointer hover:bg-[#F6F6F6] ${filters.folder === '3' ? 'bg-black rounded-lg' : null} hover:dark:bg-black hover:rounded-lg transition-all`}> Testes</p>
+                                {data?.map( (folder, index) => ( 
+                                    <p 
+                                        onClick={() => onHandleFilterFolder(index)}
+                                        className={`px-10 py-2 hover:cursor-pointer hover:bg-[#F6F6F6] ${filters.folder === index ? 'bg-black rounded-lg' : null} hover:dark:bg-black hover:rounded-lg transition-all`}
+                                    >
+                                        {folder.name}
+                                    </p> 
+                                ))}
                             </ul>
                         </div>
                 </nav>

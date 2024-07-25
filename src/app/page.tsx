@@ -22,14 +22,14 @@ import Loading from "@/components/Loading";
 import { mutate } from "swr";
 import { useTheme } from "next-themes";
 import { filtersAtom } from "./Atoms";
+import AddNewFolder from "@/components/AddNewFolder";
 
 
 export default function Home() {
   const { data, error, isLoading } = useFetch('http://localhost:3000/tarefas');
   const [ allData, setAllData ] = useState<tasksProps[]>([]);
   const [ filters, setFilters ] = useAtom(filtersAtom)
-  const { theme, setTheme } = useTheme();
-
+  const { theme } = useTheme();
 
   useEffect(() => {
     if(data != undefined){
@@ -64,7 +64,7 @@ export default function Home() {
     filteredArray();
   }, [filters]);  
 
-  if(isLoading && theme != localStorage.getItem( 'theme' )) return <Loading/>;
+  if(isLoading) return <Loading/>;
   if(!isLoading && !error)
     return (
       <div className="flex bg-[#F5F6FA] dark:bg-black/20 transition-colors durantion-100">
@@ -138,6 +138,7 @@ export default function Home() {
                 </Button>
                 </div>
               </div>
+              <AddNewFolder/>
               <AddTaskModal getNewDataAndSave={getNewDataAndSave}/>
             </div>
           </div>

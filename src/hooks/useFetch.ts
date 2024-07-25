@@ -11,3 +11,14 @@ export function useFetch( url:string ) {
 
     return { data, error, isLoading }
 }
+
+export function useFetchFolder( url:string ) {
+    const { data, error, isLoading } = useSWR<String[]>( url, async (url:string) => {
+        const response = await fetch( url );
+        const data = await response.json();
+    
+        return data;
+    });
+
+    return { data, error, isLoading }
+}
