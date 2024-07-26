@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import {
     Dialog,
     DialogContent,
-    DialogClose,
     DialogHeader,
     DialogTrigger,
   } from "@/components/ui/dialog";
@@ -25,7 +24,6 @@ export default function AddNewFolder(){
 
     function onHandleSaveFolderName(){
         if( newFolder.name != '' ){
-            console.log(JSON.stringify(newFolder), 'pasta nova')
             try {
                 fetch( url, {
                     method: 'POST',

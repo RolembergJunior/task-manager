@@ -65,7 +65,7 @@ export default function Home() {
   }, [filters]);  
 
   if(isLoading) return <Loading/>;
-  if(!isLoading && !error)
+  if(!isLoading && !error && theme === localStorage.getItem('theme'))
     return (
       <div className="flex bg-[#F5F6FA] dark:bg-black/20 transition-colors durantion-100">
         <SideBar/>

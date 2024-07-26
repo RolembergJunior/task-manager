@@ -20,13 +20,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useAtom } from 'jotai';
+import { filtersAtom } from '@/app/Atoms';
+import { useFetch } from '@/hooks/useFetch';
 
 interface TaskModalProps{
     getNewDataAndSave: (data:tasksProps) => void
 }
 
 export default function AddTaskModal({ getNewDataAndSave }:TaskModalProps){
-    const [data, setData] = useState<tasksProps>({
+    const [ filters ] = useAtom(filtersAtom);
+    const [dataTask, setDataTask] = useState<tasksProps>({
         name: '',
         description:'',
         responsible: null, 
@@ -37,20 +41,22 @@ export default function AddTaskModal({ getNewDataAndSave }:TaskModalProps){
         status: '',
         checklist:[]
     });
+    const dataFolders = useFetch('http://localhost:3000/pastas');
     const url = 'http://localhost:3000/tarefas';
     let dateNow = new Date(Date.now());
 
     function onHandleAddTask(){
-        if(data.name != "", data.finalizationDate != "", data.status != ""){
+
+        if(dataTask.name != "", dataTask.finalizationDate != "", dataTask.status != ""){
             getNewDataAndSave({
-                name: data.name,
-                description: data.description,
-                responsible: data.responsible, 
+                name: dataTask.name,
+                description: dataTask.description,
+                responsible: dataTask.responsible, 
                 creationDate: new Intl.DateTimeFormat('pt-BR').format(dateNow),
-                finalizationDate: data.finalizationDate,
-                priority: data.priority,
-                folder: data.folder,
-                status: data.status,
+                finalizationDate: dataTask.finalizationDate,
+                priority: dataTask.priority,
+                folder: dataTask.folder,
+                status: dataTask.status,
                 checklist:[]
             });
 
@@ -60,7 +66,7 @@ export default function AddTaskModal({ getNewDataAndSave }:TaskModalProps){
                     headers: {
                         'content-Type': 'application/json'
                     },
-                    body: JSON.stringify(data)
+                    body: JSON.stringify(dataTask)
                 }).then( response => response.json() );
                 
             } catch (error) {
@@ -84,7 +90,7 @@ export default function AddTaskModal({ getNewDataAndSave }:TaskModalProps){
                             <div>
                                 <label htmlFor="name">Nome da tarefa</label>
                                 <Input 
-                                    onChange={(e) => setData({...data,name:e.target.value})} 
+                                    onChange={(e) => setDataTask({...dataTask,name:e.target.value})} 
                                     id="name" 
                                     type="text" 
                                     placeholder="Colocar lixo para..."
@@ -94,7 +100,7 @@ export default function AddTaskModal({ getNewDataAndSave }:TaskModalProps){
                             <div>
                                 <label htmlFor="name">Descrição</label>
                                 <Input 
-                                    onChange={(e) => setData({...data,description:e.target.value})} 
+                                    onChange={(e) => setDataTask({...dataTask,description:e.target.value})} 
                                     id="name" 
                                     type="text" 
                                     placeholder="Usar o saco azul para lixos sólidos e preto..." 
@@ -105,75 +111,76 @@ export default function AddTaskModal({ getNewDataAndSave }:TaskModalProps){
                             <div className='w-40'>
                                 <label htmlFor="date">Data de finalização</label>
                                 <Input 
-                                    onChange={(e) => setData({...data,finalizationDate:e.target.value})} 
+                                    onChange={(e) => setDataTask({...dataTask,finalizationDate:e.target.value})} 
                                     id="date" 
                                     type="date"/>
                             </div>
                             <div>
                                 <div className='w-40'>
                                     <label>Status</label>
-                                    <Select onValueChange={(value) => setData({...data, status:value})} required>
+                                    <Select onValueChange={(value) => setDataTask({...dataTask, status:value})} required>
                                         <SelectTrigger>
-                                        <SelectValue placeholder="Selecione um Status" />
+                                            <SelectValue placeholder="Selecione um Status" />
                                         </SelectTrigger>
                                         <SelectContent>
-                                        <SelectGroup>
-                                            <SelectItem value="Não iniciado" >Não inciado</SelectItem>
-                                            <SelectItem value="Fazer" >Fazer</SelectItem>
-                                            <SelectItem value="Em andamento" >Em andamento</SelectItem>
-                                            <SelectItem value="Concluída" >Concluído</SelectItem>
-                                            <SelectItem value="Atrasada" >Atrasado</SelectItem>
-                                        </SelectGroup>
+                                            <SelectGroup>
+                                                <SelectItem value="Não iniciado" >Não inciado</SelectItem>
+                                                <SelectItem value="Fazer" >Fazer</SelectItem>
+                                                <SelectItem value="Em andamento" >Em andamento</SelectItem>
+                                                <SelectItem value="Concluída" >Concluído</SelectItem>
+                                                <SelectItem value="Atrasada" >Atrasado</SelectItem>
+                                            </SelectGroup>
                                         </SelectContent>
                                     </Select>
                                 </div>
                             </div>
                             <div className='w-40'>
                                 <label>Responsável</label>
-                                <Select onValueChange={(value) => setData({...data, responsible:value}) }>
+                                <Select onValueChange={(value) => setDataTask({...dataTask, responsible:value}) }>
                                     <SelectTrigger>
-                                    <SelectValue placeholder="Selecione um responsável" />
+                                        <SelectValue placeholder="Selecione um responsável" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                    <SelectGroup>
-                                        <SelectItem value="Rolemberg Junior" >Rolemberg Junior</SelectItem>
-                                        <SelectItem value="Pitter Antonio" >Pitter Antonio</SelectItem>
-                                        <SelectItem value="Fernanda Sales" >Fernanda Sales</SelectItem>
-                                        <SelectItem value="Ruan Pabli" >Ruan Pablo</SelectItem>
-                                        <SelectItem value="Luan Carlos" >Luan Carlos</SelectItem>
-                                    </SelectGroup>
+                                        <SelectGroup>
+                                            <SelectItem value="Rolemberg Junior" >Rolemberg Junior</SelectItem>
+                                            <SelectItem value="Pitter Antonio" >Pitter Antonio</SelectItem>
+                                            <SelectItem value="Fernanda Sales" >Fernanda Sales</SelectItem>
+                                            <SelectItem value="Ruan Pabli" >Ruan Pablo</SelectItem>
+                                            <SelectItem value="Luan Carlos" >Luan Carlos</SelectItem>
+                                        </SelectGroup>
                                     </SelectContent>
                                 </Select>
                             </div>
                             <div className='w-40'>
                                 <label>Categoria</label>
-                                <Select onValueChange={(value) => setData({...data, priority:value}) } required>
+                                <Select onValueChange={(value) => setDataTask({...dataTask, priority:value}) } required>
                                     <SelectTrigger>
-                                    <SelectValue placeholder="Selecione uma categoria" />
+                                        <SelectValue placeholder="Selecione uma categoria" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                    <SelectGroup>
-                                        <SelectItem value="ALTA PRIORIDADE" >Urgente</SelectItem>
-                                        <SelectItem value="MÉDIA PRIORIDADE" >Média urgência</SelectItem>
-                                        <SelectItem value="BAIXA PRIORIDADE" >Baixa urgência</SelectItem>
-                                    </SelectGroup>
+                                        <SelectGroup>
+                                            <SelectItem value="ALTA PRIORIDADE" >Urgente</SelectItem>
+                                            <SelectItem value="MÉDIA PRIORIDADE" >Média urgência</SelectItem>
+                                            <SelectItem value="BAIXA PRIORIDADE" >Baixa urgência</SelectItem>
+                                        </SelectGroup>
                                     </SelectContent>
                                 </Select>
                             </div>
                         </div>
                         <div>
                             <label>Pasta</label>
-                            <Select onValueChange={(value) => setData({...data, folder:value})}>
-                                <SelectTrigger>
-                                <SelectValue placeholder="Adicionar a pasta" />
+                            <Select onValueChange={(value) => setDataTask({...dataTask, folder:value})}>
+                                <SelectTrigger >
+                                    <SelectValue 
+                                       placeholder={dataFolders.data?.map( ( _, index ) => index === filters.folder ? dataFolders?.data[index]?.name : 'Adicione uma pasta' )  }
+                                    />
                                 </SelectTrigger>
                                 <SelectContent>
-                                <SelectGroup>
-                                    <SelectItem value="1" >Em desenvolvimento</SelectItem>
-                                    <SelectItem value="2" >Tarefas futuras</SelectItem>
-                                    <SelectItem value="3" >Bugs</SelectItem>
-                                    <SelectItem value="4" >Melhorias</SelectItem>
-                                </SelectGroup>
+                                    <SelectGroup>
+                                        {dataFolders.data?.map( (folders) => (
+                                            <SelectItem value={folders.id} >{folders.name}</SelectItem>
+                                        ))}
+                                    </SelectGroup>
                                 </SelectContent>
                             </Select>
                         </div>

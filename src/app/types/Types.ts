@@ -16,3 +16,9 @@ export interface tasksProps{
     folder: string | null,
     checklist: CheckListProps[]
 }
+
+
+export interface FolderProps{
+    id: string,
+    name: string
+}

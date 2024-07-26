@@ -75,8 +75,8 @@ export default function SideBar(){
                             <ul>
                                 {data?.map( (folder, index) => ( 
                                     <p 
-                                        onClick={() => onHandleFilterFolder(index)}
-                                        className={`px-10 py-2 hover:cursor-pointer hover:bg-[#F6F6F6] ${filters.folder === index ? 'bg-black rounded-lg' : null} hover:dark:bg-black hover:rounded-lg transition-all`}
+                                        onClick={() => onHandleFilterFolder(folder.id)}
+                                        className={`px-10 py-2 hover:cursor-pointer hover:bg-[#F6F6F6] ${filters.folder === folder.id ? 'bg-black rounded-lg' : null} hover:dark:bg-black hover:rounded-lg transition-all`}
                                     >
                                         {folder.name}
                                     </p> 

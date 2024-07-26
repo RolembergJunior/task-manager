@@ -1,4 +1,4 @@
-import { tasksProps } from '@/app/types/Types';
+import { FolderProps, tasksProps } from '@/app/types/Types';
 import useSWR from 'swr';
 
 export function useFetch( url:string ) {
@@ -13,7 +13,7 @@ export function useFetch( url:string ) {
 }
 
 export function useFetchFolder( url:string ) {
-    const { data, error, isLoading } = useSWR<String[]>( url, async (url:string) => {
+    const { data, error, isLoading } = useSWR<FolderProps[]>( url, async (url:string) => {
         const response = await fetch( url );
         const data = await response.json();
     
