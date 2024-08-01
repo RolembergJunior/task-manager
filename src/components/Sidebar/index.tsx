@@ -18,6 +18,7 @@ import { filtersAtom } from "@/app/Atoms";
 import { useFetchFolder } from "@/hooks/useFetch";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTrigger } from "@/components/ui/dialog";
 import { GoDash } from "react-icons/go";
+import { DialogClose } from "@radix-ui/react-dialog";
 
 
 export default function SideBar(){
@@ -33,6 +34,22 @@ export default function SideBar(){
             setFilters({...filters, folder: value });
         }
     }
+
+    const options = {
+        method: 'DELETE'
+    };
+
+    function onHandleDeleteFolder(id:string){
+
+        const url = `http://localhost:3000/pastas/${id}`
+        
+        fetch(url, options)
+        .then(response => response.json())
+        .catch(error => console.error('ERRO:',error));
+
+        alert('PASTA DELETADA!!')
+    };
+
     
     return(
         <div className="flex flex-col justify-between bg-[#ffff] dark:bg-[#1e293b] w-[15%] h-screen space-y-4 shadow-lg transition-all">
@@ -96,7 +113,12 @@ export default function SideBar(){
                                                     </DialogDescription>
                                                     <div className="flex items-center justify-end gap-3">
                                                         <Button>Cancelar</Button>
-                                                        <Button variant={'destructive'} >Excluir</Button>
+                                                        <DialogClose 
+                                                            className="bg-red-600 text-white dark:text-black font-medium text-sm hover:bg-red-800 rounded-md py-2 px-4 h-10 transition-all"
+                                                            onClick={() => onHandleDeleteFolder(folder.id)}
+                                                        >
+                                                            Excluir
+                                                        </DialogClose>
                                                     </div>
                                                 </DialogContent>
                                             </Dialog>

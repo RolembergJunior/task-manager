@@ -6,6 +6,7 @@ import {
     DialogContent,
     DialogHeader,
     DialogTrigger,
+    DialogClose
   } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -39,7 +40,9 @@ export default function AddNewFolder(){
                 alert(error);
             }
 
-            setNewFolder({name: ''})
+            setNewFolder({name: ''});
+
+            alert('PASTA SALVA!');
         } else {
             alert('Coloque o nome da pasta');
         }
@@ -62,12 +65,12 @@ export default function AddNewFolder(){
                     <label>Nome da pasta</label>
                     <Input onChange={(e) => setNewFolder({...newFolder,  name: e.target.value })} type="text" />
                 </div>
-                <Button 
-                    className="w-full dark:bg-white"
+                <DialogClose 
+                    className="w-full text-white bg-[#0f172a] dark:text-black dark:bg-white p-2 rounded-md"
                     onClick={() => onHandleSaveFolderName()}
                 >
                     Salvar
-                </Button>
+                </DialogClose>
             </DialogContent>
         </Dialog>
     );

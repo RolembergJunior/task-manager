@@ -43,8 +43,6 @@ export default function Task(){
 
 
     useEffect(() => {
-
-        console.log(data?.name, 'nome')
         
         if( data ){
             setDataTask(
