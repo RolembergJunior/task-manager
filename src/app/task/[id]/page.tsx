@@ -40,6 +40,30 @@ export default function Task(){
     const param = useParams();
     const url = `http://localhost:3000/tarefas/${param.id}`;
     const { data, error, isLoading } = useFetch(url);
+
+
+    useEffect(() => {
+
+        console.log(data?.name, 'nome')
+        
+        if( data ){
+            setDataTask(
+                {
+                    name: data?.name,
+                    description:data?.description ,
+                    responsible: data?.responsible , 
+                    creationDate: data?.creationDate ,
+                    finalizationDate: data?.finalizationDate ,
+                    priority: data?.priority ,
+                    folder: data?.folder ,
+                    status: data?.status ,
+                    checklist: data?.checklist?.map( list => list ) 
+                }
+            );
+        } ;
+
+        verifyDateAndStylize();
+    },[data]);
     
 
     function verifyDateAndStylize(){
@@ -90,30 +114,7 @@ export default function Task(){
             } 
         }
     }
-
-
-    useEffect(() => {
-        verifyDateAndStylize();
-
-        if( !error && data != undefined){
-            setDataTask(
-                {
-                    name: data.name ,
-                    description:data.description ,
-                    responsible: data.responsible , 
-                    creationDate: data.creationDate ,
-                    finalizationDate: data.finalizationDate ,
-                    priority: data.priority ,
-                    folder: data.folder ,
-                    status: data.status ,
-                    checklist: data.checklist?.map( list => list ) 
-                }
-            );
-
-            
-        } 
-    },[data]);
-
+    
     const options = {
         method: 'DELETE'
     };
@@ -155,7 +156,9 @@ export default function Task(){
 
 
     useEffect(() => {
-        onEditTask();
+        if( data ){
+            onEditTask();
+        }
     }, [
             dataTask.name, 
             dataTask.description, 

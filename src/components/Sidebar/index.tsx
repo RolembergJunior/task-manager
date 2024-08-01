@@ -4,7 +4,7 @@ import { useState } from "react";
 import { GiNetworkBars } from "react-icons/gi";
 import { TbReportSearch } from "react-icons/tb";
 import { IoMdHome } from "react-icons/io";
-import { FaInbox, FaPowerOff, FaRegFolder } from "react-icons/fa";
+import { FaInbox, FaPowerOff, FaRegFolder, FaTrash } from "react-icons/fa";
 import { FaEllipsisVertical } from "react-icons/fa6";
 import { IoMoonOutline, IoSettingsOutline } from "react-icons/io5";
 import { LuSun } from "react-icons/lu";
@@ -16,6 +16,8 @@ import NavLink from "./components/NavLink"
 import { useAtom } from "jotai";
 import { filtersAtom } from "@/app/Atoms";
 import { useFetchFolder } from "@/hooks/useFetch";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTrigger } from "@/components/ui/dialog";
+import { GoDash } from "react-icons/go";
 
 
 export default function SideBar(){
@@ -24,8 +26,8 @@ export default function SideBar(){
     const [ filters, setFilters ] = useAtom(filtersAtom);
     const { theme, setTheme } = useTheme();
 
-    function onHandleFilterFolder( value:number ){
-        if(filters.folder === value ){
+    function onHandleFilterFolder( value:string ){
+        if(filters.folder?.toString() === value ){
             setFilters({...filters, folder: null});
         } else {
             setFilters({...filters, folder: value });
@@ -73,13 +75,33 @@ export default function SideBar(){
                                 }}
                             >
                             <ul>
-                                {data?.map( (folder, index) => ( 
-                                    <p 
-                                        onClick={() => onHandleFilterFolder(folder.id)}
-                                        className={`px-10 py-2 hover:cursor-pointer hover:bg-[#F6F6F6] ${filters.folder === folder.id ? 'bg-black rounded-lg' : null} hover:dark:bg-black hover:rounded-lg transition-all`}
+                                {data?.map( (folder) => ( 
+                                    <div 
+                                        className={`relative flex items-center justify-between ml-4 px-4 py-2 hover:cursor-pointer hover:bg-[#F6F6F6] ${filters.folder?.toString() === folder.id ? 'bg-black rounded-lg' : null} hover:dark:bg-black hover:rounded-lg transition-all`}
+                                        
                                     >
-                                        {folder.name}
-                                    </p> 
+                                        <div className="px-3 w-full" onClick={() => onHandleFilterFolder(folder.id.toString())}>
+                                            {folder.name}
+                                        </div> 
+                                        <div 
+                                            className="absolute bg-transparent hover:bg-red-600 p-1 rounded-full right-3 transition-all z-10"
+                                        >
+                                            <Dialog>
+                                                <DialogTrigger>
+                                                    <GoDash className="z-10" size={15}/>
+                                                </DialogTrigger>
+                                                <DialogContent>
+                                                    <DialogDescription>
+                                                        Tem certeza que deseja excluir essa pasta?
+                                                    </DialogDescription>
+                                                    <div className="flex items-center justify-end gap-3">
+                                                        <Button>Cancelar</Button>
+                                                        <Button variant={'destructive'} >Excluir</Button>
+                                                    </div>
+                                                </DialogContent>
+                                            </Dialog>
+                                        </div>
+                                    </div>
                                 ))}
                             </ul>
                         </div>

@@ -20,76 +20,39 @@
       "id": "f4d7"
     },
     {
-      "name": "qweqweqw",
-      "description": "eqweqwe",
-      "responsible": "Rolemberg Junior",
-      "creationDate": "27/06/2024",
-      "finalizationDate": "2024-06-28",
-      "priority": "ALTA PRIORIDADE",
-      "status": "Fazer",
-      "folder": "2",
-      "checklist": [],
-      "id": "a36d"
-    },
-    {
-      "name": "TESTANDO",
-      "description": "asdasd",
-      "responsible": "Rolemberg Junior",
-      "creationDate": "27/06/2024",
-      "finalizationDate": "2024-06-11",
-      "priority": "ALTA PRIORIDADE",
-      "status": "Não iniciado",
-      "folder": "2",
-      "checklist": [
-        {
-          "name": "TESTANDO DE NOVO",
-          "isCheck": false
-        },
-        {
-          "name": "TESTANDO DE NOVO",
-          "isCheck": false
-        },
-        {
-          "name": "Testando,.....",
-          "isCheck": false
-        }
-      ],
-      "id": "6ff0"
-    },
-    {
       "dataTask": {},
       "id": "299b"
     },
     {
       "name": "Criar o filtro de idDatasets no Análise de relatórios ",
-      "description": "Criar um campo de filtro para idDatasets",
+      "description": "Trazer um filtro de visualização da table-report diferente....",
       "responsible": "Rolemberg Junior",
       "creationDate": "15/07/2024",
-      "finalizationDate": "2024-07-15",
+      "finalizationDate": "2024-08-10",
       "priority": "ALTA PRIORIDADE",
-      "status": "Fazer",
+      "status": "Em andamento",
       "folder": "1",
       "checklist": [],
       "id": "4dc8"
     },
     {
-      "id": "e98d",
       "name": "Crair proc que libera relatórios por módulos",
       "description": "Criar um campo de filtro para idDatasets",
       "responsible": "Rolemberg Junior",
       "creationDate": "15/07/2024",
-      "finalizationDate": "2024-07-19",
+      "finalizationDate": "2024-08-10",
       "priority": "MÉDIA PRIORIDADE",
-      "folder": "1",
       "status": "Não iniciado",
-      "checklist": []
+      "folder": "1",
+      "checklist": [],
+      "id": "e98d"
     },
     {
       "name": "Cronograma EAP Excel",
       "description": "Criar tela de cronograma EAP para subir por excel",
       "responsible": "Rolemberg Junior",
       "creationDate": "19/07/2024",
-      "finalizationDate": "2024-07-19",
+      "finalizationDate": "2024-08-02",
       "priority": "ALTA PRIORIDADE",
       "status": "Em andamento",
       "folder": "1",
@@ -130,89 +93,34 @@
       "id": "1dc1"
     },
     {
-      "name": "Craindo task na pasta TESTE",
-      "description": "",
-      "responsible": "Rolemberg Junior",
-      "creationDate": "26/07/2024",
-      "finalizationDate": "2024-07-26",
-      "priority": "ALTA PRIORIDADE",
-      "status": "Fazer",
-      "folder": null,
-      "checklist": [
-        {
-          "name": "CRAINDO 3",
-          "isCheck": false
-        },
-        {
-          "name": "CRAINDO 2",
-          "isCheck": false
-        },
-        {
-          "name": "CRAINDO 1",
-          "isCheck": false
-        }
-      ],
-      "id": "244a"
+      "id": "1db7"
     },
     {
-      "id": "ed98",
-      "name": "CRAINDO TASK NA PASTA TESTE",
-      "description": "",
-      "responsible": "Rolemberg Junior",
-      "creationDate": "26/07/2024",
-      "finalizationDate": "2024-07-26",
-      "priority": "ALTA PRIORIDADE",
-      "folder": null,
-      "status": "Não iniciado",
-      "checklist": []
+      "id": "6da6"
     },
     {
-      "id": "4a5b",
-      "name": "qqweqweqw",
+      "id": "b8f8"
+    },
+    {
+      "id": "1dc6"
+    },
+    {
+      "id": "0109"
+    },
+    {
+      "id": "4c31"
+    },
+    {
+      "name": "TESTAMDPPPP",
       "description": "qweqwe",
       "responsible": "Rolemberg Junior",
-      "creationDate": "26/07/2024",
-      "finalizationDate": "2024-07-26",
+      "creationDate": "01/08/2024",
+      "finalizationDate": "2024-08-01",
       "priority": "ALTA PRIORIDADE",
-      "folder": "0",
       "status": "Não iniciado",
-      "checklist": []
-    },
-    {
-      "id": "1055",
-      "name": " TASK TESTE",
-      "description": "",
-      "responsible": "Pitter Antonio",
-      "creationDate": "26/07/2024",
-      "finalizationDate": "2024-07-26",
-      "priority": "ALTA PRIORIDADE",
-      "folder": "869c",
-      "status": "Em andamento",
-      "checklist": []
-    },
-    {
-      "id": "a6ae",
-      "name": "TESTANDO NOVAMENTE",
-      "description": "sdasdasd",
-      "responsible": "Rolemberg Junior",
-      "creationDate": "26/07/2024",
-      "finalizationDate": "2024-07-27",
-      "priority": "MÉDIA PRIORIDADE",
-      "folder": "869c",
-      "status": "Fazer",
-      "checklist": []
-    },
-    {
-      "id": "9b01",
-      "name": "TASK DA PASTA DE TESTE",
-      "description": "sdasdasd",
-      "responsible": "Rolemberg Junior",
-      "creationDate": "26/07/2024",
-      "finalizationDate": "2024-07-27",
-      "priority": "ALTA PRIORIDADE",
-      "folder": "121d",
-      "status": "Não iniciado",
-      "checklist": []
+      "folder": null,
+      "checklist": [],
+      "id": "322b"
     }
   ],
   "pastas": [
@@ -223,6 +131,18 @@
     {
       "id": "121d",
       "name": "PASTA DE TESTE"
+    },
+    {
+      "id": "c870",
+      "name": "Trabalho"
+    },
+    {
+      "id": "ad57",
+      "name": "Pasta "
+    },
+    {
+      "id": "04c1",
+      "name": "Pasta 2"
     }
   ]
 }

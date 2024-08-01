@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useAtom } from "jotai";
-import { useFetch } from "@/hooks/useFetch";
+import { useFetch, useFetchFolder } from "@/hooks/useFetch";
 import { tasksProps } from "./types/Types";
 import { DataTable } from "./tasks/data-table";
 import { columns } from "./tasks/columns";
@@ -27,6 +27,7 @@ import AddNewFolder from "@/components/AddNewFolder";
 
 export default function Home() {
   const { data, error, isLoading } = useFetch('http://localhost:3000/tarefas');
+  const dataFolder = useFetchFolder('http://localhost:3000/pastas');
   const [ allData, setAllData ] = useState<tasksProps[]>([]);
   const [ filters, setFilters ] = useAtom(filtersAtom)
   const { theme } = useTheme();
@@ -72,7 +73,9 @@ export default function Home() {
           <div className="w-[90%]">
           <div className="flex items-center justify-between bg-white dark:bg-[#1e293b] border border-black/10 w-full h-20 p-4">
             <div className="flex items-center gap-3">
-              <h1 className="text-xl font-semibold">Todas as Tarefas</h1>
+              <h1 className="text-xl font-semibold">
+                Todas as tarefas
+              </h1>
               <div className="relative flex items-center">
                 <CiSearch className="absolute focus:hidden m-2" />
                 <Input 

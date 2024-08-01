@@ -12,7 +12,7 @@ interface FiltersProps{
     search: string,
     priority: string | null,
     status: string | null,
-    folder: number | null,
+    folder: string | null,
     date: string | null
 }
 
