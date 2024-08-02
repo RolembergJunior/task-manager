@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { useFetch } from "@/hooks/useFetch";
+import { useFetch, useFetchFolder } from "@/hooks/useFetch";
 import { mutate } from "swr";
 import SideBar from "@/components/Sidebar";
 import { Button } from "@/components/ui/button";
@@ -40,6 +40,7 @@ export default function Task(){
     const param = useParams();
     const url = `http://localhost:3000/tarefas/${param.id}`;
     const { data, error, isLoading } = useFetch(url);
+    const dataFolders = useFetchFolder('http://localhost:3000/pastas');
 
 
     useEffect(() => {
@@ -126,6 +127,17 @@ export default function Task(){
         route.push('/');
     };
 
+    function getIdFolderSelected( folderNameSelected: string | null ){
+        const idFolderSelected = dataFolders.data?.filter( folder => folder.name === folderNameSelected  ? folder : null)
+
+        if( idFolderSelected?.length ){
+
+            return idFolderSelected[0].name;
+        }else {
+            return null;
+        }
+    }
+
     function onEditTask(){
 
         if( data ){
@@ -143,7 +155,7 @@ export default function Task(){
                     "finalizationDate": dataTask.finalizationDate,
                     "priority": dataTask.priority,
                     "status": dataTask.status,
-                    "folder": dataTask.folder,
+                    "folder": getIdFolderSelected(dataTask.folder),
                     "checklist": dataTask.checklist
                 })
             })
@@ -287,6 +299,24 @@ export default function Task(){
                                             <SelectItem value="Concluída" >Concluído</SelectItem>
                                             <SelectItem value="Atrasada" >Atrasado</SelectItem>
                                             </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                                <div>
+                                    <span className="font-medium text-black/50 dark:text-white/70">Pasta</span>
+                                    <Select onValueChange={(value) => setDataTask({...dataTask, folder: value })}>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder={ getIdFolderSelected(dataTask.folder) } />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                        {dataFolders.data?.map( folder => (
+                                            <SelectItem 
+                                                value={folder.name}
+                                                key={folder.id}
+                                            >
+                                                {folder.name}
+                                            </SelectItem>
+                                        ))};
                                         </SelectContent>
                                     </Select>
                                 </div>

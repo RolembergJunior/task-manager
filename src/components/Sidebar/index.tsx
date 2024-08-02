@@ -94,10 +94,12 @@ export default function SideBar(){
                             <ul>
                                 {data?.map( (folder) => ( 
                                     <div 
-                                        className={`relative flex items-center justify-between ml-4 px-4 py-2 hover:cursor-pointer hover:bg-[#F6F6F6] ${filters.folder?.toString() === folder.id ? 'bg-black rounded-lg' : null} hover:dark:bg-black hover:rounded-lg transition-all`}
-                                        
+                                        className={`relative flex items-center justify-between ml-4 px-4 py-2 hover:cursor-pointer hover:bg-[#F6F6F6] hover:dark:bg-black hover:rounded-lg transition-all`}
                                     >
-                                        <div className="px-3 w-full" onClick={() => onHandleFilterFolder(folder.id.toString())}>
+                                        <div 
+                                            className={`px-3 w-full ${filters.folder?.toString() === folder.id ? 'bg-black rounded-lg' : null}`} 
+                                            onClick={() => onHandleFilterFolder(folder.name.toString())}
+                                        >
                                             {folder.name}
                                         </div> 
                                         <div 
