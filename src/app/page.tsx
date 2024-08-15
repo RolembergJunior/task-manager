@@ -30,7 +30,7 @@ export default function Home() {
   const dataFolder = useFetchFolder('http://localhost:3000/pastas');
   const [ allData, setAllData ] = useState<tasksProps[]>([]);
   const [ filters, setFilters ] = useAtom(filtersAtom)
-  const { theme } = useTheme();
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     if(data != undefined){
@@ -45,7 +45,7 @@ export default function Home() {
   }
 
   
-  const filteredArray = () => { 
+  function filteredArray() { 
 
     const normalizeToLowerCase = filters.search.toLowerCase();
     const sensitiveDataBySearch = allData.filter( task => task.name?.toLowerCase().includes( normalizeToLowerCase ) );
@@ -63,18 +63,28 @@ export default function Home() {
   
   useEffect(() => {
     filteredArray();
-  }, [filters]);  
+  }, [filters]);
 
-  if(isLoading) return <Loading/>;
-  if(!isLoading && !error && theme === localStorage.getItem('theme'))
+  useEffect(() => {
+    if( typeof window !== undefined ) {
+      const storagetheme = window.localStorage.getItem('theme')
+
+      setTheme( storagetheme || 'light' );
+    }
+  },[]);
+  
+  const localStorageIsDefined = theme === window.localStorage.getItem('theme') ? true : false;
+
+  if( !localStorageIsDefined && isLoading ) return <Loading/>;
+  if(!isLoading && !error && localStorageIsDefined )
     return (
       <div className="flex bg-[#F5F6FA] dark:bg-black/20 transition-colors durantion-100">
         <SideBar/>
           <div className="w-[90%]">
           <div className="flex items-center justify-between bg-white dark:bg-[#1e293b] border border-black/10 w-full h-20 p-4">
             <div className="flex items-center gap-3">
-              <h1 className="text-xl font-semibold">
-                Todas as tarefas
+              <h1 className="text-xl w-40 font-semibold">
+                {filters.folder === null ? 'Todas as tarefas' : filters.folder.toString()}
               </h1>
               <div className="relative flex items-center">
                 <CiSearch className="absolute focus:hidden m-2" />

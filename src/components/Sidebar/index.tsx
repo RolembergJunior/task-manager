@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GiNetworkBars } from "react-icons/gi";
 import { TbReportSearch } from "react-icons/tb";
 import { IoMdHome } from "react-icons/io";
@@ -19,13 +19,20 @@ import { useFetchFolder } from "@/hooks/useFetch";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTrigger } from "@/components/ui/dialog";
 import { GoDash } from "react-icons/go";
 import { DialogClose } from "@radix-ui/react-dialog";
+import Loading from "../Loading";
 
 
 export default function SideBar(){
     const [ isOpenFolder, setIsOpenFolder ] = useState(false);
-    const { data } = useFetchFolder('http://localhost:3000/pastas');
+    const { data, isLoading, error } = useFetchFolder('http://localhost:3000/pastas');
     const [ filters, setFilters ] = useAtom(filtersAtom);
     const { theme, setTheme } = useTheme();
+
+    const getSetThemeInLocalStorage = window.localStorage.getItem('theme');
+
+    useEffect(() => {
+        getSetThemeInLocalStorage
+    },[theme]);
 
     function onHandleFilterFolder( value:string ){
         if(filters.folder?.toString() === value ){
@@ -50,7 +57,8 @@ export default function SideBar(){
         alert('PASTA DELETADA!!')
     };
 
-    
+    if(isLoading) return <Loading/>
+    if(!isLoading && !error)
     return(
         <div className="flex flex-col justify-between bg-[#ffff] dark:bg-[#1e293b] w-[15%] h-screen space-y-4 shadow-lg transition-all">
             <div>
@@ -94,10 +102,10 @@ export default function SideBar(){
                             <ul>
                                 {data?.map( (folder) => ( 
                                     <div 
-                                        className={`relative flex items-center justify-between ml-4 px-4 py-2 hover:cursor-pointer hover:bg-[#F6F6F6] hover:dark:bg-black hover:rounded-lg transition-all`}
+                                        className={`relative flex items-center justify-between ml-4 px-4 py-2 hover:cursor-pointer ${filters.folder?.toString() === folder.name ? 'bg-black rounded-lg' : null} hover:bg-[#F6F6F6] hover:dark:bg-black hover:rounded-lg transition-all`}
                                     >
                                         <div 
-                                            className={`px-3 w-full ${filters.folder?.toString() === folder.id ? 'bg-black rounded-lg' : null}`} 
+                                            className={`px-3 w-full`} 
                                             onClick={() => onHandleFilterFolder(folder.name.toString())}
                                         >
                                             {folder.name}

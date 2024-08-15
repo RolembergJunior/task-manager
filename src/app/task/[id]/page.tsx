@@ -182,7 +182,7 @@ export default function Task(){
         ]);
 
 
-    if(isLoading && error && theme != localStorage.getItem( 'theme' )) return <Loading/>
+    if(isLoading && error) return <Loading/>
     if(!isLoading)
     return(
         <div className="flex bg-[#F5F6FA] dark:bg-black/20">

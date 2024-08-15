@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/select";
 import { useAtom } from 'jotai';
 import { filtersAtom } from '@/app/Atoms';
-import { useFetch } from '@/hooks/useFetch';
+import { useFetchFolder } from '@/hooks/useFetch';
 
 interface TaskModalProps{
     getNewDataAndSave: (data:tasksProps) => void
@@ -41,7 +41,7 @@ export default function AddTaskModal({ getNewDataAndSave }:TaskModalProps){
         status: '',
         checklist:[]
     });
-    const dataFolders = useFetch('http://localhost:3000/pastas');
+    const dataFolders = useFetchFolder('http://localhost:3000/pastas');
     const url = 'http://localhost:3000/tarefas';
     let dateNow = new Date(Date.now());
 
@@ -172,7 +172,7 @@ export default function AddTaskModal({ getNewDataAndSave }:TaskModalProps){
                             <Select onValueChange={(value) => setDataTask({...dataTask, folder:value})}>
                                 <SelectTrigger >
                                     <SelectValue 
-                                       placeholder={dataFolders.data?.map( ( _, index ) => index === filters.folder ? dataFolders?.data[index]?.name : 'Adicione uma pasta' )  }
+                                       placeholder={'Adicione uma pasta'}
                                     />
                                 </SelectTrigger>
                                 <SelectContent>
