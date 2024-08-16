@@ -15,11 +15,15 @@ import {
     Table,
     TableBody,
     TableCell,
+    TableFooter,
     TableHead,
     TableHeader,
     TableRow,
   } from "@/components/ui/table";
 import Loading from "@/components/Loading";
+import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
+import { FaAngleDoubleRight, FaAngleDoubleLeft } from "react-icons/fa";
+import ButtonIcon from "@/components/ButtonIcon";
 
   interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[],
@@ -28,6 +32,7 @@ import Loading from "@/components/Loading";
 
   export function DataTable<Tdata, Tvalue>({columns, data}:DataTableProps<Tdata, Tvalue>) {
     const [ sorting, setSorting ] = useState<SortingState>([]);
+    const [ page, setPage ] = useState(1);
     const router = useRouter();
     const table = useReactTable({
         data,
@@ -42,7 +47,17 @@ import Loading from "@/components/Loading";
 
     function onHandleClickRow(id:number | string){
         router.push(`/task/${id}`);
-    }
+    };
+
+    let countAllTasks = data.length;
+    let totalPages = Math.ceil(countAllTasks/10);
+
+    // function getItemsCurrentPage(){
+    //     const startIndex = (page - 1) * 10;
+    //     const endIndex = page * 10;
+
+    //     return 
+    // }
 
 
     if(data === undefined) return <Loading/>
@@ -70,7 +85,7 @@ import Loading from "@/components/Loading";
                 </TableHeader>
                 <TableBody>
                     {table.getRowModel().rows?.length ? (
-                        table.getRowModel().rows.map( (row) => (
+                        table.getRowModel().rows.slice((page - 1) * 10, page * 10).map( (row) => (
                             <TableRow 
                                 onClick={() => onHandleClickRow(row.original.id)} 
                                 key={row.id} 
@@ -97,6 +112,43 @@ import Loading from "@/components/Loading";
                     )}
                 </TableBody>
             </Table>
+            <div className="flex justify-end items-center gap-3 border border-black/20 dark:border-white/20 w-full p-3 rounded-b-md">
+                <p>
+                    {page} de { totalPages }
+                </p>
+                <div className="flex space-x-1">
+                    <ButtonIcon 
+                        disabled={page === 1 ? true : false} 
+                        transparent={false}
+                        onClick={() => setPage(1)}
+                    >
+                        <FaAngleDoubleLeft/>
+                    </ButtonIcon>
+                    <ButtonIcon 
+                        disabled={page === 1 ? true : false} 
+                        transparent={false}
+                        onClick={() => setPage(page - 1)} 
+                    >
+                        <FaChevronLeft/>
+                    </ButtonIcon>
+                </div>
+                <div className="flex space-x-1">
+                    <ButtonIcon 
+                        disabled={page === totalPages ? true : false} 
+                        transparent={false}
+                        onClick={() => setPage(page + 1)} 
+                    >
+                        <FaChevronRight/>
+                    </ButtonIcon>
+                    <ButtonIcon 
+                        disabled={page === totalPages ? true : false} 
+                        transparent={false}
+                        onClick={() => setPage(totalPages)}
+                    >
+                        <FaAngleDoubleRight/>
+                    </ButtonIcon>
+                </div>
+            </div>
         </div>
     );
   }

@@ -37,13 +37,12 @@ export default function Home() {
       setAllData(data);
     }
     mutate( 'http://localhost:3000/tarefas' );
-
+    
   },[data, allData]);
-
+  
   function getNewDataAndSave(newData:tasksProps){   
     setAllData([...allData, newData]);
-  }
-
+  } 
   
   function filteredArray() { 
 
@@ -72,6 +71,7 @@ export default function Home() {
       setTheme( storagetheme || 'light' );
     }
   },[]);
+
   
   const localStorageIsDefined = theme === window.localStorage.getItem('theme') ? true : false;
 
@@ -160,3 +160,4 @@ export default function Home() {
       </div>
   );
 }
+
