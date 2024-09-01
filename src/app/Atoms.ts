@@ -27,7 +27,7 @@ export const filtersAtom = atom<FiltersProps>({
     priority: 'Todos',
     status: 'Todos',
     folder: null,
-    date: null
+    competency: null
   });
 
 export const darkModeAtom = atomWithStorage( 'dark', false )

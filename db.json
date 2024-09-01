@@ -1,38 +1,24 @@
 {
   "tarefas": [
     {
-      "dataTask": {
-        "name": "Ajustar o relatório Gerencial da Passarelli",
-        "description": "Chamar um dos DEV's para realizar esses ajustes",
-        "responsible": "Rolemberg Junior",
-        "creationDate": "05/06/2024",
-        "finalizationDate": "2024-06-14",
-        "priority": "MÉDIA PRIORIDADE",
-        "folder": "2",
-        "status": "Fazer",
-        "checklist": [
-          {
-            "name": "CRIAR CHECKLIST",
-            "isCheck": false
-          }
-        ]
-      },
-      "id": "f4d7"
-    },
-    {
-      "dataTask": {},
-      "id": "299b"
-    },
-    {
-      "name": "Criar o filtro de idDatasets no Análise de relatórios ",
-      "description": "Trazer um filtro de visualização da table-report diferente....",
+      "name": "Ver o meu amor",
+      "description": "dar muitoa bjs no seu amor",
       "responsible": "Rolemberg Junior",
       "creationDate": "15/07/2024",
-      "finalizationDate": "2024-08-10",
+      "finalizationDate": "2024-09-27",
       "priority": "ALTA PRIORIDADE",
       "status": "Em andamento",
-      "folder": "Juninho",
-      "checklist": [],
+      "folder": "Nova pasta",
+      "checklist": [
+        {
+          "name": "abraço ",
+          "isCheck": true
+        },
+        {
+          "name": "beijo",
+          "isCheck": false
+        }
+      ],
       "id": "4dc8"
     },
     {
@@ -46,24 +32,6 @@
       "folder": "Trabalho",
       "checklist": [],
       "id": "e98d"
-    },
-    {
-      "id": "1db7"
-    },
-    {
-      "id": "6da6"
-    },
-    {
-      "id": "b8f8"
-    },
-    {
-      "id": "1dc6"
-    },
-    {
-      "id": "0109"
-    },
-    {
-      "id": "4c31"
     },
     {
       "name": "Task do vídeo",
@@ -184,6 +152,66 @@
       "folder": null,
       "status": "Fazer",
       "checklist": []
+    },
+    {
+      "name": "Terminar de FAZER atividades de figuras de linguagem",
+      "description": "Fazer exercícios de ENEM sobre figuras de linguagem.",
+      "responsible": "Rolemberg Junior",
+      "creationDate": "22/08/2024",
+      "finalizationDate": "2024-08-29",
+      "priority": "MÉDIA PRIORIDADE",
+      "status": "Em andamento",
+      "folder": "Estudos",
+      "checklist": [],
+      "id": "d886"
+    },
+    {
+      "name": "Iniciar módulo de PROBRABILIDADE ",
+      "description": "",
+      "responsible": "Rolemberg Junior",
+      "creationDate": "22/08/2024",
+      "finalizationDate": "2024-08-23",
+      "priority": "ALTA PRIORIDADE",
+      "status": "Não iniciado",
+      "folder": "Estudos",
+      "checklist": [],
+      "id": "2fa9"
+    },
+    {
+      "name": "Fazer bastante exercícios de ELETRODINÂMICA E ONDULATÓRIA",
+      "description": "",
+      "responsible": "Rolemberg Junior",
+      "creationDate": "22/08/2024",
+      "finalizationDate": "2024-08-23",
+      "priority": "ALTA PRIORIDADE",
+      "status": "Fazer",
+      "folder": "Estudos",
+      "checklist": [],
+      "id": "11c0"
+    },
+    {
+      "id": "e9b9",
+      "name": "LIXAR O CARRO",
+      "description": "TESTE",
+      "responsible": "Rolemberg Junior",
+      "creationDate": "24/08/2024",
+      "finalizationDate": "2024-09-20",
+      "priority": "ALTA PRIORIDADE",
+      "folder": "d541",
+      "status": "Em andamento",
+      "checklist": []
+    },
+    {
+      "id": "0378",
+      "name": "Estudar sobre o REDUCE",
+      "description": "Pesquisar sobre sua funcionalidade",
+      "responsible": "Rolemberg Junior",
+      "creationDate": "31/08/2024",
+      "finalizationDate": "2024-09-01",
+      "priority": "ALTA PRIORIDADE",
+      "folder": null,
+      "status": "Fazer",
+      "checklist": []
     }
   ],
   "pastas": [
@@ -194,6 +222,10 @@
     {
       "id": "4823",
       "name": "Nova pasta"
+    },
+    {
+      "id": "c66d",
+      "name": "Estudos"
     }
   ]
 }

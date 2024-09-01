@@ -44,12 +44,13 @@ export default function PercentLateTaskDash(){
         ];
     };
 
-    console.log( needle, '??????' )
-
     return(
-        <div className="dark:bg-[#1e293b] row-start-2 row-end-3 col-start-1 col-end-2 h-full w-full">
+        <div className="dark:bg-[#1e293b] row-start-2 row-end-4 col-start-1 col-end-2 h-full w-full p-5">
             <h1 className="text-xl text-center font-semibold">Índice de efetividade</h1>
-            <PieChart className="mx-auto " width={300} height={250}>
+            <PieChart 
+                className="mx-auto my-10"
+                width={300} 
+                height={250}>
                 <Pie 
                     className="w-[300px] h-[200px]"
                     dataKey='value'
@@ -69,6 +70,14 @@ export default function PercentLateTaskDash(){
                 </Pie>
                 { needle( value, data, cx, cy, iR, oR, '#d0d000' ) }
             </PieChart>
+            <div className="flex flex-col items-center justify-center space-y-1">
+                <h3 className="text-black dark:text-red-600 font-medium">
+                    2,35%
+                </h3>
+                <h2 className="text-black dark:text-white font-semibold">
+                    PERÍODO ANALISADO: AGOSTO/24
+                </h2>
+            </div>
         </div>
     );
 }

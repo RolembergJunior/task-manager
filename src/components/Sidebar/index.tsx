@@ -106,6 +106,7 @@ export default function SideBar(){
                                     >
                                         <div 
                                             className={`px-3 w-full`} 
+                                            key={folder.id}
                                             onClick={() => onHandleFilterFolder(folder.name.toString())}
                                         >
                                             {folder.name}

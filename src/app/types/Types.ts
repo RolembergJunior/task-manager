@@ -9,7 +9,7 @@ export interface tasksProps{
     name: string,
     description: string ,
     responsible: string | null, 
-    creationDate: string | null,
+    creationDate: string ,
     finalizationDate: string ,
     priority: string | number,
     status: string,

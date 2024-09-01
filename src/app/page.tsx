@@ -29,7 +29,7 @@ export default function Home() {
   const { data, error, isLoading } = useFetch('http://localhost:3000/tarefas');
   const dataFolder = useFetchFolder('http://localhost:3000/pastas');
   const [ allData, setAllData ] = useState<tasksProps[]>([]);
-  const [ filters, setFilters ] = useAtom(filtersAtom)
+  const [ filters, setFilters ] = useAtom(filtersAtom);
   const { theme, setTheme } = useTheme();
 
   useEffect(() => {

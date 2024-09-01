@@ -12,5 +12,5 @@ export function extractMonthFromDate(date:string[]):string[] | undefined{
 
             return month;
         }));
-    }
+    } 
 };
