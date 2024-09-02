@@ -45,12 +45,6 @@ export default function CountTaskStatus(){
                 />
                 <div 
                     style={{
-                        width: formatNumbertoPercent(((statusTasks['Atrasada']?.length ? statusTasks['Atrasada']?.length : 0) / totalItens), 2)
-                    }}    
-                    className="bg-red-700 h-10" 
-                />
-                <div 
-                    style={{
                         width: formatNumbertoPercent(((statusTasks['Fazer']?.length ? statusTasks['Fazer']?.length : 0) / totalItens), 2)
                     }}   
                     className="bg-blue-500 h-10 w-full" 
@@ -63,7 +57,7 @@ export default function CountTaskStatus(){
                 />
                 <div 
                     style={{
-                        width: formatNumbertoPercent(((statusTasks['Concluida']?.length ? statusTasks['Concluida']?.length : 0) / totalItens), 2)
+                        width: formatNumbertoPercent(((statusTasks['Concluída']?.length ? statusTasks['Concluída']?.length : 0) / totalItens), 2)
                     }}   
                     className="bg-green-600 h-10 w-full" 
                 />
@@ -74,10 +68,6 @@ export default function CountTaskStatus(){
                     <span className="text-gray-500 font-semibold">Não iniciado</span>
                 </div>
                 <div className="text-center">
-                    <p className="text-xl">{formatNumbertoPercent(((statusTasks['Atrasada']?.length ? statusTasks['Atrasada']?.length : 0) / totalItens), 2)}</p>
-                    <span className="text-red-700 font-semibold">Atrasadas</span>
-                </div>
-                <div className="text-center">
                     <p className="text-xl">{formatNumbertoPercent(((statusTasks['Fazer']?.length ? statusTasks['Fazer']?.length : 0) / totalItens), 2)}</p>
                     <span className="text-blue-500 font-semibold">Fazer</span>
                 </div>
@@ -86,7 +76,7 @@ export default function CountTaskStatus(){
                     <span className="text-yellow-500 font-semibold">Em andamento</span>
                 </div>
                 <div className="text-center">
-                    <p className="text-xl">{formatNumbertoPercent(((statusTasks['Concluida']?.length ? statusTasks['Não iniciado']?.length : 0) / totalItens), 2)}</p>
+                    <p className="text-xl">{formatNumbertoPercent(((statusTasks['Concluída']?.length ? statusTasks['Concluída']?.length : 0) / totalItens), 2)}</p>
                     <span className="text-green-600 font-semibold">Concluídas</span>
                 </div>
             </div>

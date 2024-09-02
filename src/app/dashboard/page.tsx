@@ -10,16 +10,17 @@ import SelectCompetency from "@/components/SelectCompetency";
 import SelectStatus from "@/components/SelectStatus";
 import SelectPriority from "@/components/SelectPriority";
 import { useEffect } from "react";
+import SelectWorking from "@/components/SelectWorking";
 
 export default function Dashboard(){
-    const { data, isLoading, error } = useFetch('http://localhost:3000/tarefas');
+    const { data } = useFetch('http://localhost:3000/tarefas');
 
     useEffect(() => {
         if(!data){
             return;
         }
 
-    },[data])
+    },[data]);
 
     return(
         <section>
@@ -32,6 +33,7 @@ export default function Dashboard(){
                             <SelectCompetency />
                             <SelectStatus/>
                             <SelectPriority/>
+                            <SelectWorking/>
                         </div>
                         <Button className="text-black p-2">
                             Editar layout

@@ -9,11 +9,9 @@ import {
   Bar, 
   BarChart, 
   CartesianGrid, 
-  ComposedChart, 
   Legend, 
-  Line, 
-  Rectangle, 
   ResponsiveContainer, 
+  Tooltip, 
   XAxis, 
   YAxis } from "recharts";
 
@@ -98,9 +96,9 @@ const normalizedDataChart = Object.entries( monthsTasks ).map( ([ name, value ])
               <CartesianGrid stroke="#ffffff00" />
               <XAxis type="category" dataKey="name" />
               <YAxis type="number"  />
-              {/* <Tooltip /> */}
+              <Tooltip />
               <Legend />
-              <Bar dataKey="value" fill="#2449ee" activeBar={<Rectangle fill="pink" stroke="blue" />}/>
+              <Bar dataKey="value" fill="#2449ee" />
           </BarChart>
       </ResponsiveContainer>
     </div>

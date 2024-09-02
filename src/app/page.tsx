@@ -23,6 +23,8 @@ import { mutate } from "swr";
 import { useTheme } from "next-themes";
 import { filtersAtom } from "./Atoms";
 import AddNewFolder from "@/components/AddNewFolder";
+import SelectWorking from "@/components/SelectWorking";
+import { getValueWorkingTask } from "@/utils/getValueworkingTask";
 
 
 export default function Home() {
@@ -50,12 +52,13 @@ export default function Home() {
     const sensitiveDataBySearch = allData.filter( task => task.name?.toLowerCase().includes( normalizeToLowerCase ) );
     const sensitiveDataByPriority = filters.priority != 'Todos' ? sensitiveDataBySearch.filter( taskFiltered => taskFiltered.priority === filters.priority ) : sensitiveDataBySearch;
     const sensitiveDataByStatus = filters.status != 'Todos' ? sensitiveDataByPriority.filter( taskFiltered => taskFiltered.status === filters.status ) : sensitiveDataByPriority;
-    const sensitiveDataByFolders = filters.folder != null ? sensitiveDataByPriority.filter( taskFiltered => taskFiltered.folder === filters.folder ) : sensitiveDataByStatus;
+    const sensitiveDataWorking = filters.working != 'Todos' ? sensitiveDataByStatus.filter( taskFiltered => getValueWorkingTask(taskFiltered.finalizationDate)?.toString() === filters.working ) : sensitiveDataByStatus;
+    const sensitiveDataByFolders = filters.folder != null ? sensitiveDataWorking.filter( taskFiltered => taskFiltered.folder === filters.folder ) : sensitiveDataWorking;
 
 
-    const dataFiltered = [...sensitiveDataByFolders]
+    const dataFiltered = [...sensitiveDataByFolders];
 
-    return dataFiltered
+    return dataFiltered;
   }
 
   const sensitiveDataByFilters = filteredArray();
@@ -139,11 +142,11 @@ export default function Home() {
                       <SelectItem value="Concluída">
                           Concluída
                       </SelectItem>
-                      <SelectItem value="Atrasada">
-                          Atrasada
-                      </SelectItem>
                     </SelectContent>
                   </Select>
+                </div>
+                <div>
+                  <SelectWorking/>
                 </div>
                 <div>
                 <Button variant="outline" >
