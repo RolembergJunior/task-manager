@@ -14,7 +14,6 @@ import {
     filtersAtom 
 } from "@/app/Atoms";
 import { extractMonthFromDate } from "@/utils/extractMonthFromDate";
-import { useEffect } from "react";
 import { useFetch } from "@/hooks/useFetch";
 import Loading from "../Loading";
 
@@ -39,7 +38,7 @@ export default function SelectCompetency(){
                 <SelectValue placeholder="Competência" />
             </SelectTrigger>
             <SelectContent>
-                <SelectItem value="Todos">
+                <SelectItem value={null}>
                     Todos
                 </SelectItem>
                 {arrayWhitoutDuplicates?.map( (date, index) => (

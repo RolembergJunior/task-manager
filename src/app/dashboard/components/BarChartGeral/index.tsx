@@ -1,5 +1,7 @@
 'use client'
 
+import { useAtom } from "jotai";
+import { filtersAtom } from "@/app/Atoms";
 import { tasksProps } from "@/app/types/Types";
 import { useFetch } from "@/hooks/useFetch";
 import { extractMonthFromDate } from "@/utils/extractMonthFromDate";
@@ -14,11 +16,30 @@ import {
   Tooltip, 
   XAxis, 
   YAxis } from "recharts";
+import { getValueWorkingTask } from "@/utils/getValueworkingTask";
 
 export default function BarChartGeral(){
   const { data } = useFetch('http://localhost:3000/tarefas');
+  const [ filters ] = useAtom(filtersAtom);
 
   if(!data) return;
+
+  function filteredArray() { 
+
+    if(!data) return;
+
+    const normalizeToLowerCase = filters.search.toLowerCase();
+    const sensitiveDataBySearch = data.filter( task => task.name?.toLowerCase().includes( normalizeToLowerCase ) );
+    const sensitiveDataByPriority = filters.priority != 'Todos' ? sensitiveDataBySearch.filter( taskFiltered => taskFiltered.priority === filters.priority ) : sensitiveDataBySearch;
+    const sensitiveDataByStatus = filters.status != 'Todos' ? sensitiveDataByPriority.filter( taskFiltered => taskFiltered.status === filters.status ) : sensitiveDataByPriority;
+    const sensitiveDataWorking = filters.working != 'Todos' ? sensitiveDataByStatus.filter( taskFiltered => getValueWorkingTask(taskFiltered.finalizationDate)?.toString() === filters.working ) : sensitiveDataByStatus;
+    const sensitiveDataCompetency = filters.competency != null ? sensitiveDataWorking.filter( taskFiltered => format(new Date(formatDateToUs( taskFiltered.creationDate )), 'MMMM/yy').toLowerCase() === filters.competency ) : sensitiveDataWorking;
+    const sensitiveDataByFolders = filters.folder != null ? sensitiveDataWorking.filter( taskFiltered => taskFiltered.folder === filters.folder ) : sensitiveDataCompetency;
+
+    return [...sensitiveDataByFolders];
+  }
+
+  const dataFiltered = filteredArray();
 
   type taskPerMonth = {
     [month: string]: number;
@@ -27,7 +48,7 @@ export default function BarChartGeral(){
 function separeMonthsInArrays(){
     const monthsTasks: taskPerMonth = {};
 
-    data?.forEach( item => {
+    dataFiltered?.forEach( item => {
       const normalizedDate = format(new Date(formatDateToUs( item.creationDate ) ), 'MMMM/yy');
 
         if( normalizedDate in monthsTasks ) {

@@ -1,24 +1,116 @@
 'use client'
 
+import { filtersAtom } from "@/app/Atoms";
+import { useFetch } from "@/hooks/useFetch";
+import { formatDateToUs } from "@/utils/formatDateToUS";
+import { formatNumbertoPercent } from "@/utils/formatNumbertoPercent";
+import { getValueWorkingTask } from "@/utils/getValueworkingTask";
+import { format } from "date-fns";
+import { useAtom } from "jotai";
 import { PieChart, Pie, Cell } from "recharts";
 
+
 export default function PercentLateTaskDash(){
+    const { data } = useFetch( 'http://localhost:3000/tarefas' );
+    const [ filters ] = useAtom(filtersAtom);
 
+    if( !data ) return;
+
+    function filteredArray() { 
+
+        if(!data) return;
+
+        const normalizeToLowerCase = filters.search.toLowerCase();
+        const sensitiveDataBySearch = data.filter( task => task.name?.toLowerCase().includes( normalizeToLowerCase ) );
+        const sensitiveDataByPriority = filters.priority != 'Todos' ? sensitiveDataBySearch.filter( taskFiltered => taskFiltered.priority === filters.priority ) : sensitiveDataBySearch;
+        const sensitiveDataByStatus = filters.status != 'Todos' ? sensitiveDataByPriority.filter( taskFiltered => taskFiltered.status === filters.status ) : sensitiveDataByPriority;
+        const sensitiveDataWorking = filters.working != 'Todos' ? sensitiveDataByStatus.filter( taskFiltered => getValueWorkingTask(taskFiltered.finalizationDate)?.toString() === filters.working ) : sensitiveDataByStatus;
+        const sensitiveDataCompetency = filters.competency != null ? sensitiveDataWorking.filter( taskFiltered => format(new Date(formatDateToUs( taskFiltered.creationDate )), 'MMMM/yy').toLowerCase() === filters.competency ) : sensitiveDataWorking;
+        const sensitiveDataByFolders = filters.folder != null ? sensitiveDataWorking.filter( taskFiltered => taskFiltered.folder === filters.folder ) : sensitiveDataCompetency;
+    
+        return [...sensitiveDataByFolders];
+    }
+
+    const dataFiltered = filteredArray();
+
+    type WorkingType = {
+        [working: string]: number,
+    };
+
+    function getLabelWorkingtask(value:number){
+        if(value === -1 ){
+            return 'Atrasada'
+        } else if( value === 0 ){
+            return 'último dia'
+        } else if( value === 1 ){
+            return 'No prazo'
+        } else {
+            return 'SEM STATUS'
+        }
+
+    };
+
+    function getColorbyWorkingTask(typeWorking:string){
+        if(!typeWorking) return;
+
+        if(typeWorking === 'Atrasada' ){
+            return '#dc2626'
+        } else if( typeWorking === 'último dia' ){
+            return '#ea580c'
+        } else if( typeWorking === 'No prazo' ){
+            return '#16a34a'
+        } 
+    }
+
+    function separeWorkingTaskInArray(){
+        const workingTasks: WorkingType = {};
+
+        dataFiltered?.forEach( item => {
+            const working:number | undefined = getValueWorkingTask(item.finalizationDate);
+            const labelWorking = getLabelWorkingtask(working!);
+            
+            if( labelWorking in workingTasks ) {
+                workingTasks[labelWorking]++;
+            } else {
+                workingTasks[labelWorking] = 1;
+            }
+        });
+
+        const normalizedStatus = Object.entries(workingTasks).map( ([name, value]) => ({name, value, color: getColorbyWorkingTask(name)}) );
+    
+        return normalizedStatus;
+    }
+    
+    type workingTaskProps = {
+        name: string,
+        value: number,
+        color: string | undefined
+    };
+
+    const workingTask:workingTaskProps[] = separeWorkingTaskInArray();
+
+
+    function sumLastdayAndOnTimevalues(array:workingTaskProps[]):number{
+        const targetNames = ['No prazo', 'Último dia'];
+
+        return array.reduce(( total, item ) => {
+            if (targetNames.includes(item.name)) {
+              return total + item.value;
+            }
+
+            return total;
+        },0);
+    }
+    
     const RADIAN = Math.PI / 180;
-    const data = [
-        { name: 'A', value: 80, color: '#ff0000' },
-        { name: 'B', value: 45, color: '#00ff00' },
-        { name: 'C', value: 25, color: '#0000ff' },
-      ];
-
     const cx =  140;
     const cy = 150;
     const iR = 50;
     const oR = 100;
-    const value = 50;
+    const value = sumLastdayAndOnTimevalues(workingTask);
+    let total = 0;
 
-    const needle = ( value:number, data:any, cx:number, cy:number, iR:number, oR:number, color:string ) => {
-        let total = 0;
+    const needle = ( value:number, data:WorkingType[], cx:number, cy:number, iR:number, oR:number, color:string ) => {
 
         data.forEach( ( dataItem ) => {
             total += dataItem.value
@@ -56,7 +148,7 @@ export default function PercentLateTaskDash(){
                     dataKey='value'
                     startAngle={180}
                     endAngle={0}
-                    data={data}
+                    data={workingTask}
                     cx={cx}
                     cy={cy}
                     innerRadius={iR}
@@ -64,18 +156,18 @@ export default function PercentLateTaskDash(){
                     fill="#8884d8"
                     stroke="none"
                 >
-                    { data.map(( entry, index ) => (
+                    { workingTask.map(( entry, index ) => (
                         <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
                 </Pie>
-                { needle( value, data, cx, cy, iR, oR, '#d0d000' ) }
+                { needle( value, workingTask, cx, cy, iR, oR, '#d0d000' ) }
             </PieChart>
             <div className="flex flex-col items-center justify-center space-y-1">
                 <h3 className="text-black dark:text-red-600 font-medium">
-                    2,35%
+                    {formatNumbertoPercent((value/total),2)}
                 </h3>
                 <h2 className="text-black dark:text-white font-semibold">
-                    PERÍODO ANALISADO: AGOSTO/24
+                    PERÍODO ANALISADO: {filters.competency?.toUpperCase() ? filters.competency?.toUpperCase() : 'Todos'}
                 </h2>
             </div>
         </div>

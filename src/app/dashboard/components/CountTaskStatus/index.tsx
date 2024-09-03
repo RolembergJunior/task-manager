@@ -1,15 +1,40 @@
 'use client'
 
+import { useAtom } from "jotai";
+import { filterData } from "@/utils/filterData";
+import { filtersAtom } from "@/app/Atoms";
 import { tasksProps } from "@/app/types/Types";
 import { useFetch } from "@/hooks/useFetch";
 import { formatNumbertoPercent } from "@/utils/formatNumbertoPercent";
+import { getValueWorkingTask } from "@/utils/getValueworkingTask";
+import { format } from "date-fns";
+import { formatDateToUs } from "@/utils/formatDateToUS";
 
 export default function CountTaskStatus(){
     const { data } = useFetch('http://localhost:3000/tarefas');
+    const [ filters ] = useAtom(filtersAtom);
 
     if(!data) return; 
 
     let totalItens = data.length;
+
+    function filteredArray() { 
+
+        if(!data) return;
+
+        const normalizeToLowerCase = filters.search.toLowerCase();
+    const sensitiveDataBySearch = data.filter( task => task.name?.toLowerCase().includes( normalizeToLowerCase ) );
+    const sensitiveDataByPriority = filters.priority != 'Todos' ? sensitiveDataBySearch.filter( taskFiltered => taskFiltered.priority === filters.priority ) : sensitiveDataBySearch;
+    const sensitiveDataByStatus = filters.status != 'Todos' ? sensitiveDataByPriority.filter( taskFiltered => taskFiltered.status === filters.status ) : sensitiveDataByPriority;
+    const sensitiveDataWorking = filters.working != 'Todos' ? sensitiveDataByStatus.filter( taskFiltered => getValueWorkingTask(taskFiltered.finalizationDate)?.toString() === filters.working ) : sensitiveDataByStatus;
+    const sensitiveDataCompetency = filters.competency != null ? sensitiveDataWorking.filter( taskFiltered => format(new Date(formatDateToUs( taskFiltered.creationDate )), 'MMMM/yy').toLowerCase() === filters.competency ) : sensitiveDataWorking;
+    const sensitiveDataByFolders = filters.folder != null ? sensitiveDataWorking.filter( taskFiltered => taskFiltered.folder === filters.folder ) : sensitiveDataCompetency;
+    
+        return [...sensitiveDataByFolders];
+    }
+
+    const dataFiltered = filteredArray();
+    
 
     type StatusETarefas = {
         [status: string]: tasksProps[];
@@ -18,7 +43,7 @@ export default function CountTaskStatus(){
     function separeStatusInArrays(){
         const statusTarefas: StatusETarefas = {};
 
-        data?.forEach( item => {
+        dataFiltered?.forEach( item => {
             const status:string = item.status;
 
             if( status in statusTarefas ) {
@@ -41,25 +66,25 @@ export default function CountTaskStatus(){
                     style={{
                         width: formatNumbertoPercent(((statusTasks['Não iniciado']?.length ? statusTasks['Não iniciado']?.length : 0) / totalItens), 2)
                     }}    
-                    className="bg-gray-500 h-10" 
+                    className="transition-all duration-100 bg-gray-500 h-10" 
                 />
                 <div 
                     style={{
                         width: formatNumbertoPercent(((statusTasks['Fazer']?.length ? statusTasks['Fazer']?.length : 0) / totalItens), 2)
                     }}   
-                    className="bg-blue-500 h-10 w-full" 
+                    className="transition-all duration-100 bg-blue-500 h-10 w-full" 
                 />
                 <div 
                     style={{
                         width: formatNumbertoPercent(((statusTasks['Em andamento']?.length ? statusTasks['Em andamento']?.length : 0) / totalItens), 2)
                     }}   
-                    className="bg-yellow-500 h-10 w-full" 
+                    className="transition-all duration-100 bg-yellow-500 h-10 w-full" 
                 />
                 <div 
                     style={{
                         width: formatNumbertoPercent(((statusTasks['Concluída']?.length ? statusTasks['Concluída']?.length : 0) / totalItens), 2)
                     }}   
-                    className="bg-green-600 h-10 w-full" 
+                    className="transition-all duration-100 bg-green-600 h-10 w-full" 
                 />
             </div>
             <div className="flex justify-around ">

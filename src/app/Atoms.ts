@@ -12,8 +12,9 @@ interface FiltersProps{
     search: string,
     priority: string | null,
     status: string | null,
+    working: number | string,
     folder: string | null,
-    date: string | null
+    competency: string | null
 }
 
 export const taskAtom = atom<TaskState>({ 
@@ -26,6 +27,7 @@ export const filtersAtom = atom<FiltersProps>({
     search: '',
     priority: 'Todos',
     status: 'Todos',
+    working: 'Todos',
     folder: null,
     competency: null
   });
