@@ -13,13 +13,16 @@ import SideBar from "@/components/Sidebar";
 import AddTaskModal from "@/components/AddTaskModal";
 import Loading from "@/components/Loading";
 import { mutate } from "swr";
-import { useTheme } from "next-themes";
 import { filtersAtom } from "./Atoms";
 import AddNewFolder from "@/components/AddNewFolder";
 import SelectWorking from "@/components/SelectWorking";
 import { getValueWorkingByDateTask } from "@/utils/getValueWorkingByDateTask";
 import SelectStatus from "@/components/SelectStatus";
 import SelectPrority from "@/components/SelectPriority";
+import SelectCompetency from "@/components/SelectCompetency";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import { formatDateToUs } from "@/utils/formatDateToUS";
 
 
 export default function Home() {
@@ -27,7 +30,6 @@ export default function Home() {
   const [ allData, setAllData ] = useState<tasksProps[]>([]);
   const [ filters, setFilters ] = useAtom(filtersAtom);
   const sensitiveDataByFilters = useMemo(filteredArray, [allData, filters]);
-  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     if(data?.length){
@@ -48,7 +50,8 @@ export default function Home() {
     const sensitiveDataByPriority = filters.priority != 'Todos' ? sensitiveDataBySearch.filter( taskFiltered => taskFiltered.priority === filters.priority ) : sensitiveDataBySearch;
     const sensitiveDataByStatus = filters.status != 'Todos' ? sensitiveDataByPriority.filter( taskFiltered => taskFiltered.status === filters.status ) : sensitiveDataByPriority;
     const sensitiveDataWorking = filters.working != 'Todos' ? sensitiveDataByStatus.filter( taskFiltered => getValueWorkingByDateTask(taskFiltered.finalizationDate)?.toString() === filters.working ) : sensitiveDataByStatus;
-    const sensitiveDataByFolders = filters.folder != null ? sensitiveDataWorking.filter( taskFiltered => taskFiltered.folder === filters.folder ) : sensitiveDataWorking;
+    const sensitiveDataCompetency = filters.competency != null ? sensitiveDataWorking.filter( taskFiltered => format(new Date(formatDateToUs( taskFiltered.creationDate )), 'MMMM/yy', { locale: ptBR }).toLowerCase() === filters.competency ) : sensitiveDataWorking;
+    const sensitiveDataByFolders = filters.folder != null ? sensitiveDataWorking.filter( taskFiltered => taskFiltered.folder === filters.folder ) : sensitiveDataCompetency;
 
     return [...sensitiveDataByFolders];
   };
@@ -83,6 +86,9 @@ export default function Home() {
                 </div>
                 <div>
                   <SelectWorking/>
+                </div>
+                <div>
+                  <SelectCompetency/>
                 </div>
                 <div>
                 <Button variant="outline" >

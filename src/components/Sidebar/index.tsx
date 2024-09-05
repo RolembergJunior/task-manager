@@ -16,7 +16,7 @@ import NavLink from "./components/NavLink"
 import { useAtom } from "jotai";
 import { filtersAtom } from "@/app/Atoms";
 import { useFetchFolder } from "@/hooks/useFetch";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogTrigger } from "@/components/ui/dialog";
 import { GoDash } from "react-icons/go";
 import { DialogClose } from "@radix-ui/react-dialog";
 import Loading from "../Loading";
