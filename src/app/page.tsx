@@ -1,20 +1,13 @@
 "use client"
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useAtom } from "jotai";
-import { useFetch, useFetchFolder } from "@/hooks/useFetch";
+import { useFetch } from "@/hooks/useFetch";
 import { tasksProps } from "./types/Types";
 import { DataTable } from "./tasks/data-table";
 import { columns } from "./tasks/columns";
 import { Input } from "@/components/ui/input";
 import { CiCalendarDate, CiSearch } from "react-icons/ci";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import { Button } from "@/components/ui/button";
 import SideBar from "@/components/Sidebar";
 import AddTaskModal from "@/components/AddTaskModal";
@@ -24,18 +17,20 @@ import { useTheme } from "next-themes";
 import { filtersAtom } from "./Atoms";
 import AddNewFolder from "@/components/AddNewFolder";
 import SelectWorking from "@/components/SelectWorking";
-import { getValueWorkingTask } from "@/utils/getValueworkingTask";
+import { getValueWorkingByDateTask } from "@/utils/getValueWorkingByDateTask";
+import SelectStatus from "@/components/SelectStatus";
+import SelectPrority from "@/components/SelectPriority";
 
 
 export default function Home() {
   const { data, error, isLoading } = useFetch('http://localhost:3000/tarefas');
-  const dataFolder = useFetchFolder('http://localhost:3000/pastas');
   const [ allData, setAllData ] = useState<tasksProps[]>([]);
   const [ filters, setFilters ] = useAtom(filtersAtom);
+  const sensitiveDataByFilters = useMemo(filteredArray, [allData, filters]);
   const { theme, setTheme } = useTheme();
 
   useEffect(() => {
-    if(data != undefined){
+    if(data?.length){
       setAllData(data);
     }
     mutate( 'http://localhost:3000/tarefas' );
@@ -52,20 +47,11 @@ export default function Home() {
     const sensitiveDataBySearch = allData.filter( task => task.name?.toLowerCase().includes( normalizeToLowerCase ) );
     const sensitiveDataByPriority = filters.priority != 'Todos' ? sensitiveDataBySearch.filter( taskFiltered => taskFiltered.priority === filters.priority ) : sensitiveDataBySearch;
     const sensitiveDataByStatus = filters.status != 'Todos' ? sensitiveDataByPriority.filter( taskFiltered => taskFiltered.status === filters.status ) : sensitiveDataByPriority;
-    const sensitiveDataWorking = filters.working != 'Todos' ? sensitiveDataByStatus.filter( taskFiltered => getValueWorkingTask(taskFiltered.finalizationDate)?.toString() === filters.working ) : sensitiveDataByStatus;
+    const sensitiveDataWorking = filters.working != 'Todos' ? sensitiveDataByStatus.filter( taskFiltered => getValueWorkingByDateTask(taskFiltered.finalizationDate)?.toString() === filters.working ) : sensitiveDataByStatus;
     const sensitiveDataByFolders = filters.folder != null ? sensitiveDataWorking.filter( taskFiltered => taskFiltered.folder === filters.folder ) : sensitiveDataWorking;
 
-
-    const dataFiltered = [...sensitiveDataByFolders];
-
-    return dataFiltered;
-  }
-
-  const sensitiveDataByFilters = filteredArray();
-  
-  useEffect(() => {
-    filteredArray();
-  }, [filters]);
+    return [...sensitiveDataByFolders];
+  };
 
   useEffect(() => {
     if( typeof window !== undefined ) {
@@ -101,49 +87,10 @@ export default function Home() {
             <div className="flex gap-3">
               <div className="flex gap-3">
                 <div>
-                  <Select onValueChange={(value) => setFilters({...filters, priority: value})}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Prioridade" />
-                    </SelectTrigger>
-                    <SelectContent>
-                    <SelectItem value="Todos">
-                          Todos
-                      </SelectItem>
-                      <SelectItem value="ALTA PRIORIDADE">
-                          Priordade Alta
-                      </SelectItem>
-                      <SelectItem value="MÉDIA PRIORIDADE">
-                          Priordade Média
-                      </SelectItem>
-                      <SelectItem value="BAIXA PRIORIDADE">
-                          Priordade Baixa
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <SelectPrority/>
                 </div>
                 <div>
-                  <Select onValueChange={(value) => setFilters({...filters, status: value})}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Status" />
-                    </SelectTrigger>
-                    <SelectContent>
-                    <SelectItem value="Todos">
-                          Todos
-                      </SelectItem>
-                      <SelectItem value="Não inciado">
-                          Não inciada
-                      </SelectItem>
-                      <SelectItem value="Fazer">
-                          Fazer
-                      </SelectItem>
-                      <SelectItem value="Em andamento">
-                          Em andamento
-                      </SelectItem>
-                      <SelectItem value="Concluída">
-                          Concluída
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <SelectStatus/>
                 </div>
                 <div>
                   <SelectWorking/>

@@ -1,5 +1,6 @@
 'use client'
 
+import { useMemo } from "react";
 import { useAtom } from "jotai";
 import { useFetch } from "@/hooks/useFetch";
 import { 
@@ -10,17 +11,22 @@ import {
     SelectValue 
 } from "../ui/select";
 import { filtersAtom } from "@/app/Atoms";
-import { getValueWorkingTask } from "@/utils/getValueworkingTask";
+import { getValueWorkingByDateTask } from "@/utils/getValueWorkingByDateTask";
+import { Working } from "@/app/types/Types";
 
 export default function SelectWorking(){
-    const { data } = useFetch('http://localhost:3000/tarefas');
     const [ filters, setFilters ] = useAtom(filtersAtom);
+    const { data } = useFetch('http://localhost:3000/tarefas');
+    const dateEndValues = data?.map( item =>  getValueWorkingByDateTask(item.finalizationDate)!);
+    const normalizedData = useMemo(removeDuplicatesUsingIndexOf, [dateEndValues] );
 
-    if(!data) return;
+    if(!data?.length) return;
 
-    const dateEndValues = data?.map( item =>  getValueWorkingTask(item.finalizationDate)!);
     
     function removeDuplicatesUsingIndexOf() {
+        
+        if(!dateEndValues?.length) return;
+        
         const uniqueArr = [];
         
         for (let i = 0; i < dateEndValues.length; i++) {
@@ -30,19 +36,17 @@ export default function SelectWorking(){
         }
         
         return uniqueArr;
-      }
-      
-      const result = removeDuplicatesUsingIndexOf();
+      };
 
     function getLabelWorkingTask(valueTask:number | undefined){
         if(valueTask === 1 ){
-            return 'No prazo';
+            return Working.ON_TIME;
         } else if( valueTask === 0){
-            return 'Último dia';
+            return Working.LAST_DAY;
         } else if( valueTask === -1 ){
-            return 'Atrasada';
+            return Working.LATE;
         }
-    }
+    };
 
     return(
         <Select onValueChange={(value) => setFilters({...filters, working: value})}>
@@ -53,8 +57,8 @@ export default function SelectWorking(){
                 <SelectItem value="Todos">
                     Todos
                 </SelectItem>
-                {result?.map( item => (
-                        <SelectItem value={item.toString()}>
+                {normalizedData?.map( item => (
+                        <SelectItem value={item?.toString()}>
                             {getLabelWorkingTask(item)}
                         </SelectItem>
                     )

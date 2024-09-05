@@ -118,16 +118,16 @@
       "checklist": []
     },
     {
-      "id": "8433",
       "name": "qweqweqweqwe",
       "description": "qweqwe",
       "responsible": "Pitter Antonio",
       "creationDate": "16/08/2024",
       "finalizationDate": "2024-08-31",
       "priority": "MÉDIA PRIORIDADE",
-      "folder": null,
       "status": "Em andamento",
-      "checklist": []
+      "folder": null,
+      "checklist": [],
+      "id": "8433"
     },
     {
       "id": "b0bc",
@@ -202,16 +202,28 @@
       "checklist": []
     },
     {
-      "id": "0378",
       "name": "Estudar sobre o REDUCE",
       "description": "Pesquisar sobre sua funcionalidade",
       "responsible": "Rolemberg Junior",
       "creationDate": "31/08/2024",
       "finalizationDate": "2024-09-01",
       "priority": "ALTA PRIORIDADE",
-      "folder": null,
+      "status": "Concluída",
+      "folder": "Projeto",
+      "checklist": [],
+      "id": "0378"
+    },
+    {
+      "name": "Próximos passos do projeto",
+      "description": "1 - Criar um novo filtro  de ANDAMENTO, onde o usuário poderá verificar se a tarefa está, Atrasada, no Dia ou no prazo \n2 - Criar modal no contexto, para poder criar chamá-lo em qualquer lugar \n3 - Ajustar lógica do Dashboard ",
+      "responsible": "Rolemberg Junior",
+      "creationDate": "01/09/2024",
+      "finalizationDate": "2024-09-06",
+      "priority": "MÉDIA PRIORIDADE",
       "status": "Fazer",
-      "checklist": []
+      "folder": "Projeto",
+      "checklist": [],
+      "id": "886b"
     }
   ],
   "pastas": [
@@ -226,6 +238,10 @@
     {
       "id": "c66d",
       "name": "Estudos"
+    },
+    {
+      "id": "d93a",
+      "name": "Projeto"
     }
   ]
 }
