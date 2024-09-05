@@ -52,13 +52,6 @@ import ButtonIcon from "@/components/ButtonIcon";
     let countAllTasks = data.length;
     let totalPages = Math.ceil(countAllTasks/10);
 
-    // function getItemsCurrentPage(){
-    //     const startIndex = (page - 1) * 10;
-    //     const endIndex = page * 10;
-
-    //     return 
-    // }
-
 
     if(data === undefined) return <Loading/>
     if(data != undefined)

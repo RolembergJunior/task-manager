@@ -1,73 +1,92 @@
 'use client'
 
 import { filtersAtom } from "@/app/Atoms";
+import { Working } from "@/app/types/Types";
 import { useFetch } from "@/hooks/useFetch";
 import { formatDateToUs } from "@/utils/formatDateToUS";
 import { formatNumbertoPercent } from "@/utils/formatNumbertoPercent";
-import { getValueWorkingTask } from "@/utils/getValueworkingTask";
+import { getValueWorkingByDateTask } from "@/utils/getValueWorkingByDateTask";
 import { format } from "date-fns";
 import { useAtom } from "jotai";
+import { useMemo } from "react";
 import { PieChart, Pie, Cell } from "recharts";
 
+
+type workingTaskProps = {
+    name: string,
+    value: number,
+    color: string | undefined
+};
+
+type WorkingType = {
+    [working: string]: number,
+};
 
 export default function PercentLateTaskDash(){
     const { data } = useFetch( 'http://localhost:3000/tarefas' );
     const [ filters ] = useAtom(filtersAtom);
-
-    if( !data ) return;
+    const workingTask:workingTaskProps[]  = useMemo(separeWorkingTaskInArray, [data,filters]);
+    
+    if( !data?.length ) return;
 
     function filteredArray() { 
 
-        if(!data) return;
+        if(!data?.length) return;
 
         const normalizeToLowerCase = filters.search.toLowerCase();
         const sensitiveDataBySearch = data.filter( task => task.name?.toLowerCase().includes( normalizeToLowerCase ) );
         const sensitiveDataByPriority = filters.priority != 'Todos' ? sensitiveDataBySearch.filter( taskFiltered => taskFiltered.priority === filters.priority ) : sensitiveDataBySearch;
         const sensitiveDataByStatus = filters.status != 'Todos' ? sensitiveDataByPriority.filter( taskFiltered => taskFiltered.status === filters.status ) : sensitiveDataByPriority;
-        const sensitiveDataWorking = filters.working != 'Todos' ? sensitiveDataByStatus.filter( taskFiltered => getValueWorkingTask(taskFiltered.finalizationDate)?.toString() === filters.working ) : sensitiveDataByStatus;
+        const sensitiveDataWorking = filters.working != 'Todos' ? sensitiveDataByStatus.filter( taskFiltered => getValueWorkingByDateTask(taskFiltered.finalizationDate)?.toString() === filters.working ) : sensitiveDataByStatus;
         const sensitiveDataCompetency = filters.competency != null ? sensitiveDataWorking.filter( taskFiltered => format(new Date(formatDateToUs( taskFiltered.creationDate )), 'MMMM/yy').toLowerCase() === filters.competency ) : sensitiveDataWorking;
         const sensitiveDataByFolders = filters.folder != null ? sensitiveDataWorking.filter( taskFiltered => taskFiltered.folder === filters.folder ) : sensitiveDataCompetency;
     
         return [...sensitiveDataByFolders];
     }
-
-    const dataFiltered = filteredArray();
-
-    type WorkingType = {
-        [working: string]: number,
-    };
-
-    function getLabelWorkingtask(value:number){
+ 
+    function getLabelByValueWorkingTask(value:number){
         if(value === -1 ){
-            return 'Atrasada'
+            return Working.LATE
         } else if( value === 0 ){
-            return 'último dia'
+            return Working.LAST_DAY 
         } else if( value === 1 ){
-            return 'No prazo'
+            return Working.ON_TIME
         } else {
             return 'SEM STATUS'
         }
 
     };
 
-    function getColorbyWorkingTask(typeWorking:string){
+    function getColorbyLabelWorkingTask(typeWorking:string){
         if(!typeWorking) return;
 
-        if(typeWorking === 'Atrasada' ){
+        if(typeWorking === Working.LATE ){
             return '#dc2626'
-        } else if( typeWorking === 'último dia' ){
+        } else if( typeWorking === Working.LAST_DAY ){
             return '#ea580c'
-        } else if( typeWorking === 'No prazo' ){
+        } else if( typeWorking === Working.ON_TIME ){
             return '#16a34a'
         } 
-    }
+    };
+
+    function getValueByLabelWorkingTask(labelWorking:string){
+        if(!labelWorking) return;
+
+        if(labelWorking === Working.LATE ){
+            return -1
+        } else if( labelWorking === Working.LAST_DAY ){
+            return 0
+        } else if( labelWorking === Working.ON_TIME ){
+            return 1
+        } 
+    };
 
     function separeWorkingTaskInArray(){
         const workingTasks: WorkingType = {};
 
-        dataFiltered?.forEach( item => {
-            const working:number | undefined = getValueWorkingTask(item.finalizationDate);
-            const labelWorking = getLabelWorkingtask(working!);
+        filteredArray()?.forEach( item => {
+            const valueWorking:number = getValueWorkingByDateTask(item.finalizationDate);
+            const labelWorking = getLabelByValueWorkingTask(valueWorking!);
             
             if( labelWorking in workingTasks ) {
                 workingTasks[labelWorking]++;
@@ -76,31 +95,23 @@ export default function PercentLateTaskDash(){
             }
         });
 
-        const normalizedStatus = Object.entries(workingTasks).map( ([name, value]) => ({name, value, color: getColorbyWorkingTask(name)}) );
-    
-        return normalizedStatus;
-    }
-    
-    type workingTaskProps = {
-        name: string,
-        value: number,
-        color: string | undefined
+        const normalizedWorkingTask = Object.entries(workingTasks).map( ([name, value]) => ({name, value, color: getColorbyLabelWorkingTask(name), seq: getValueByLabelWorkingTask(name)}) );
+
+        return normalizedWorkingTask.sort( (a, b) => a.seq! - b.seq! );
     };
 
-    const workingTask:workingTaskProps[] = separeWorkingTaskInArray();
-
-
     function sumLastdayAndOnTimevalues(array:workingTaskProps[]):number{
-        const targetNames = ['No prazo', 'Último dia'];
+        const targetNames = [Working.ON_TIME, Working.LAST_DAY];
 
-        return array.reduce(( total, item ) => {
-            if (targetNames.includes(item.name)) {
-              return total + item.value;
+        return array.reduce(( accumulator, currentValues ) => {
+
+            if (targetNames.find( nameTarget => nameTarget === currentValues.name)) {
+              return accumulator + currentValues.value;
             }
 
-            return total;
+            return accumulator;
         },0);
-    }
+    };
     
     const RADIAN = Math.PI / 180;
     const cx =  140;
@@ -132,15 +143,15 @@ export default function PercentLateTaskDash(){
 
         return [
             <circle cx={x0} cy={y0} r={r} fill={color} stroke="none"></circle>,
-            <path d={`M${xba} ${yba}L${xbb} ${ybb} L${xp} ${yp} L${xba} ${yba}`} stroke="#none" fill={color} />
+            <path d={`M${xba} ${yba}L${xbb} ${ybb} L${xp} ${yp} L${xba} ${yba}`} stroke="#none" fill={color} />,
         ];
     };
 
     return(
-        <div className="dark:bg-[#1e293b] row-start-2 row-end-4 col-start-1 col-end-2 h-full w-full p-5">
+        <div className="relative dark:bg-[#1e293b] row-start-2 row-end-4 col-start-1 col-end-2 h-full w-full p-5">
             <h1 className="text-xl text-center font-semibold">Índice de efetividade</h1>
             <PieChart 
-                className="mx-auto my-10"
+                className="mx-auto mt-10"
                 width={300} 
                 height={250}>
                 <Pie 
@@ -162,10 +173,10 @@ export default function PercentLateTaskDash(){
                 </Pie>
                 { needle( value, workingTask, cx, cy, iR, oR, '#d0d000' ) }
             </PieChart>
+            <h3 className="absolute top-[50%] right-[250px] text-black dark:text-red-600 font-medium">
+                {formatNumbertoPercent((value/total),2)}
+            </h3>
             <div className="flex flex-col items-center justify-center space-y-1">
-                <h3 className="text-black dark:text-red-600 font-medium">
-                    {formatNumbertoPercent((value/total),2)}
-                </h3>
                 <h2 className="text-black dark:text-white font-semibold">
                     PERÍODO ANALISADO: {filters.competency?.toUpperCase() ? filters.competency?.toUpperCase() : 'Todos'}
                 </h2>

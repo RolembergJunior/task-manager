@@ -12,7 +12,7 @@ import { FaPlus, FaRegTrashAlt } from "react-icons/fa";
 import { Dialog, DialogClose, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { tasksProps } from "@/app/types/Types";
+import { Prioritys, Status, tasksProps } from "@/app/types/Types";
 import { format } from 'date-fns';
 import { useTheme } from "next-themes";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@radix-ui/react-tooltip";
@@ -182,7 +182,7 @@ export default function Task(){
         ]);
 
 
-    if(isLoading && error) return <Loading/>
+    if(isLoading || error) return <Loading/>
     if(!isLoading)
     return(
         <div className="flex bg-[#F5F6FA] dark:bg-black/20">
@@ -278,9 +278,9 @@ export default function Task(){
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
-                                                <SelectItem value="ALTA PRIORIDADE" >URGENTE</SelectItem>
-                                                <SelectItem value="MÉDIA PRIORIDADE" >MÉDIA URGÊNCIA</SelectItem>
-                                                <SelectItem value="BAIXA PRIORIDADE" >BAIXA URGÊNCIA</SelectItem>
+                                                <SelectItem value={Prioritys.HIGH_PRORITY} >URGENTE</SelectItem>
+                                                <SelectItem value={Prioritys.MEDIUM_PRIORITY} >MÉDIA URGÊNCIA</SelectItem>
+                                                <SelectItem value={Prioritys.LOW_PRIORITY} >BAIXA URGÊNCIA</SelectItem>
                                             </SelectGroup>
                                         </SelectContent>
                                     </Select>
@@ -293,11 +293,10 @@ export default function Task(){
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
-                                            <SelectItem value="Não iniciado" >Não inciado</SelectItem>
-                                            <SelectItem value="Fazer" >Fazer</SelectItem>
-                                            <SelectItem value="Em andamento" >Em andamento</SelectItem>
-                                            <SelectItem value="Concluída" >Concluído</SelectItem>
-                                            <SelectItem value="Atrasada" >Atrasado</SelectItem>
+                                            <SelectItem value={Status.NOT_INICIATE} >Não inciado</SelectItem>
+                                            <SelectItem value={Status.TO_DO} >Fazer</SelectItem>
+                                            <SelectItem value={Status.WORKING} >Em andamento</SelectItem>
+                                            <SelectItem value={Status.CLOSED} >Concluído</SelectItem>
                                             </SelectGroup>
                                         </SelectContent>
                                     </Select>

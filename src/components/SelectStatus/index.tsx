@@ -13,18 +13,15 @@ import { filtersAtom } from "@/app/Atoms";
 import Loading from "../Loading";
 
 export default function SelectStatus(){
-    const { data, isLoading, error } = useFetch('http://localhost:3000/tarefas');
+    const { data } = useFetch('http://localhost:3000/tarefas');
     const [ filters, setFilters ] = useAtom(filtersAtom);
 
-    if(!data?.map( item => item.status )){
-        return;
-    }
+    if(!data?.length) return;
+
     const statusTasks:string[] = data?.map( item => item.status );
 
-    const arrayWhitoutDuplicates = statusTasks?.filter( (item, index) => statusTasks.indexOf(item) === index && item != undefined ) ;
+    const arrayWhitoutDuplicates:string[] = statusTasks?.filter( (item, index) => statusTasks.indexOf(item) === index && item != undefined ) ;
 
-    if(isLoading || error ) return <Loading/>
-    if(!isLoading || !error) 
     return(
         <Select onValueChange={(value) => setFilters({...filters, status: value})}>
             <SelectTrigger>

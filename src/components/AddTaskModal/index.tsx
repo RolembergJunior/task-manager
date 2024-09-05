@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react';
-import { tasksProps } from '@/app/types/Types';
+import { Prioritys, Status, tasksProps } from '@/app/types/Types';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -20,16 +20,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useAtom } from 'jotai';
-import { filtersAtom } from '@/app/Atoms';
 import { useFetchFolder } from '@/hooks/useFetch';
 
 interface TaskModalProps{
-    getNewDataAndSave: (data:tasksProps) => void
-}
+    getNewDataAndSave: (data:tasksProps) => void;
+};
 
 export default function AddTaskModal({ getNewDataAndSave }:TaskModalProps){
-    const [ filters ] = useAtom(filtersAtom);
     const [dataTask, setDataTask] = useState<tasksProps>({
         name: '',
         description:'',
@@ -74,7 +71,7 @@ export default function AddTaskModal({ getNewDataAndSave }:TaskModalProps){
             }
         } else
         alert('Adicione o nome, a data de finalização e o status da tarefa')
-    }
+    };
 
     return(
         <Dialog>
@@ -124,11 +121,10 @@ export default function AddTaskModal({ getNewDataAndSave }:TaskModalProps){
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
-                                                <SelectItem value="Não iniciado" >Não inciado</SelectItem>
-                                                <SelectItem value="Fazer" >Fazer</SelectItem>
-                                                <SelectItem value="Em andamento" >Em andamento</SelectItem>
-                                                <SelectItem value="Concluída" >Concluído</SelectItem>
-                                                <SelectItem value="Atrasada" >Atrasado</SelectItem>
+                                                <SelectItem value={Status.NOT_INICIATE} >Não inciado</SelectItem>
+                                                <SelectItem value={Status.TO_DO} >Fazer</SelectItem>
+                                                <SelectItem value={Status.WORKING} >Em andamento</SelectItem>
+                                                <SelectItem value={Status.CLOSED} >Concluído</SelectItem>
                                             </SelectGroup>
                                         </SelectContent>
                                     </Select>
@@ -159,9 +155,9 @@ export default function AddTaskModal({ getNewDataAndSave }:TaskModalProps){
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectGroup>
-                                            <SelectItem value="ALTA PRIORIDADE" >Urgente</SelectItem>
-                                            <SelectItem value="MÉDIA PRIORIDADE" >Média urgência</SelectItem>
-                                            <SelectItem value="BAIXA PRIORIDADE" >Baixa urgência</SelectItem>
+                                            <SelectItem value={Prioritys.HIGH_PRORITY} >Urgente</SelectItem>
+                                            <SelectItem value={Prioritys.MEDIUM_PRIORITY} >Média urgência</SelectItem>
+                                            <SelectItem value={Prioritys.LOW_PRIORITY} >Baixa urgência</SelectItem>
                                         </SelectGroup>
                                     </SelectContent>
                                 </Select>

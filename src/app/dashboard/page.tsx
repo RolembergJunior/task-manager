@@ -9,18 +9,12 @@ import BarChartGeral from "./components/BarChartGeral";
 import SelectCompetency from "@/components/SelectCompetency";
 import SelectStatus from "@/components/SelectStatus";
 import SelectPriority from "@/components/SelectPriority";
-import { useEffect } from "react";
 import SelectWorking from "@/components/SelectWorking";
 
 export default function Dashboard(){
     const { data } = useFetch('http://localhost:3000/tarefas');
 
-    useEffect(() => {
-        if(!data){
-            return;
-        }
-
-    },[data]);
+    if(!data?.length) return;
 
     return(
         <section>
@@ -40,7 +34,7 @@ export default function Dashboard(){
                         </Button>
                     </div>
                     <section className="grid grid-rows-3 grid-cols-3 w-full h-[90vh] p-5 gap-2">
-                        <CountTaskStatus data={data}/>
+                        <CountTaskStatus/>
                         <PercentLateTaskDash/>
                         <BarChartGeral />
                     </section>

@@ -9,6 +9,7 @@ import { AiOutlineExclamationCircle } from "react-icons/ai";
 import { parse,format } from 'date-fns';
 import { ArrowUpDown } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@radix-ui/react-tooltip";
+import { Prioritys } from "../types/Types";
 
 export type Tasks = {
     id: number,
@@ -113,7 +114,7 @@ export const columns: ColumnDef<Tasks>[] = [
     {
         header: 'Prioridade',
         cell: ({ row }) => {
-            if( row.original.priority === "BAIXA PRIORIDADE" ){
+            if( row.original.priority === Prioritys.LOW_PRIORITY ){
                 return (
                     <TooltipProvider>
                         <Tooltip>
@@ -126,7 +127,7 @@ export const columns: ColumnDef<Tasks>[] = [
                         </Tooltip>
                     </TooltipProvider>
                 );
-            } else if( row.original.priority === "MÉDIA PRIORIDADE"){
+            } else if( row.original.priority === Prioritys.MEDIUM_PRIORITY){
                 return (
                     <TooltipProvider>
                         <Tooltip>
@@ -139,7 +140,7 @@ export const columns: ColumnDef<Tasks>[] = [
                         </Tooltip>
                     </TooltipProvider>
                 );
-            } else if( row.original.priority === "ALTA PRIORIDADE" ) {
+            } else if( row.original.priority === Prioritys.HIGH_PRORITY ) {
                 return (
                     <TooltipProvider>
                         <Tooltip>
