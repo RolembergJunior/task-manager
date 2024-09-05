@@ -28,19 +28,13 @@ export default function SideBar(){
     const [ filters, setFilters ] = useAtom(filtersAtom);
     const { theme, setTheme } = useTheme();
 
-    const getSetThemeInLocalStorage = window.localStorage.getItem('theme');
-
-    useEffect(() => {
-        getSetThemeInLocalStorage
-    },[theme]);
-
     function onHandleFilterFolder( value:string ){
         if(filters.folder?.toString() === value ){
             setFilters({...filters, folder: null});
         } else {
             setFilters({...filters, folder: value });
         }
-    }
+    };
 
     const options = {
         method: 'DELETE'
@@ -102,6 +96,7 @@ export default function SideBar(){
                             <ul>
                                 {data?.map( (folder) => ( 
                                     <div 
+                                        key={folder.id}
                                         className={`relative flex items-center justify-between ml-4 px-4 py-2 hover:cursor-pointer ${filters.folder?.toString() === folder.name ? 'bg-black rounded-lg' : null} hover:bg-[#F6F6F6] hover:dark:bg-black hover:rounded-lg transition-all`}
                                     >
                                         <div 

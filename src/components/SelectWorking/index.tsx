@@ -57,8 +57,8 @@ export default function SelectWorking(){
                 <SelectItem value="Todos">
                     Todos
                 </SelectItem>
-                {normalizedData?.map( item => (
-                        <SelectItem value={item?.toString()}>
+                {normalizedData?.map( (item, index) => (
+                        <SelectItem key={index.toString()} value={item?.toString()}>
                             {getLabelWorkingTask(item)}
                         </SelectItem>
                     )

@@ -7,6 +7,7 @@ import { formatDateToUs } from "@/utils/formatDateToUS";
 import { formatNumbertoPercent } from "@/utils/formatNumbertoPercent";
 import { getValueWorkingByDateTask } from "@/utils/getValueWorkingByDateTask";
 import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import { useAtom } from "jotai";
 import { useMemo } from "react";
 import { PieChart, Pie, Cell } from "recharts";
@@ -38,7 +39,7 @@ export default function PercentLateTaskDash(){
         const sensitiveDataByPriority = filters.priority != 'Todos' ? sensitiveDataBySearch.filter( taskFiltered => taskFiltered.priority === filters.priority ) : sensitiveDataBySearch;
         const sensitiveDataByStatus = filters.status != 'Todos' ? sensitiveDataByPriority.filter( taskFiltered => taskFiltered.status === filters.status ) : sensitiveDataByPriority;
         const sensitiveDataWorking = filters.working != 'Todos' ? sensitiveDataByStatus.filter( taskFiltered => getValueWorkingByDateTask(taskFiltered.finalizationDate)?.toString() === filters.working ) : sensitiveDataByStatus;
-        const sensitiveDataCompetency = filters.competency != null ? sensitiveDataWorking.filter( taskFiltered => format(new Date(formatDateToUs( taskFiltered.creationDate )), 'MMMM/yy').toLowerCase() === filters.competency ) : sensitiveDataWorking;
+        const sensitiveDataCompetency = filters.competency != null ? sensitiveDataWorking.filter( taskFiltered => format(new Date(formatDateToUs( taskFiltered.creationDate )), 'MMMM/yy', { locale: ptBR }).toLowerCase() === filters.competency ) : sensitiveDataWorking;
         const sensitiveDataByFolders = filters.folder != null ? sensitiveDataWorking.filter( taskFiltered => taskFiltered.folder === filters.folder ) : sensitiveDataCompetency;
     
         return [...sensitiveDataByFolders];

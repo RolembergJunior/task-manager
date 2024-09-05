@@ -39,7 +39,7 @@ export default function Home() {
   
   function getNewDataAndSave(newData:tasksProps){   
     setAllData([...allData, newData]);
-  } 
+  } ;
   
   function filteredArray() { 
 
@@ -53,19 +53,8 @@ export default function Home() {
     return [...sensitiveDataByFolders];
   };
 
-  useEffect(() => {
-    if( typeof window !== undefined ) {
-      const storagetheme = window.localStorage.getItem('theme')
-
-      setTheme( storagetheme || 'light' );
-    }
-  },[]);
-
-  
-  const localStorageIsDefined = theme === window.localStorage.getItem('theme') ? true : false;
-
-  if( !localStorageIsDefined && isLoading ) return <Loading/>;
-  if(!isLoading && !error && localStorageIsDefined )
+  if( isLoading ) return <Loading/>;
+  if(!isLoading && !error )
     return (
       <div className="flex bg-[#F5F6FA] dark:bg-black/20 transition-colors durantion-100">
         <SideBar/>
