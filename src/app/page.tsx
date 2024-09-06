@@ -23,6 +23,7 @@ import SelectCompetency from "@/components/SelectCompetency";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { formatDateToUs } from "@/utils/formatDateToUS";
+import { isServer } from "@/lib/isServer";
 
 
 export default function Home() {
@@ -31,7 +32,10 @@ export default function Home() {
   const [ filters, setFilters ] = useAtom(filtersAtom);
   const sensitiveDataByFilters = useMemo(filteredArray, [allData, filters]);
 
+  if(!isServer()) return;
+
   useEffect(() => {
+
     if(data?.length){
       setAllData(data);
     }
@@ -61,7 +65,7 @@ export default function Home() {
     return (
       <div className="flex bg-[#F5F6FA] dark:bg-black/20 transition-colors durantion-100">
         <SideBar/>
-          <div className="w-[90%]">
+        <div className="w-[85%]">
           <div className="flex items-center justify-between bg-white dark:bg-[#1e293b] border border-black/10 w-full h-20 p-4">
             <div className="flex items-center gap-3">
               <h1 className="text-xl w-40 font-semibold">
