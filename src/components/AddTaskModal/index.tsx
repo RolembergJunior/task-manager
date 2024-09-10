@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react';
-import { Prioritys, Status, tasksProps } from '@/app/types/Types';
+import { FolderProps, Prioritys, Status, tasksProps } from '@/app/types/Types';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -21,12 +21,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useFetchFolder } from '@/hooks/useFetch';
+import { mutate } from 'swr';
 
-interface TaskModalProps{
-    getNewDataAndSave: (data:tasksProps) => void;
-};
-
-export default function AddTaskModal({ getNewDataAndSave }:TaskModalProps){
+export default function AddTaskModal(){
     const [dataTask, setDataTask] = useState<tasksProps>({
         name: '',
         description:'',
@@ -38,27 +35,13 @@ export default function AddTaskModal({ getNewDataAndSave }:TaskModalProps){
         status: '',
         checklist:[]
     });
-    const dataFolders = useFetchFolder('http://localhost:3000/pastas');
-    const url = 'http://localhost:3000/tarefas';
-    let dateNow = new Date(Date.now());
+    const dataFolders = useFetchFolder({ url:'http://localhost:3000/pastas' });
 
-    function onHandleAddTask(){
+    async function onHandleAddTask(){
 
         if(dataTask.name != "", dataTask.finalizationDate != "", dataTask.status != ""){
-            getNewDataAndSave({
-                name: dataTask.name,
-                description: dataTask.description,
-                responsible: dataTask.responsible, 
-                creationDate: new Intl.DateTimeFormat('pt-BR').format(dateNow),
-                finalizationDate: dataTask.finalizationDate,
-                priority: dataTask.priority,
-                folder: dataTask.folder,
-                status: dataTask.status,
-                checklist:[]
-            });
-
             try {
-                fetch(url, {
+                await fetch('http://localhost:3000/tarefas', {
                     method: 'POST',
                     headers: {
                         'content-Type': 'application/json'
@@ -69,8 +52,10 @@ export default function AddTaskModal({ getNewDataAndSave }:TaskModalProps){
             } catch (error) {
                 console.error( 'Hoube um erro ao adicionar uma task', error );
             }
+
+            mutate( 'http://localhost:3000/tarefas' );
         } else
-        alert('Adicione o nome, a data de finalização e o status da tarefa')
+        alert('Adicione o nome, a data de finalização e o status da tarefa');
     };
 
     return(
@@ -173,7 +158,7 @@ export default function AddTaskModal({ getNewDataAndSave }:TaskModalProps){
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectGroup>
-                                        {dataFolders.data?.map( (folders) => (
+                                        {dataFolders.data?.map( (folders:FolderProps) => (
                                             <SelectItem value={folders.id} >{folders.name}</SelectItem>
                                         ))}
                                     </SelectGroup>

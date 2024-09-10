@@ -5,6 +5,7 @@ import { Working } from "@/app/types/Types";
 import { useFetch } from "@/hooks/useFetch";
 import { formatDateToUs } from "@/utils/formatDateToUS";
 import { formatNumbertoPercent } from "@/utils/formatNumbertoPercent";
+import { getColorbyLabelWorkingTask } from "@/utils/getColorWorkingByLabel";
 import { getValueWorkingByDateTask } from "@/utils/getValueWorkingByDateTask";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -24,7 +25,7 @@ type WorkingType = {
 };
 
 export default function PercentLateTaskDash(){
-    const { data } = useFetch( 'http://localhost:3000/tarefas' );
+    const { data } = useFetch({ url:'http://localhost:3000/tarefas' });
     const [ filters ] = useAtom(filtersAtom);
     const workingTask:workingTaskProps[]  = useMemo(separeWorkingTaskInArray, [data,filters]);
     
@@ -56,18 +57,6 @@ export default function PercentLateTaskDash(){
             return 'SEM STATUS'
         }
 
-    };
-
-    function getColorbyLabelWorkingTask(typeWorking:string){
-        if(!typeWorking) return;
-
-        if(typeWorking === Working.LATE ){
-            return '#dc2626'
-        } else if( typeWorking === Working.LAST_DAY ){
-            return '#ea580c'
-        } else if( typeWorking === Working.ON_TIME ){
-            return '#16a34a'
-        } 
     };
 
     function getValueByLabelWorkingTask(labelWorking:string){
@@ -149,7 +138,7 @@ export default function PercentLateTaskDash(){
     };
 
     return(
-        <div className="relative dark:bg-[#1e293b] row-start-2 row-end-4 col-start-1 col-end-2 h-full w-full p-5">
+        <div className="relative bg-white dark:bg-[#1e293b] row-start-2 row-end-4 col-start-1 col-end-2 h-full w-full p-5">
             <h1 className="text-xl text-center font-semibold">Índice de efetividade</h1>
             <PieChart 
                 className="mx-auto mt-10"

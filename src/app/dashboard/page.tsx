@@ -10,18 +10,19 @@ import SelectCompetency from "@/components/SelectCompetency";
 import SelectStatus from "@/components/SelectStatus";
 import SelectPriority from "@/components/SelectPriority";
 import SelectWorking from "@/components/SelectWorking";
+import { isServer } from "@/lib/isServer";
 
 export default function Dashboard(){
-    const { data } = useFetch('http://localhost:3000/tarefas');
+    const { data } = useFetch({url: 'http://localhost:3000/tarefas'});
 
-    if(!data?.length) return;
+    if(!data?.length || !isServer()) return;
 
     return(
         <section>
             <div className="flex">
                 <SideBar/>
-                <div className="flex flex-col w-[85%]">
-                    <div className="flex justify-between items-center dark:bg-[#1e293b] border-b w-full h-[81px] p-5 ">
+                <div className="flex flex-col bg-[#F5F6FA] dark:bg-black/70 w-[85%]">
+                    <div className="flex justify-between items-center bg-white dark:bg-[#1e293b] border-b w-full h-[81px] p-5 ">
                         <h1 className="text-2xl font-semibold">Dashboard</h1>
                         <div className="flex space-x-3 ite">
                             <SelectCompetency />

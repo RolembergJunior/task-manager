@@ -27,7 +27,7 @@ import { isServer } from "@/lib/isServer";
 
 
 export default function Home() {
-  const { data, error, isLoading } = useFetch('http://localhost:3000/tarefas');
+  const { data, error, isLoading } = useFetch({ url:'http://localhost:3000/tarefas' });
   const [ allData, setAllData ] = useState<tasksProps[]>([]);
   const [ filters, setFilters ] = useAtom(filtersAtom);
   const sensitiveDataByFilters = useMemo(filteredArray, [allData, filters]);
@@ -35,17 +35,10 @@ export default function Home() {
   if(!isServer()) return;
 
   useEffect(() => {
-
     if(data?.length){
       setAllData(data);
-    }
-    mutate( 'http://localhost:3000/tarefas' );
-    
-  },[data, allData]);
-  
-  function getNewDataAndSave(newData:tasksProps){   
-    setAllData([...allData, newData]);
-  } ;
+    }; 
+  },[data]);
   
   function filteredArray() { 
 
@@ -101,7 +94,7 @@ export default function Home() {
                 </div>
               </div>
               <AddNewFolder/>
-              <AddTaskModal getNewDataAndSave={getNewDataAndSave}/>
+              <AddTaskModal/>
             </div>
           </div>
           <DataTable columns={columns} data={sensitiveDataByFilters} />

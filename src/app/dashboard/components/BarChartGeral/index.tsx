@@ -23,7 +23,7 @@ type taskPerMonth = {
 };
 
 export default function BarChartGeral(){
-  const { data } = useFetch('http://localhost:3000/tarefas');
+  const { data } = useFetch({ url:'http://localhost:3000/tarefas' });
   const [ filters ] = useAtom(filtersAtom);
   const dataChart = useMemo( separeMonthsInArrays, [data, filters] );
 
@@ -91,7 +91,7 @@ function separeMonthsInArrays(){
 // const result = createArrayTaskPerMonth();
 
   return(
-    <div className="dark:bg-[#1e293b] row-start-1 row-end-4 col-start-2 col-end-4 p-5">
+    <div className="bg-white dark:bg-[#1e293b] row-start-1 row-end-4 col-start-2 col-end-4 p-5">
       <h1 className="text-xl text-center font-semibold">
         Quadro Geral
       </h1>

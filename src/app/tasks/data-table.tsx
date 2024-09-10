@@ -15,7 +15,6 @@ import {
     Table,
     TableBody,
     TableCell,
-    TableFooter,
     TableHead,
     TableHeader,
     TableRow,
@@ -28,7 +27,7 @@ import ButtonIcon from "@/components/ButtonIcon";
   interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[],
     data: TData[]
-  }
+  };
 
   export function DataTable<Tdata, Tvalue>({columns, data}:DataTableProps<Tdata, Tvalue>) {
     const [ sorting, setSorting ] = useState<SortingState>([]);
@@ -56,7 +55,7 @@ import ButtonIcon from "@/components/ButtonIcon";
     if(data === undefined) return <Loading/>
     if(data != undefined)
     return(
-        <div className="bg-white dark:bg-[#1e293b] rounded-md border dark:border-white/20 w-[90%] mx-auto my-5">
+        <div className="bg-white dark:bg-[#1e293b] rounded-md border dark:border-white/20 w-[95%] mx-auto my-5">
             <Table>
                 <TableHeader>
                     {table?.getHeaderGroups().map( (headerGroup) => (

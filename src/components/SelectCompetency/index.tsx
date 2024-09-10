@@ -18,7 +18,7 @@ import { useFetch } from "@/hooks/useFetch";
 import Loading from "../Loading";
 
 export default function SelectCompetency(){
-    const { data, isLoading, error } = useFetch('http://localhost:3000/tarefas');
+    const { data, isLoading, error } = useFetch({ url:'http://localhost:3000/tarefas' });
     const [ filters, setFilters ] = useAtom(filtersAtom);
 
     if(!data?.map( item => item.creationDate )){

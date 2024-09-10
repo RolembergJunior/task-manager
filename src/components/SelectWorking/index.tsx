@@ -12,12 +12,12 @@ import {
 } from "../ui/select";
 import { filtersAtom } from "@/app/Atoms";
 import { getValueWorkingByDateTask } from "@/utils/getValueWorkingByDateTask";
-import { Working } from "@/app/types/Types";
+import { tasksProps, Working } from "@/app/types/Types";
 
 export default function SelectWorking(){
     const [ filters, setFilters ] = useAtom(filtersAtom);
-    const { data } = useFetch('http://localhost:3000/tarefas');
-    const dateEndValues = data?.map( item =>  getValueWorkingByDateTask(item.finalizationDate)!);
+    const { data } = useFetch({ url:'http://localhost:3000/tarefas' });
+    const dateEndValues = data?.map( (item:tasksProps) =>  getValueWorkingByDateTask(item.finalizationDate)!);
     const normalizedData = useMemo(removeDuplicatesUsingIndexOf, [dateEndValues] );
 
     if(!data?.length) return;

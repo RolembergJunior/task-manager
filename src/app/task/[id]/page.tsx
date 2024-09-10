@@ -12,7 +12,7 @@ import { FaPlus, FaRegTrashAlt } from "react-icons/fa";
 import { Dialog, DialogClose, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { Prioritys, Status, tasksProps } from "@/app/types/Types";
+import { FolderProps, Prioritys, Status, tasksProps } from "@/app/types/Types";
 import { format } from 'date-fns';
 import { useTheme } from "next-themes";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@radix-ui/react-tooltip";
@@ -20,27 +20,15 @@ import { IoIosClose } from "react-icons/io";
 
 
 export default function Task(){
-    const [ dataTask, setDataTask ] = useState<tasksProps>(
-        {
-            name: '',
-            description:'',
-            responsible: '', 
-            creationDate: '',
-            finalizationDate: '',
-            priority: '',
-            folder: null,
-            status: '',
-            checklist: []
-        }
-    );
+    const [ dataTask, setDataTask ] = useState<tasksProps>({});
     const [isOpenInput, setIsOpenInput] = useState(false);
     const [inputText, setInputText] = useState('');
     const { theme } = useTheme();
     const route = useRouter();
     const param = useParams();
-    const url = `http://localhost:3000/tarefas/${param.id}`;
-    const { data, error, isLoading } = useFetch(url);
-    const dataFolders = useFetchFolder('http://localhost:3000/pastas');
+    const urlTask= `http://localhost:3000/tarefas/${param.id}`;
+    const { data, error, isLoading } = useFetch({ url:urlTask });
+    const dataFolders = useFetchFolder({ url:'http://localhost:3000/pastas' });
 
 
     useEffect(() => {
@@ -48,20 +36,10 @@ export default function Task(){
         if( data ){
             setDataTask(
                 {
-                    name: data?.name,
-                    description:data?.description ,
-                    responsible: data?.responsible , 
-                    creationDate: data?.creationDate ,
-                    finalizationDate: data?.finalizationDate ,
-                    priority: data?.priority ,
-                    folder: data?.folder ,
-                    status: data?.status ,
-                    checklist: data?.checklist?.map( list => list ) 
+                    ...data
                 }
             );
         } ;
-
-        verifyDateAndStylize();
     },[data]);
     
 
@@ -118,31 +96,28 @@ export default function Task(){
         method: 'DELETE'
     };
 
-    function onHandleRemoveTask(){
+    async function onHandleRemoveTask(){
         
-        fetch(url, options)
-        .then(response => response.json())
-        .catch(error => console.error('ERRO:',error));
+        await fetch(urlTask, options)
+              .catch(error => console.error('ERRO:',error));
 
         route.push('/');
     };
 
     function getIdFolderSelected( folderNameSelected: string | null ){
-        const idFolderSelected = dataFolders.data?.filter( folder => folder.name === folderNameSelected  ? folder : null)
+        const idFolderSelected = dataFolders.data?.find( (folder:FolderProps) => folder.name === folderNameSelected )
 
-        if( idFolderSelected?.length ){
+        if( idFolderSelected?.name ){
 
-            return idFolderSelected[0].name;
+            return idFolderSelected.name;
         }else {
             return null;
         }
     }
 
-    function onEditTask(){
+    async function onEditTask(){
 
-        if( data ){
-
-            fetch( url, {
+            await fetch( urlTask, {
                 method: 'PUT',
                 headers: {
                 "content-type": "application/json"
@@ -159,14 +134,12 @@ export default function Task(){
                     "checklist": dataTask.checklist
                 })
             })
-            .then( response => response.json() )
-            mutate(url);
-        };
+            .catch(error => console.error('ERRO:',error));
     };
 
 
     useEffect(() => {
-        if( data ){
+        if(Object.keys(dataTask).length && JSON.stringify(data) !== JSON.stringify(dataTask)){
             onEditTask();
         }
     }, [
@@ -191,7 +164,10 @@ export default function Task(){
                 <div className="bg-white dark:bg-[#1e293b] mx-auto w-[95%] h-[95vh] rounded-xl shadow-md shadow-black/20 p-5">
                     <div className="flex justify-between">
                         <BiLeftArrowAlt 
-                            onClick={() => route.push('/')} 
+                            onClick={() => {
+                                mutate('http://localhost:3000/tarefas');
+                                route.push('/')
+                            }} 
                             className="hover:cursor-pointer"
                             size={30} />
                     <Dialog>
@@ -233,8 +209,8 @@ export default function Task(){
                                     {verifyDateAndStylize()}
                                 </div>
                                 <textarea 
-                                    onChange={(e) => setDataTask({ ...dataTask, name: e.target.value })}
-                                    value={dataTask.name} 
+                                    onBlur={(e) => setDataTask({ ...dataTask, name: e.target.value })}
+                                    defaultValue={dataTask.name} 
                                     className="bg-transparent h-10 w-full text-3xl font-semibold focus:outline-none resize-none overflow-auto" 
                                 />
                             </div>
@@ -308,7 +284,7 @@ export default function Task(){
                                             <SelectValue placeholder={ getIdFolderSelected(dataTask.folder) } />
                                         </SelectTrigger>
                                         <SelectContent>
-                                        {dataFolders.data?.map( folder => (
+                                        {dataFolders.data?.map( (folder:FolderProps) => (
                                             <SelectItem 
                                                 value={folder.name}
                                                 key={folder.id}

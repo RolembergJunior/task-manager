@@ -9,10 +9,16 @@ import { getValueWorkingByDateTask } from "@/utils/getValueWorkingByDateTask";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { formatDateToUs } from "@/utils/formatDateToUS";
+import { useMemo } from "react";
+
+type StatusProps = {
+    [status: string]: tasksProps[];
+};
 
 export default function CountTaskStatus(){
-    const { data } = useFetch('http://localhost:3000/tarefas');
+    const { data } = useFetch({ url:'http://localhost:3000/tarefas' });
     const [ filters ] = useAtom(filtersAtom);
+    const statusTasks = useMemo(separeStatusInArrays, [data, filters]);
 
     if(!data) return; 
 
@@ -33,17 +39,11 @@ export default function CountTaskStatus(){
         return [...sensitiveDataByFolders];
     };
 
-    const dataFiltered = filteredArray();
-    
-
-    type StatusProps = {
-        [status: string]: tasksProps[];
-    };
 
     function separeStatusInArrays(){
         const statusArray: StatusProps = {};
 
-        dataFiltered?.forEach( item => {
+        filteredArray()?.forEach( item => {
             const status:string = item.status;
 
             if( status in statusArray ) {
@@ -55,8 +55,6 @@ export default function CountTaskStatus(){
 
         return statusArray;
     };
-
-    const statusTasks = separeStatusInArrays();
 
     return(
         <div className="flex flex-col justify-around row-start-1 row-end-2 col-start-1 col-end-2 bg-white dark:bg-[#1e293b] p-4">

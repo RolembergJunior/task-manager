@@ -1,10 +1,10 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { GiNetworkBars } from "react-icons/gi";
 import { TbReportSearch } from "react-icons/tb";
 import { IoMdHome } from "react-icons/io";
-import { FaInbox, FaPowerOff, FaRegFolder, FaTrash } from "react-icons/fa";
+import { FaInbox, FaPowerOff, FaRegFolder } from "react-icons/fa";
 import { FaEllipsisVertical } from "react-icons/fa6";
 import { IoMoonOutline, IoSettingsOutline } from "react-icons/io5";
 import { LuSun } from "react-icons/lu";
@@ -24,7 +24,7 @@ import Loading from "../Loading";
 
 export default function SideBar(){
     const [ isOpenFolder, setIsOpenFolder ] = useState(false);
-    const { data, isLoading, error } = useFetchFolder('http://localhost:3000/pastas');
+    const { data, isLoading, error } = useFetchFolder({ url: 'http://localhost:3000/pastas' });
     const [ filters, setFilters ] = useAtom(filtersAtom);
     const { theme, setTheme } = useTheme();
 
@@ -48,7 +48,7 @@ export default function SideBar(){
         .then(response => response.json())
         .catch(error => console.error('ERRO:',error));
 
-        alert('PASTA DELETADA!!')
+        alert('PASTA DELETADA!!');
     };
 
     if(isLoading) return <Loading/>

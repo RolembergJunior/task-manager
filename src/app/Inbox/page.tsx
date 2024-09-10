@@ -1,27 +1,13 @@
 'use client'
 
-import { useEffect, useState } from "react";
-import { useFetch } from "@/hooks/useFetch";
-import { tasksProps } from "../types/Types";
 import { Dialog, DialogContent, DialogTrigger, DialogClose, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import MenuFilter from "./components/MenuFilters";
 import SideBar from "@/components/Sidebar";
-import Loading from "@/components/Loading";
-import { useAtom } from "jotai";
-import { taskAtom } from "../Atoms";
 
 export default function Inbox(){
-  // const { data, error, isLoading } = useFetch('http://localhost:3000/tarefas');
-  const [atomData, setAtomData] = useAtom( taskAtom );
-  const [ allTasks, setAllTasks ] = useState<tasksProps[]>([]);
 
-  console.log(atomData.task, ' DADOS')
-
-
-  // if(isLoading) return <Loading/>  
-  // if(!error && !isLoading)  
     return(
         <div className="flex">
           <SideBar/>

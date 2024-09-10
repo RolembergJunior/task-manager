@@ -10,15 +10,15 @@ import {
     SelectValue 
 } from "../ui/select";
 import { filtersAtom } from "@/app/Atoms";
-import Loading from "../Loading";
+import { tasksProps } from "@/app/types/Types";
 
 export default function SelectStatus(){
-    const { data } = useFetch('http://localhost:3000/tarefas');
+    const { data } = useFetch({ url:'http://localhost:3000/tarefas' });
     const [ filters, setFilters ] = useAtom(filtersAtom);
 
     if(!data?.length) return;
 
-    const statusTasks:string[] = data?.map( item => item.status );
+    const statusTasks:string[] = data?.map( (item:tasksProps) => item.status );
 
     const arrayWhitoutDuplicates:string[] = statusTasks?.filter( (item, index) => statusTasks.indexOf(item) === index && item != undefined ) ;
 

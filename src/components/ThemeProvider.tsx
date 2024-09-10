@@ -1,13 +1,14 @@
-import { ThemeProvider } from "next-themes";
+'use client'
 
+import { ThemeProvider } from "next-themes";
 
 interface ChildrenType{
     children: React.ReactNode
-}
+};
 
 export default function ProviderTheme({children}:ChildrenType){
     return(
-        <ThemeProvider defaultTheme="light" >
+        <ThemeProvider defaultTheme="light">
             { children }
         </ThemeProvider>
     );

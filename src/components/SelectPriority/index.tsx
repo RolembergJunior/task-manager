@@ -10,18 +10,17 @@ import {
 } from "../ui/select";
 import { filtersAtom } from "@/app/Atoms";
 import { useFetch } from "@/hooks/useFetch";
-import Loading from "../Loading";
-
+import { tasksProps } from "@/app/types/Types";
 
 export default function SelectPrority(){
-    const { data } = useFetch('http://localhost:3000/tarefas');
+    const { data } = useFetch({ url:'http://localhost:3000/tarefas' });
     const [ filters, setFilters ] = useAtom(filtersAtom);
 
     if(!data?.length) return;
 
-    const priorityTasks:( string | number )[] = data.map( item => item.priority );
+    const priorityTasks = data.map( (item:tasksProps) => item.priority );
 
-    const arrayWhitoutDuplicates = priorityTasks?.filter( (item, index) => priorityTasks.indexOf(item) === index && item != undefined ) ;
+    const arrayWhitoutDuplicates:string[] = priorityTasks?.filter( (item:string, index:number) => priorityTasks.indexOf(item) === index && item != undefined ) ;
 
     return(
         <Select onValueChange={(value) => setFilters({...filters, priority: value})}>
@@ -33,7 +32,7 @@ export default function SelectPrority(){
                     Todos
                 </SelectItem>
                 {arrayWhitoutDuplicates?.map((priority, index) => (
-                    <SelectItem key={index} value={priority}>
+                    <SelectItem key={index} value={priority.toString()}>
                         {priority}
                     </SelectItem>
                 ))}
