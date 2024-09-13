@@ -4,25 +4,21 @@ import AtomProvider from "@/components/Provider";
 import { ThemeProvider } from "next-themes";
 
 export const metadata: Metadata = {
-  title: "Task Manager"
+	title: "Task Manager",
 };
 
 export default function RootLayout({
-  children,
+	children,
 }: Readonly<{
-  children: React.ReactNode;
+	children: React.ReactNode;
 }>) {
-  return (
-    <html lang="pt-br">
-      <AtomProvider>
-        <ThemeProvider
-          attribute="class"
-        >
-          <body>
-              {children}
-          </body>
-        </ThemeProvider>
-      </AtomProvider>
-    </html>
-  );
+	return (
+		<html lang="pt-br">
+			<AtomProvider>
+				<ThemeProvider attribute="class">
+					<body>{children}</body>
+				</ThemeProvider>
+			</AtomProvider>
+		</html>
+	);
 }

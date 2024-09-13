@@ -12,7 +12,6 @@ import { Button } from "@/components/ui/button";
 import SideBar from "@/components/Sidebar";
 import AddTaskModal from "@/components/AddTaskModal";
 import Loading from "@/components/Loading";
-import { mutate } from "swr";
 import { filtersAtom } from "./Atoms";
 import AddNewFolder from "@/components/AddNewFolder";
 import SelectWorking from "@/components/SelectWorking";
@@ -33,7 +32,10 @@ export default function Home() {
 		url: "http://localhost:3000/tarefas",
 	});
 
-	const sensitiveDataByFilters = useMemo(dynamicFilterFunction, [allData, filters]);
+	const sensitiveDataByFilters = useMemo(dynamicFilterFunction, [
+		allData,
+		filters,
+	]);
 
 	if (!isServer()) return;
 
@@ -66,9 +68,10 @@ export default function Home() {
 
 				return !filters.competency || taskCompetency === filters.competency;
 			},
-			folder: (task) => !filters.folder || task.folder === filters.folder,
+			folder: (task: tasksProps) =>
+				!filters.folder || task.folder === filters.folder,
 		};
-    
+
 		return allData.filter((task) =>
 			Object.values(filterMap).every((filterFunc) => filterFunc(task)),
 		);

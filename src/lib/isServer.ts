@@ -1,7 +1,7 @@
-function isClientSide(){
-    return typeof window !== 'undefined';
-};
+function isClientSide() {
+	return typeof window !== "undefined";
+}
 
-export async function isServer(){
-    return isClientSide();
-};
+export async function isServer() {
+	return isClientSide();
+}

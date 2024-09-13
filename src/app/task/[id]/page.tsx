@@ -44,7 +44,7 @@ import {
 import { IoIosClose } from "react-icons/io";
 
 export default function Task() {
-	const [dataTask, setDataTask] = useState<tasksProps>({});
+	const [dataTask, setDataTask] = useState<tasksProps>({} as tasksProps);
 	const [isOpenInput, setIsOpenInput] = useState(false);
 	const [inputText, setInputText] = useState("");
 	const { theme } = useTheme();
@@ -83,8 +83,8 @@ export default function Task() {
 						</Tooltip>
 					</TooltipProvider>
 				);
-			} 
-            if (currentDate.getTime() < inputedDate.getTime()) {
+			}
+			if (currentDate.getTime() < inputedDate.getTime()) {
 				return (
 					<TooltipProvider>
 						<Tooltip>
@@ -100,8 +100,8 @@ export default function Task() {
 						</Tooltip>
 					</TooltipProvider>
 				);
-			} 
-            if (currentDate.getTime() > inputedDate.getTime()) {
+			}
+			if (currentDate.getTime() > inputedDate.getTime()) {
 				return (
 					<TooltipProvider>
 						<Tooltip>
@@ -140,9 +140,9 @@ export default function Task() {
 
 		if (idFolderSelected?.name) {
 			return idFolderSelected.name;
-		} 
-        
-        return null;
+		}
+
+		return null;
 	}
 
 	async function onEditTask() {
@@ -172,10 +172,7 @@ export default function Task() {
 		) {
 			onEditTask();
 		}
-	}, [
-        data,
-		dataTask
-	]);
+	}, [dataTask]);
 
 	if (isLoading || error) return <Loading />;
 	if (!isLoading)
@@ -402,7 +399,7 @@ export default function Task() {
 													/>
 													<Button
 														onClick={() => {
-															if (inputText != "") {
+															if (inputText !== "") {
 																setInputText("");
 																setIsOpenInput(false);
 
@@ -410,7 +407,7 @@ export default function Task() {
 																	...dataTask,
 																	checklist: [
 																		{ name: inputText, isCheck: false },
-																		...dataTask.checklist?.map((item) => item),
+																		...dataTask.checklist.map((item) => item),
 																	],
 																});
 															}
@@ -435,7 +432,7 @@ export default function Task() {
 													)}
 													<div className="flex items-center gap-3">
 														<Input
-															checked={item.isCheck ? true : false}
+															checked={item.isCheck}
 															onClick={() => {
 																const updateCheckboxItems =
 																	dataTask.checklist.map(
@@ -478,7 +475,7 @@ export default function Task() {
 							<div className="mt-16 space-y-5 w-[20%] mx-auto h-full">
 								<h1 className="text-center text-xl font-semibold">Atividade</h1>
 								<div className="bg-[#F5F6FA] dark:bg-black/50 h-[62vh] w-full rounded-md">
-									<p className="text-center text-black/50"/>
+									<p className="text-center text-black/50" />
 								</div>
 								<div className="flex items-center justify-between gap-1">
 									<textarea

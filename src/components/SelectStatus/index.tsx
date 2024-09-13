@@ -1,42 +1,44 @@
-'use client'
+"use client";
 
 import { useAtom } from "jotai";
 import { useFetch } from "@/hooks/useFetch";
-import { 
-    Select, 
-    SelectContent, 
-    SelectItem, 
-    SelectTrigger, 
-    SelectValue 
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
 } from "../ui/select";
 import { filtersAtom } from "@/app/Atoms";
 import type { tasksProps } from "@/app/types/Types";
 
-export default function SelectStatus(){
-    const { data } = useFetch({ url:'http://localhost:3000/tarefas' });
-    const [ filters, setFilters ] = useAtom(filtersAtom);
+export default function SelectStatus() {
+	const { data } = useFetch({ url: "http://localhost:3000/tarefas" });
+	const [filters, setFilters] = useAtom(filtersAtom);
 
-    if(!data?.length) return;
+	if (!data?.length) return;
 
-    const statusTasks:string[] = data?.map( (item:tasksProps) => item.status );
+	const statusTasks: string[] = data?.map((item: tasksProps) => item.status);
 
-    const arrayWhitoutDuplicates:string[] = statusTasks?.filter( (item, index) => statusTasks.indexOf(item) === index && item !== undefined ) ;
+	const arrayWhitoutDuplicates: string[] = statusTasks?.filter(
+		(item, index) => statusTasks.indexOf(item) === index && item !== undefined,
+	);
 
-    return(
-        <Select onValueChange={(value) => setFilters({...filters, status: value})}>
-            <SelectTrigger>
-                <SelectValue placeholder="Status" />
-            </SelectTrigger>
-            <SelectContent>
-            <SelectItem value="Todos">
-                    Todos
-                </SelectItem>
-                {arrayWhitoutDuplicates?.map((status, index) => (
-                    <SelectItem key={index} value={status}>
-                        {status}
-                    </SelectItem>
-                ))}
-            </SelectContent>
-        </Select>
-    );
+	return (
+		<Select
+			onValueChange={(value) => setFilters({ ...filters, status: value })}
+		>
+			<SelectTrigger>
+				<SelectValue placeholder="Status" />
+			</SelectTrigger>
+			<SelectContent>
+				<SelectItem value="Todos">Todos</SelectItem>
+				{arrayWhitoutDuplicates?.map((status, index) => (
+					<SelectItem key={index} value={status}>
+						{status}
+					</SelectItem>
+				))}
+			</SelectContent>
+		</Select>
+	);
 }

@@ -1,73 +1,72 @@
-'use client'
+"use client";
 
 import { useMemo } from "react";
 import { useAtom } from "jotai";
 import { useFetch } from "@/hooks/useFetch";
-import { 
-    Select, 
-    SelectContent, 
-    SelectItem, 
-    SelectTrigger, 
-    SelectValue 
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
 } from "../ui/select";
 import { filtersAtom } from "@/app/Atoms";
 import { getValueWorkingByDateTask } from "@/utils/getValueWorkingByDateTask";
 import { type tasksProps, Working } from "@/app/types/Types";
 
-export default function SelectWorking(){
-    const [ filters, setFilters ] = useAtom(filtersAtom);
-    const { data } = useFetch({ url:'http://localhost:3000/tarefas' });
-    
-    const dateEndValues = data?.map( (item:tasksProps) =>  getValueWorkingByDateTask(item.finalizationDate));
-    
-    const normalizedData = useMemo(removeDuplicatesUsingIndexOf, [] );
+export default function SelectWorking() {
+	const [filters, setFilters] = useAtom(filtersAtom);
+	const { data } = useFetch({ url: "http://localhost:3000/tarefas" });
 
-    if(!data?.length) return;
+	const dateEndValues = data?.map((item: tasksProps) =>
+		getValueWorkingByDateTask(item.finalizationDate),
+	);
 
-    
-    function removeDuplicatesUsingIndexOf() {
-        
-        if(!dateEndValues?.length) return;
-        
-        const uniqueArr = [];
-        
-        for (let i = 0; i < dateEndValues.length; i++) {
-          if (uniqueArr.indexOf(dateEndValues[i]) === -1) {
-            uniqueArr.push(dateEndValues[i]);
-          }
-        }
-        
-        return uniqueArr;
-      };
+	const normalizedData = useMemo(removeDuplicatesUsingIndexOf, []);
 
-    function getLabelWorkingTask(valueTask:number | undefined){
-        if(valueTask === 1 ){
-            return Working.ON_TIME;
-        } 
-        if( valueTask === 0){
-            return Working.LAST_DAY;
-        } 
-        if( valueTask === -1 ){
-            return Working.LATE;
-        }
-    };
+	if (!data?.length) return;
 
-    return(
-        <Select onValueChange={(value) => setFilters({...filters, working: value})}>
-            <SelectTrigger>
-                <SelectValue placeholder="Andamento" />
-            </SelectTrigger>
-            <SelectContent>
-                <SelectItem value="Todos">
-                    Todos
-                </SelectItem>
-                {normalizedData?.map( (item, index) => (
-                        <SelectItem key={index.toString()} value={item?.toString()}>
-                            {getLabelWorkingTask(item)}
-                        </SelectItem>
-                    )
-                )}
-            </SelectContent>
-        </Select>
-    );
+	function removeDuplicatesUsingIndexOf() {
+		if (!dateEndValues?.length) return;
+
+		const uniqueArr = [];
+
+		for (let i = 0; i < dateEndValues.length; i++) {
+			if (uniqueArr.indexOf(dateEndValues[i]) === -1) {
+				uniqueArr.push(dateEndValues[i]);
+			}
+		}
+
+		return uniqueArr;
+	}
+
+	function getLabelWorkingTask(valueTask: number | undefined) {
+		if (valueTask === 1) {
+			return Working.ON_TIME;
+		}
+		if (valueTask === 0) {
+			return Working.LAST_DAY;
+		}
+		if (valueTask === -1) {
+			return Working.LATE;
+		}
+	}
+
+	return (
+		<Select
+			onValueChange={(value) => setFilters({ ...filters, working: value })}
+		>
+			<SelectTrigger>
+				<SelectValue placeholder="Andamento" />
+			</SelectTrigger>
+			<SelectContent>
+				<SelectItem value="Todos">Todos</SelectItem>
+				{normalizedData?.map((item, index) => (
+					<SelectItem key={index.toString()} value={item?.toString()}>
+						{getLabelWorkingTask(item)}
+					</SelectItem>
+				))}
+			</SelectContent>
+		</Select>
+	);
 }
