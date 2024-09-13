@@ -2,7 +2,6 @@
 
 import { useFetch } from "@/hooks/useFetch";
 import SideBar from "@/components/Sidebar";
-import { Button } from "@/components/ui/button";
 import CountTaskStatus from "./components/CountTaskStatus";
 import PercentLateTaskDash from "./components/PercentLateTasks";
 import BarChartGeral from "./components/BarChartGeral";
@@ -10,6 +9,7 @@ import SelectCompetency from "@/components/SelectCompetency";
 import SelectStatus from "@/components/SelectStatus";
 import SelectPriority from "@/components/SelectPriority";
 import SelectWorking from "@/components/SelectWorking";
+import { Button } from "@/components/ui/button";
 import { isServer } from "@/lib/isServer";
 
 export default function Dashboard() {

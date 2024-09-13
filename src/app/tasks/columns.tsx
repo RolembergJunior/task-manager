@@ -1,5 +1,7 @@
 "use client";
 
+import { Prioritys } from "../types/Types";
+import type { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
@@ -8,7 +10,6 @@ import {
 	DropdownMenuLabel,
 	DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
-import type { ColumnDef } from "@tanstack/react-table";
 import {
 	IoEllipsisHorizontal,
 	IoStarSharp,
@@ -24,7 +25,6 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@radix-ui/react-tooltip";
-import { Prioritys } from "../types/Types";
 
 export type Tasks = {
 	id: number;

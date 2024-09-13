@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 import { useAtom } from "jotai";
 import { useFetch } from "@/hooks/useFetch";
+import { type tasksProps, Working } from "@/app/types/Types";
 import {
 	Select,
 	SelectContent,
@@ -12,7 +13,6 @@ import {
 } from "../ui/select";
 import { filtersAtom } from "@/app/Atoms";
 import { getValueWorkingByDateTask } from "@/utils/getValueWorkingByDateTask";
-import { type tasksProps, Working } from "@/app/types/Types";
 
 export default function SelectWorking() {
 	const [filters, setFilters] = useAtom(filtersAtom);

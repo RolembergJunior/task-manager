@@ -1,7 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { FolderProps, Prioritys, Status, tasksProps } from "@/app/types/Types";
+import { useFetchFolder } from "@/hooks/useFetch";
+import {
+	type FolderProps,
+	Prioritys,
+	Status,
+	type tasksProps,
+} from "@/app/types/Types";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -20,7 +26,6 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useFetchFolder } from "@/hooks/useFetch";
 import { mutate } from "swr";
 
 export default function AddTaskModal() {
@@ -39,9 +44,9 @@ export default function AddTaskModal() {
 
 	async function onHandleAddTask() {
 		if (
-			(dataTask.name != "",
-			dataTask.finalizationDate != "",
-			dataTask.status != "")
+			dataTask.name !== "" &&
+			dataTask.finalizationDate !== "" &&
+			dataTask.status !== ""
 		) {
 			try {
 				await fetch("http://localhost:3000/tarefas", {

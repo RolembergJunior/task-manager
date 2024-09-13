@@ -2,6 +2,7 @@
 
 import { useAtom } from "jotai";
 import { useFetch } from "@/hooks/useFetch";
+import type { tasksProps } from "@/app/types/Types";
 import {
 	Select,
 	SelectContent,
@@ -10,7 +11,6 @@ import {
 	SelectValue,
 } from "../ui/select";
 import { filtersAtom } from "@/app/Atoms";
-import type { tasksProps } from "@/app/types/Types";
 
 export default function SelectStatus() {
 	const { data } = useFetch({ url: "http://localhost:3000/tarefas" });

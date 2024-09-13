@@ -1,6 +1,8 @@
 "use client";
 
 import { useAtom } from "jotai";
+import type { tasksProps } from "@/app/types/Types";
+import Loading from "../Loading";
 import {
 	Select,
 	SelectContent,
@@ -11,8 +13,6 @@ import {
 import { filtersAtom } from "@/app/Atoms";
 import { extractMonthFromDate } from "@/utils/extractMonthFromDate";
 import { useFetch } from "@/hooks/useFetch";
-import Loading from "../Loading";
-import type { tasksProps } from "@/app/types/Types";
 
 export default function SelectCompetency() {
 	const { data, isLoading, error } = useFetch({

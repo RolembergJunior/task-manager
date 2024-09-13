@@ -1,6 +1,6 @@
 import { atom } from "jotai";
 import { atomWithStorage } from 'jotai/utils'
-import { tasksProps } from "./types/Types";
+import type { tasksProps } from "./types/Types";
 
 interface TaskState {
     task: tasksProps[],

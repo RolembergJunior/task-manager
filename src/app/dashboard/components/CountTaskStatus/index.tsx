@@ -1,15 +1,12 @@
 "use client";
 
 import { useAtom } from "jotai";
+import { useMemo } from "react";
+import { useFetch } from "@/hooks/useFetch";
+import { useFilterTask } from "@/utils/dynamicFilterFunction";
 import { filtersAtom } from "@/app/Atoms";
 import { Status, type tasksProps } from "@/app/types/Types";
-import { useFetch } from "@/hooks/useFetch";
 import { formatNumbertoPercent } from "@/utils/formatNumbertoPercent";
-import { getValueWorkingByDateTask } from "@/utils/getValueWorkingByDateTask";
-import { format } from "date-fns";
-import { ptBR } from "date-fns/locale";
-import { formatDateToUs } from "@/utils/formatDateToUS";
-import { useMemo } from "react";
 
 type StatusProps = {
 	[status: string]: tasksProps[];
@@ -18,6 +15,9 @@ type StatusProps = {
 export default function CountTaskStatus() {
 	const { data } = useFetch({ url: "http://localhost:3000/tarefas" });
 	const [filters] = useAtom(filtersAtom);
+	const { search, priority, status, working, competency, folder } =
+		useFilterTask();
+
 	const statusTasks = useMemo(separeStatusInArrays, [data, filters]);
 
 	if (!data) return;
@@ -25,30 +25,14 @@ export default function CountTaskStatus() {
 	const totalItens = data.length;
 
 	function dynamicFilterFunction() {
-		const scearchTerm = filters.search?.toLowerCase();
 
 		const filterMap = {
-			search: (task: tasksProps) =>
-				!scearchTerm || task.name.toLowerCase().includes(scearchTerm),
-			priority: (task: tasksProps) =>
-				filters.priority === "Todos" || task.priority === filters.priority,
-			status: (task: tasksProps) =>
-				filters.status === "Todos" || task.status === filters.status,
-			working: (task: tasksProps) =>
-				filters.working === "Todos" ||
-				getValueWorkingByDateTask(task.finalizationDate)?.toString() ===
-					filters.working,
-			competency: (task: tasksProps) => {
-				const taskCompetency = format(
-					new Date(formatDateToUs(task.creationDate)),
-					"MMMM/yy",
-					{ locale: ptBR },
-				).toLowerCase();
-
-				return !filters.competency || taskCompetency === filters.competency;
-			},
-			folder: (task: tasksProps) =>
-				!filters.folder || task.folder === filters.folder,
+			search,
+			priority,
+			status,
+			working,
+			competency,
+			folder,
 		};
 
 		return data.filter((task: tasksProps) =>

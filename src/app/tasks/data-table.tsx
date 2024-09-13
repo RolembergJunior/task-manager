@@ -10,7 +10,8 @@ import {
 	type SortingState,
 	getSortedRowModel,
 } from "@tanstack/react-table";
-
+import Loading from "@/components/Loading";
+import ButtonIcon from "@/components/ButtonIcon";
 import {
 	Table,
 	TableBody,
@@ -19,10 +20,8 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import Loading from "@/components/Loading";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 import { FaAngleDoubleRight, FaAngleDoubleLeft } from "react-icons/fa";
-import ButtonIcon from "@/components/ButtonIcon";
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];

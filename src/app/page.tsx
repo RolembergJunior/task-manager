@@ -4,29 +4,28 @@ import { useEffect, useMemo, useState } from "react";
 import { useAtom } from "jotai";
 import { useFetch } from "@/hooks/useFetch";
 import type { tasksProps } from "./types/Types";
+import SideBar from "@/components/Sidebar";
+import AddTaskModal from "@/components/AddTaskModal";
+import Loading from "@/components/Loading";
+import AddNewFolder from "@/components/AddNewFolder";
+import SelectWorking from "@/components/SelectWorking";
+import SelectStatus from "@/components/SelectStatus";
+import SelectPrority from "@/components/SelectPriority";
+import SelectCompetency from "@/components/SelectCompetency";
+import { filtersAtom } from "./Atoms";
 import { DataTable } from "./tasks/data-table";
 import { columns } from "./tasks/columns";
 import { Input } from "@/components/ui/input";
 import { CiCalendarDate, CiSearch } from "react-icons/ci";
 import { Button } from "@/components/ui/button";
-import SideBar from "@/components/Sidebar";
-import AddTaskModal from "@/components/AddTaskModal";
-import Loading from "@/components/Loading";
-import { filtersAtom } from "./Atoms";
-import AddNewFolder from "@/components/AddNewFolder";
-import SelectWorking from "@/components/SelectWorking";
-import { getValueWorkingByDateTask } from "@/utils/getValueWorkingByDateTask";
-import SelectStatus from "@/components/SelectStatus";
-import SelectPrority from "@/components/SelectPriority";
-import SelectCompetency from "@/components/SelectCompetency";
-import { format } from "date-fns";
-import { ptBR } from "date-fns/locale";
-import { formatDateToUs } from "@/utils/formatDateToUS";
 import { isServer } from "@/lib/isServer";
+import { useFilterTask } from "@/utils/dynamicFilterFunction";
 
 export default function Home() {
 	const [allData, setAllData] = useState<tasksProps[]>([]);
 	const [filters, setFilters] = useAtom(filtersAtom);
+	const { search, priority, status, working, competency, folder } =
+		useFilterTask();
 
 	const { data, error, isLoading } = useFetch({
 		url: "http://localhost:3000/tarefas",
@@ -46,33 +45,17 @@ export default function Home() {
 	}, [data]);
 
 	function dynamicFilterFunction() {
-		const scearchTerm = filters.search?.toLowerCase();
 
 		const filterMap = {
-			search: (task: tasksProps) =>
-				!scearchTerm || task.name.toLowerCase().includes(scearchTerm),
-			priority: (task: tasksProps) =>
-				filters.priority === "Todos" || task.priority === filters.priority,
-			status: (task: tasksProps) =>
-				filters.status === "Todos" || task.status === filters.status,
-			working: (task: tasksProps) =>
-				filters.working === "Todos" ||
-				getValueWorkingByDateTask(task.finalizationDate)?.toString() ===
-					filters.working,
-			competency: (task: tasksProps) => {
-				const taskCompetency = format(
-					new Date(formatDateToUs(task.creationDate)),
-					"MMMM/yy",
-					{ locale: ptBR },
-				).toLowerCase();
-
-				return !filters.competency || taskCompetency === filters.competency;
-			},
-			folder: (task: tasksProps) =>
-				!filters.folder || task.folder === filters.folder,
+			search,
+			priority,
+			status,
+			working,
+			competency,
+			folder,
 		};
 
-		return allData.filter((task) =>
+		return data.filter((task: tasksProps) =>
 			Object.values(filterMap).every((filterFunc) => filterFunc(task)),
 		);
 	}

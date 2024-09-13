@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import type { FolderProps } from "@/app/types/Types";
+import Loading from "../Loading";
+import NavLink from "./components/NavLink";
 import { GiNetworkBars } from "react-icons/gi";
 import { TbReportSearch } from "react-icons/tb";
 import { IoMdHome } from "react-icons/io";
@@ -12,7 +15,6 @@ import { Button } from "../ui/button";
 import { useTheme } from "next-themes";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
-import NavLink from "./components/NavLink";
 import { useAtom } from "jotai";
 import { filtersAtom } from "@/app/Atoms";
 import { useFetchFolder } from "@/hooks/useFetch";
@@ -24,7 +26,6 @@ import {
 } from "@/components/ui/dialog";
 import { GoDash } from "react-icons/go";
 import { DialogClose } from "@radix-ui/react-dialog";
-import Loading from "../Loading";
 
 export default function SideBar() {
 	const [isOpenFolder, setIsOpenFolder] = useState(false);
@@ -120,7 +121,7 @@ export default function SideBar() {
 							}}
 						>
 							<ul>
-								{data?.map((folder) => (
+								{data?.map((folder: FolderProps) => (
 									<div
 										key={folder.id}
 										className={`relative flex items-center justify-between ml-4 px-4 py-2 hover:cursor-pointer ${filters.folder?.toString() === folder.name ? "bg-black rounded-lg" : null} hover:bg-[#F6F6F6] hover:dark:bg-black hover:rounded-lg transition-all`}

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import { useTheme } from "next-themes";
 import { useFetch, useFetchFolder } from "@/hooks/useFetch";
 import { mutate } from "swr";
 import SideBar from "@/components/Sidebar";
@@ -34,7 +35,6 @@ import {
 	type tasksProps,
 } from "@/app/types/Types";
 import { format } from "date-fns";
-import { useTheme } from "next-themes";
 import {
 	Tooltip,
 	TooltipContent,

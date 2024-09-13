@@ -1,8 +1,10 @@
 "use client";
 
 import { useAtom } from "jotai";
-import { filtersAtom } from "@/app/Atoms";
+import { useMemo } from "react";
 import { useFetch } from "@/hooks/useFetch";
+import { useFilterTask } from "@/utils/dynamicFilterFunction";
+import { filtersAtom } from "@/app/Atoms";
 import { formatDateToUs } from "@/utils/formatDateToUS";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -16,29 +18,24 @@ import {
 	XAxis,
 	YAxis,
 } from "recharts";
-import { useMemo } from "react";
 import type { tasksProps } from "@/app/types/Types";
-import {
-	status,
-	search,
-	competency,
-	folder,
-	priority,
-	working,
-} from "@/utils/dynamicFilterFunction";
 
 type taskPerMonth = {
 	[month: string]: number;
 };
 
 export default function BarChartGeral() {
-	const { data } = useFetch({ url: "http://localhost:3000/tarefas" });
 	const [filters] = useAtom(filtersAtom);
+	const { data } = useFetch({ url: "http://localhost:3000/tarefas" });
+	const { search, priority, status, working, competency, folder } =
+		useFilterTask();
+	
 	const dataChart = useMemo(separeMonthsInArrays, [data, filters]);
-
-	if (!data?.length) return;
-
+	
+	if (!data?.length) return null;
+	
 	function dynamicFilterFunction() {
+
 		const filterMap = {
 			search,
 			priority,

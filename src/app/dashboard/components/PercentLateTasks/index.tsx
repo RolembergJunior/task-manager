@@ -1,16 +1,14 @@
 "use client";
 
-import { filtersAtom } from "@/app/Atoms";
-import { tasksProps, Working } from "@/app/types/Types";
+import { useAtom } from "jotai";
+import { useMemo } from "react";
 import { useFetch } from "@/hooks/useFetch";
-import { formatDateToUs } from "@/utils/formatDateToUS";
+import { useFilterTask } from "@/utils/dynamicFilterFunction";
+import { filtersAtom } from "@/app/Atoms";
+import { type tasksProps, Working } from "@/app/types/Types";
 import { formatNumbertoPercent } from "@/utils/formatNumbertoPercent";
 import { getColorbyLabelWorkingTask } from "@/utils/getColorWorkingByLabel";
 import { getValueWorkingByDateTask } from "@/utils/getValueWorkingByDateTask";
-import { format } from "date-fns";
-import { ptBR } from "date-fns/locale";
-import { useAtom } from "jotai";
-import { useMemo } from "react";
 import { PieChart, Pie, Cell } from "recharts";
 
 type workingTaskProps = {
@@ -26,6 +24,9 @@ type WorkingType = {
 export default function PercentLateTaskDash() {
 	const [filters] = useAtom(filtersAtom);
 	const { data } = useFetch({ url: "http://localhost:3000/tarefas" });
+	const { search, priority, status, working, competency, folder } =
+		useFilterTask();
+
 	const workingTask: workingTaskProps[] = useMemo(separeWorkingTaskInArray, [
 		data,
 		filters,
@@ -33,31 +34,14 @@ export default function PercentLateTaskDash() {
 
 	if (!data?.length) return;
 
-	function dynamicFilterFunction(): tasksProps[] {
-		const scearchTerm = filters.search?.toLowerCase();
-
+	function dynamicFilterFunction() {
 		const filterMap = {
-			search: (task: tasksProps) =>
-				!scearchTerm || task.name.toLowerCase().includes(scearchTerm),
-			priority: (task: tasksProps) =>
-				filters.priority === "Todos" || task.priority === filters.priority,
-			status: (task: tasksProps) =>
-				filters.status === "Todos" || task.status === filters.status,
-			working: (task: tasksProps) =>
-				filters.working === "Todos" ||
-				getValueWorkingByDateTask(task.finalizationDate)?.toString() ===
-					filters.working,
-			competency: (task: tasksProps) => {
-				const taskCompetency = format(
-					new Date(formatDateToUs(task.creationDate)),
-					"MMMM/yy",
-					{ locale: ptBR },
-				).toLowerCase();
-
-				return !filters.competency || taskCompetency === filters.competency;
-			},
-			folder: (task: tasksProps) =>
-				!filters.folder || task.folder === filters.folder,
+			search,
+			priority,
+			status,
+			working,
+			competency,
+			folder,
 		};
 
 		return data.filter((task: tasksProps) =>
@@ -68,20 +52,18 @@ export default function PercentLateTaskDash() {
 	function getLabelByValueWorkingTask(value: number): string {
 		if (value === -1) {
 			return Working.LATE;
-		} 
+		}
 		if (value === 0) {
 			return Working.LAST_DAY;
-		} 
+		}
 		if (value === 1) {
 			return Working.ON_TIME;
-		} 
+		}
 
 		return "SEM STATUS";
 	}
 
-	function getValueByLabelWorkingTask(
-		labelWorking: string,
-	): number {
+	function getValueByLabelWorkingTask(labelWorking: string): number {
 		if (labelWorking === Working.LATE) {
 			return -1;
 		}
@@ -92,12 +74,12 @@ export default function PercentLateTaskDash() {
 			return 1;
 		}
 
-		return 0
+		return 0;
 	}
 
 	function separeWorkingTaskInArray() {
 		const workingTasks: WorkingType = {};
-		const dataFiltered = dynamicFilterFunction()
+		const dataFiltered = dynamicFilterFunction();
 
 		dataFiltered?.forEach((item) => {
 			const valueWorking: number = getValueWorkingByDateTask(
