@@ -1,7 +1,7 @@
 'use client'
 
 import { filtersAtom } from "@/app/Atoms";
-import { Working } from "@/app/types/Types";
+import { tasksProps, Working } from "@/app/types/Types";
 import { useFetch } from "@/hooks/useFetch";
 import { formatDateToUs } from "@/utils/formatDateToUS";
 import { formatNumbertoPercent } from "@/utils/formatNumbertoPercent";
@@ -25,28 +25,45 @@ type WorkingType = {
 };
 
 export default function PercentLateTaskDash(){
+    const [ filters ] = useAtom(filtersAtom); 
     const { data } = useFetch({ url:'http://localhost:3000/tarefas' });
-    const [ filters ] = useAtom(filtersAtom);
     const workingTask:workingTaskProps[]  = useMemo(separeWorkingTaskInArray, [data,filters]);
     
     if( !data?.length ) return;
 
-    function filteredArray() { 
+    function dynamicFilterFunction():tasksProps[] {
+		const scearchTerm = filters.search?.toLowerCase();
 
-        if(!data?.length) return;
+		const filterMap = {
+			search: (task: tasksProps) =>
+				!scearchTerm || task.name.toLowerCase().includes(scearchTerm),
+			priority: (task: tasksProps) =>
+				filters.priority === "Todos" || task.priority === filters.priority,
+			status: (task: tasksProps) =>
+				filters.status === "Todos" || task.status === filters.status,
+			working: (task: tasksProps) =>
+				filters.working === "Todos" ||
+				getValueWorkingByDateTask(task.finalizationDate)?.toString() ===
+					filters.working,
+			competency: (task: tasksProps) => {
+				const taskCompetency = format(
+					new Date(formatDateToUs(task.creationDate)),
+					"MMMM/yy",
+					{ locale: ptBR },
+				).toLowerCase();
 
-        const normalizeToLowerCase = filters.search.toLowerCase();
-        const sensitiveDataBySearch = data.filter( task => task.name?.toLowerCase().includes( normalizeToLowerCase ) );
-        const sensitiveDataByPriority = filters.priority != 'Todos' ? sensitiveDataBySearch.filter( taskFiltered => taskFiltered.priority === filters.priority ) : sensitiveDataBySearch;
-        const sensitiveDataByStatus = filters.status != 'Todos' ? sensitiveDataByPriority.filter( taskFiltered => taskFiltered.status === filters.status ) : sensitiveDataByPriority;
-        const sensitiveDataWorking = filters.working != 'Todos' ? sensitiveDataByStatus.filter( taskFiltered => getValueWorkingByDateTask(taskFiltered.finalizationDate)?.toString() === filters.working ) : sensitiveDataByStatus;
-        const sensitiveDataCompetency = filters.competency != null ? sensitiveDataWorking.filter( taskFiltered => format(new Date(formatDateToUs( taskFiltered.creationDate )), 'MMMM/yy', { locale: ptBR }).toLowerCase() === filters.competency ) : sensitiveDataWorking;
-        const sensitiveDataByFolders = filters.folder != null ? sensitiveDataWorking.filter( taskFiltered => taskFiltered.folder === filters.folder ) : sensitiveDataCompetency;
+				return !filters.competency || taskCompetency === filters.competency;
+			},
+			folder: (task: tasksProps) => !filters.folder || task.folder === filters.folder,
+		};
     
-        return [...sensitiveDataByFolders];
-    }
+		return data.filter((task: tasksProps) =>
+			Object.values(filterMap).every((filterFunc) => filterFunc(task)),
+		);
+	}
+
  
-    function getLabelByValueWorkingTask(value:number){
+    function getLabelByValueWorkingTask(value:number):string{
         if(value === -1 ){
             return Working.LATE
         } else if( value === 0 ){
@@ -59,8 +76,7 @@ export default function PercentLateTaskDash(){
 
     };
 
-    function getValueByLabelWorkingTask(labelWorking:string){
-        if(!labelWorking) return;
+    function getValueByLabelWorkingTask(labelWorking:string):number | undefined{
 
         if(labelWorking === Working.LATE ){
             return -1
@@ -68,13 +84,13 @@ export default function PercentLateTaskDash(){
             return 0
         } else if( labelWorking === Working.ON_TIME ){
             return 1
-        } 
+        }
     };
 
     function separeWorkingTaskInArray(){
         const workingTasks: WorkingType = {};
 
-        filteredArray()?.forEach( item => {
+        dynamicFilterFunction()?.forEach( item => {
             const valueWorking:number = getValueWorkingByDateTask(item.finalizationDate);
             const labelWorking = getLabelByValueWorkingTask(valueWorking!);
             

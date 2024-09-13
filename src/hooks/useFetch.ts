@@ -1,4 +1,3 @@
-import { FolderProps, tasksProps } from '@/app/types/Types';
 import { useCallback } from 'react';
 import useSWR from 'swr';
 

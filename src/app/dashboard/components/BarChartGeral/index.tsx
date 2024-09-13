@@ -17,6 +17,7 @@ import {
   YAxis } from "recharts";
 import { getValueWorkingByDateTask } from "@/utils/getValueWorkingByDateTask";
 import { useMemo } from "react";
+import { type tasksProps } from "@/app/types/Types";
 
 type taskPerMonth = {
   [month: string]: number;
@@ -29,25 +30,42 @@ export default function BarChartGeral(){
 
   if(!data?.length) return;
 
-  function filteredArray() { 
+  function dynamicFilterFunction() {
+		const scearchTerm = filters.search?.toLowerCase();
 
-    if(!data?.length) return;
+		const filterMap = {
+			search: (task: tasksProps) =>
+				!scearchTerm || task.name.toLowerCase().includes(scearchTerm),
+			priority: (task: tasksProps) =>
+				filters.priority === "Todos" || task.priority === filters.priority,
+			status: (task: tasksProps) =>
+				filters.status === "Todos" || task.status === filters.status,
+			working: (task: tasksProps) =>
+				filters.working === "Todos" ||
+				getValueWorkingByDateTask(task.finalizationDate)?.toString() ===
+					filters.working,
+			competency: (task: tasksProps) => {
+				const taskCompetency = format(
+					new Date(formatDateToUs(task.creationDate)),
+					"MMMM/yy",
+					{ locale: ptBR },
+				).toLowerCase();
 
-    const normalizeToLowerCase = filters.search.toLowerCase();
-    const sensitiveDataBySearch = data.filter( task => task.name?.toLowerCase().includes( normalizeToLowerCase ) );
-    const sensitiveDataByPriority = filters.priority != 'Todos' ? sensitiveDataBySearch.filter( taskFiltered => taskFiltered.priority === filters.priority ) : sensitiveDataBySearch;
-    const sensitiveDataByStatus = filters.status != 'Todos' ? sensitiveDataByPriority.filter( taskFiltered => taskFiltered.status === filters.status ) : sensitiveDataByPriority;
-    const sensitiveDataWorking = filters.working != 'Todos' ? sensitiveDataByStatus.filter( taskFiltered => getValueWorkingByDateTask(taskFiltered.finalizationDate)?.toString() === filters.working ) : sensitiveDataByStatus;
-    const sensitiveDataCompetency = filters.competency != null ? sensitiveDataWorking.filter( taskFiltered => format(new Date(formatDateToUs( taskFiltered.creationDate )), 'MMMM/yy', {locale: ptBR}).toLowerCase() === filters.competency ) : sensitiveDataWorking;
-    const sensitiveDataByFolders = filters.folder != null ? sensitiveDataWorking.filter( taskFiltered => taskFiltered.folder === filters.folder ) : sensitiveDataCompetency;
+				return !filters.competency || taskCompetency === filters.competency;
+			},
+			folder: (task: tasksProps) => !filters.folder || task.folder === filters.folder,
+		};
+    
+		return data.filter((task: tasksProps) =>
+			Object.values(filterMap).every((filterFunc) => filterFunc(task)),
+		);
+	}
 
-    return [...sensitiveDataByFolders];
-  }
 
 function separeMonthsInArrays(){
     const monthsTasks: taskPerMonth = {};
 
-    filteredArray()?.forEach( item => {
+    dynamicFilterFunction()?.forEach( item => {
       const normalizedDate = format(new Date(formatDateToUs( item.creationDate ) ), 'MMMM/yy', {locale: ptBR});
 
         if( normalizedDate in monthsTasks ) {

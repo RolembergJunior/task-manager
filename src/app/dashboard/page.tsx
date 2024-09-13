@@ -30,7 +30,8 @@ export default function Dashboard(){
                             <SelectPriority/>
                             <SelectWorking/>
                         </div>
-                        <Button className="text-black p-2">
+                        <Button
+                            className="text-white dark:text-black p-2">
                             Editar layout
                         </Button>
                     </div>

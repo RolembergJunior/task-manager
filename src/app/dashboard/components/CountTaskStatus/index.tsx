@@ -22,28 +22,45 @@ export default function CountTaskStatus(){
 
     if(!data) return; 
 
-    let totalItens = data.length;
+    const totalItens = data.length;
 
-    function filteredArray() { 
+    function dynamicFilterFunction() {
+		const scearchTerm = filters.search?.toLowerCase();
 
-        if(!data) return;
+		const filterMap = {
+			search: (task: tasksProps) =>
+				!scearchTerm || task.name.toLowerCase().includes(scearchTerm),
+			priority: (task: tasksProps) =>
+				filters.priority === "Todos" || task.priority === filters.priority,
+			status: (task: tasksProps) =>
+				filters.status === "Todos" || task.status === filters.status,
+			working: (task: tasksProps) =>
+				filters.working === "Todos" ||
+				getValueWorkingByDateTask(task.finalizationDate)?.toString() ===
+					filters.working,
+			competency: (task: tasksProps) => {
+				const taskCompetency = format(
+					new Date(formatDateToUs(task.creationDate)),
+					"MMMM/yy",
+					{ locale: ptBR },
+				).toLowerCase();
 
-        const normalizeToLowerCase = filters.search.toLowerCase();
-        const sensitiveDataBySearch = data.filter( task => task.name?.toLowerCase().includes( normalizeToLowerCase ) );
-        const sensitiveDataByPriority = filters.priority != 'Todos' ? sensitiveDataBySearch.filter( taskFiltered => taskFiltered.priority === filters.priority ) : sensitiveDataBySearch;
-        const sensitiveDataByStatus = filters.status != 'Todos' ? sensitiveDataByPriority.filter( taskFiltered => taskFiltered.status === filters.status ) : sensitiveDataByPriority;
-        const sensitiveDataWorking = filters.working != 'Todos' ? sensitiveDataByStatus.filter( taskFiltered => getValueWorkingByDateTask(taskFiltered.finalizationDate)?.toString() === filters.working ) : sensitiveDataByStatus;
-        const sensitiveDataCompetency = filters.competency != null ? sensitiveDataWorking.filter( taskFiltered => format(new Date(formatDateToUs( taskFiltered.creationDate )), 'MMMM/yy',{ locale: ptBR }).toLowerCase() === filters.competency ) : sensitiveDataWorking;
-        const sensitiveDataByFolders = filters.folder != null ? sensitiveDataWorking.filter( taskFiltered => taskFiltered.folder === filters.folder ) : sensitiveDataCompetency;
+				return !filters.competency || taskCompetency === filters.competency;
+			},
+			folder: (task: tasksProps) => !filters.folder || task.folder === filters.folder,
+		};
     
-        return [...sensitiveDataByFolders];
-    };
+		return data.filter((task: tasksProps) =>
+			Object.values(filterMap).every((filterFunc) => filterFunc(task)),
+		);
+	}
+
 
 
     function separeStatusInArrays(){
         const statusArray: StatusProps = {};
 
-        filteredArray()?.forEach( item => {
+        dynamicFilterFunction()?.forEach( item => {
             const status:string = item.status;
 
             if( status in statusArray ) {
