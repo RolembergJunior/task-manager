@@ -15,13 +15,14 @@ import {
   Tooltip, 
   XAxis, 
   YAxis } from "recharts";
-import { getValueWorkingByDateTask } from "@/utils/getValueWorkingByDateTask";
 import { useMemo } from "react";
-import { type tasksProps } from "@/app/types/Types";
+import type { tasksProps } from "@/app/types/Types";
+import { status, search, competency, folder, priority, working } from "@/utils/dynamicFilterFunction";
 
 type taskPerMonth = {
   [month: string]: number;
 };
+
 
 export default function BarChartGeral(){
   const { data } = useFetch({ url:'http://localhost:3000/tarefas' });
@@ -31,29 +32,13 @@ export default function BarChartGeral(){
   if(!data?.length) return;
 
   function dynamicFilterFunction() {
-		const scearchTerm = filters.search?.toLowerCase();
-
 		const filterMap = {
-			search: (task: tasksProps) =>
-				!scearchTerm || task.name.toLowerCase().includes(scearchTerm),
-			priority: (task: tasksProps) =>
-				filters.priority === "Todos" || task.priority === filters.priority,
-			status: (task: tasksProps) =>
-				filters.status === "Todos" || task.status === filters.status,
-			working: (task: tasksProps) =>
-				filters.working === "Todos" ||
-				getValueWorkingByDateTask(task.finalizationDate)?.toString() ===
-					filters.working,
-			competency: (task: tasksProps) => {
-				const taskCompetency = format(
-					new Date(formatDateToUs(task.creationDate)),
-					"MMMM/yy",
-					{ locale: ptBR },
-				).toLowerCase();
-
-				return !filters.competency || taskCompetency === filters.competency;
-			},
-			folder: (task: tasksProps) => !filters.folder || task.folder === filters.folder,
+			search,
+			priority,
+			status,
+			working,
+			competency,
+			folder,
 		};
     
 		return data.filter((task: tasksProps) =>

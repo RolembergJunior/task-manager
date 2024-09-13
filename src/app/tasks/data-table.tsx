@@ -3,11 +3,11 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import {
-    ColumnDef,
+    type ColumnDef,
     flexRender,
     getCoreRowModel,
     useReactTable,
-    SortingState,
+    type SortingState,
     getSortedRowModel
   } from "@tanstack/react-table";
    
@@ -48,12 +48,12 @@ import ButtonIcon from "@/components/ButtonIcon";
         router.push(`/task/${id}`);
     };
 
-    let countAllTasks = data.length;
-    let totalPages = Math.ceil(countAllTasks/10);
+    const countAllTasks = data.length;
+    const totalPages = Math.ceil(countAllTasks/10);
 
 
     if(data === undefined) return <Loading/>
-    if(data != undefined)
+    if(data !== undefined)
     return(
         <div className="bg-white dark:bg-[#1e293b] rounded-md border dark:border-white/20 w-[95%] mx-auto my-5">
             <Table>
@@ -110,14 +110,14 @@ import ButtonIcon from "@/components/ButtonIcon";
                 </p>
                 <div className="flex space-x-1">
                     <ButtonIcon 
-                        disabled={page === 1 ? true : false} 
+                        disabled={page === 1} 
                         transparent={false}
                         onClick={() => setPage(1)}
                     >
                         <FaAngleDoubleLeft/>
                     </ButtonIcon>
                     <ButtonIcon 
-                        disabled={page === 1 ? true : false} 
+                        disabled={page === 1} 
                         transparent={false}
                         onClick={() => setPage(page - 1)} 
                     >
@@ -126,14 +126,14 @@ import ButtonIcon from "@/components/ButtonIcon";
                 </div>
                 <div className="flex space-x-1">
                     <ButtonIcon 
-                        disabled={page === totalPages ? true : false} 
+                        disabled={page === totalPages} 
                         transparent={false}
                         onClick={() => setPage(page + 1)} 
                     >
                         <FaChevronRight/>
                     </ButtonIcon>
                     <ButtonIcon 
-                        disabled={page === totalPages ? true : false} 
+                        disabled={page === totalPages} 
                         transparent={false}
                         onClick={() => setPage(totalPages)}
                     >

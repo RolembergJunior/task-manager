@@ -23,7 +23,7 @@ export default function AddNewFolder(){
     const url = 'http://localhost:3000/pastas'
 
     function onHandleSaveFolderName(){
-        if( newFolder.name != '' ){
+        if( newFolder.name !== '' ){
             try {
                 fetch( url, {
                     method: 'POST',
@@ -34,11 +34,12 @@ export default function AddNewFolder(){
                         name: newFolder.name
                     })
                 }).then( response => response.json() );
+
+                mutate('http://localhost:3000/pastas');
                 
             } catch (error) {
                 alert(error);
             }
-
             setNewFolder({name: ''});
 
             alert('PASTA SALVA!');
@@ -46,10 +47,6 @@ export default function AddNewFolder(){
             alert('Coloque o nome da pasta');
         }
     }
-
-    useEffect(() => {
-        mutate('http://localhost:3000/pastas')
-    },[onHandleSaveFolderName])
 
     return(
         <Dialog>

@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
-import { ColumnDef } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
 import { IoEllipsisHorizontal, IoStarSharp, IoTrashOutline } from 'react-icons/io5'
 import { BsDashSquare } from "react-icons/bs";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
@@ -28,8 +28,8 @@ export const columns: ColumnDef<Tasks>[] = [
         id: '1',
         cell(props) {
 
-            let currentDate = new Date(format(Date.now(), 'yyyy-MM-dd'));
-            let finalizationDateStringToDate = new Date(props.cell.row.original.finalizationDate);
+            const currentDate = new Date(format(Date.now(), 'yyyy-MM-dd'));
+            const finalizationDateStringToDate = new Date(props.cell.row.original.finalizationDate);
 
                 if( currentDate.getTime() === finalizationDateStringToDate.getTime() ){
                       return (
@@ -44,20 +44,22 @@ export const columns: ColumnDef<Tasks>[] = [
                                     </Tooltip>
                                 </TooltipProvider>
                         );
-                  } else if( currentDate.getTime() < finalizationDateStringToDate.getTime() ){
-                      return (
-                        <TooltipProvider>
-                            <Tooltip>
-                                <TooltipTrigger className="hover:cursor-default">
-                                    <div className="bg-green-600 w-3 h-3 mx-auto rounded-full" /> 
-                                </TooltipTrigger>
-                                <TooltipContent sideOffset={10} className="bg-gray-600 text-white p-2 rounded-sm transition-all">
-                                    <p>No prazo</p>
-                                </TooltipContent>
-                            </Tooltip>
-                        </TooltipProvider>
-                );
-                  } else if( currentDate.getTime() > finalizationDateStringToDate.getTime() ){
+                  } 
+                if( currentDate.getTime() < finalizationDateStringToDate.getTime() ){
+                    return (
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger className="hover:cursor-default">
+                                <div className="bg-green-600 w-3 h-3 mx-auto rounded-full" /> 
+                            </TooltipTrigger>
+                            <TooltipContent sideOffset={10} className="bg-gray-600 text-white p-2 rounded-sm transition-all">
+                                <p>No prazo</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                    );
+                } 
+                if( currentDate.getTime() > finalizationDateStringToDate.getTime() ){
                     return (
                         <TooltipProvider>
                             <Tooltip>
@@ -69,8 +71,8 @@ export const columns: ColumnDef<Tasks>[] = [
                                 </TooltipContent>
                             </Tooltip>
                         </TooltipProvider>
-                );
-                  } 
+                    );
+                } 
         }
     },
     {
@@ -129,8 +131,9 @@ export const columns: ColumnDef<Tasks>[] = [
                         </Tooltip>
                     </TooltipProvider>
                 );
-            } else if( row.original.priority === Prioritys.MEDIUM_PRIORITY){
-                return (
+            } 
+            if( row.original.priority === Prioritys.MEDIUM_PRIORITY){
+               return (
                     <TooltipProvider>
                         <Tooltip>
                             <TooltipTrigger className="hover:cursor-default">
@@ -142,7 +145,8 @@ export const columns: ColumnDef<Tasks>[] = [
                         </Tooltip>
                     </TooltipProvider>
                 );
-            } else if( row.original.priority === Prioritys.HIGH_PRORITY ) {
+            } 
+            if( row.original.priority === Prioritys.HIGH_PRORITY ) {
                 return (
                     <TooltipProvider>
                         <Tooltip>
@@ -155,7 +159,8 @@ export const columns: ColumnDef<Tasks>[] = [
                         </Tooltip>
                     </TooltipProvider>
                 );
-            } else if( row.original.priority === "" )
+            } 
+            if( row.original.priority === "" )
                 return (
                     <TooltipProvider>
                         <Tooltip>

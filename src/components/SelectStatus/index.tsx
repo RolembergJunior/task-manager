@@ -10,7 +10,7 @@ import {
     SelectValue 
 } from "../ui/select";
 import { filtersAtom } from "@/app/Atoms";
-import { tasksProps } from "@/app/types/Types";
+import type { tasksProps } from "@/app/types/Types";
 
 export default function SelectStatus(){
     const { data } = useFetch({ url:'http://localhost:3000/tarefas' });
@@ -20,7 +20,7 @@ export default function SelectStatus(){
 
     const statusTasks:string[] = data?.map( (item:tasksProps) => item.status );
 
-    const arrayWhitoutDuplicates:string[] = statusTasks?.filter( (item, index) => statusTasks.indexOf(item) === index && item != undefined ) ;
+    const arrayWhitoutDuplicates:string[] = statusTasks?.filter( (item, index) => statusTasks.indexOf(item) === index && item !== undefined ) ;
 
     return(
         <Select onValueChange={(value) => setFilters({...filters, status: value})}>

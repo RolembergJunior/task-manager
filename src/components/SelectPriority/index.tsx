@@ -10,7 +10,7 @@ import {
 } from "../ui/select";
 import { filtersAtom } from "@/app/Atoms";
 import { useFetch } from "@/hooks/useFetch";
-import { tasksProps } from "@/app/types/Types";
+import type { tasksProps } from "@/app/types/Types";
 
 export default function SelectPrority(){
     const { data } = useFetch({ url:'http://localhost:3000/tarefas' });
@@ -20,7 +20,7 @@ export default function SelectPrority(){
 
     const priorityTasks = data.map( (item:tasksProps) => item.priority );
 
-    const arrayWhitoutDuplicates:string[] = priorityTasks?.filter( (item:string, index:number) => priorityTasks.indexOf(item) === index && item != undefined ) ;
+    const arrayWhitoutDuplicates:string[] = priorityTasks?.filter( (item:string, index:number) => priorityTasks.indexOf(item) === index && item !== undefined ) ;
 
     return(
         <Select onValueChange={(value) => setFilters({...filters, priority: value})}>

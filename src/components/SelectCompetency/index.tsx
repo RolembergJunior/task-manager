@@ -16,19 +16,20 @@ import {
 import { extractMonthFromDate } from "@/utils/extractMonthFromDate";
 import { useFetch } from "@/hooks/useFetch";
 import Loading from "../Loading";
+import type { tasksProps } from "@/app/types/Types";
 
 export default function SelectCompetency(){
     const { data, isLoading, error } = useFetch({ url:'http://localhost:3000/tarefas' });
     const [ filters, setFilters ] = useAtom(filtersAtom);
 
-    if(!data?.map( item => item.creationDate )){
+    if(!data?.map( (item:tasksProps) => item.creationDate )){
         return;
     }
-    const creationDates:string[] = data?.map( item => item.creationDate );
+    const creationDates:string[] = data?.map( (item:tasksProps) => item.creationDate );
     
     const monthsTasks = extractMonthFromDate(creationDates);
 
-    const arrayWhitoutDuplicates = monthsTasks?.filter( (item, index) => monthsTasks.indexOf(item) === index && item != undefined ) ;
+    const arrayWhitoutDuplicates = monthsTasks?.filter( (item, index) => monthsTasks.indexOf(item) === index && item !== undefined ) ;
 
     if(isLoading || error ) return <Loading/>
     if(!isLoading || !error) 

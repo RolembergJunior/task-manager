@@ -2,7 +2,7 @@
 
 import { useAtom } from "jotai";
 import { filtersAtom } from "@/app/Atoms";
-import { Status, tasksProps } from "@/app/types/Types";
+import { Status, type tasksProps } from "@/app/types/Types";
 import { useFetch } from "@/hooks/useFetch";
 import { formatNumbertoPercent } from "@/utils/formatNumbertoPercent";
 import { getValueWorkingByDateTask } from "@/utils/getValueWorkingByDateTask";
@@ -56,11 +56,11 @@ export default function CountTaskStatus(){
 	}
 
 
-
     function separeStatusInArrays(){
         const statusArray: StatusProps = {};
+        const dataFiltered = dynamicFilterFunction();
 
-        dynamicFilterFunction()?.forEach( item => {
+        dataFiltered?.forEach( item => {
             const status:string = item.status;
 
             if( status in statusArray ) {

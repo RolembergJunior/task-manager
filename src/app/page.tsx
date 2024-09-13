@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useAtom } from "jotai";
 import { useFetch } from "@/hooks/useFetch";
-import { tasksProps } from "./types/Types";
+import type { tasksProps } from "./types/Types";
 import { DataTable } from "./tasks/data-table";
 import { columns } from "./tasks/columns";
 import { Input } from "@/components/ui/input";

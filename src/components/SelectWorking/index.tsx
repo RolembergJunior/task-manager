@@ -12,13 +12,15 @@ import {
 } from "../ui/select";
 import { filtersAtom } from "@/app/Atoms";
 import { getValueWorkingByDateTask } from "@/utils/getValueWorkingByDateTask";
-import { tasksProps, Working } from "@/app/types/Types";
+import { type tasksProps, Working } from "@/app/types/Types";
 
 export default function SelectWorking(){
     const [ filters, setFilters ] = useAtom(filtersAtom);
     const { data } = useFetch({ url:'http://localhost:3000/tarefas' });
-    const dateEndValues = data?.map( (item:tasksProps) =>  getValueWorkingByDateTask(item.finalizationDate)!);
-    const normalizedData = useMemo(removeDuplicatesUsingIndexOf, [dateEndValues] );
+    
+    const dateEndValues = data?.map( (item:tasksProps) =>  getValueWorkingByDateTask(item.finalizationDate));
+    
+    const normalizedData = useMemo(removeDuplicatesUsingIndexOf, [] );
 
     if(!data?.length) return;
 
@@ -41,9 +43,11 @@ export default function SelectWorking(){
     function getLabelWorkingTask(valueTask:number | undefined){
         if(valueTask === 1 ){
             return Working.ON_TIME;
-        } else if( valueTask === 0){
+        } 
+        if( valueTask === 0){
             return Working.LAST_DAY;
-        } else if( valueTask === -1 ){
+        } 
+        if( valueTask === -1 ){
             return Working.LATE;
         }
     };
