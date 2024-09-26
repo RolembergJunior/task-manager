@@ -257,6 +257,30 @@
       "folder": null,
       "status": "Fazer",
       "checklist": []
+    },
+    {
+      "id": "e46f",
+      "name": "TESTANDO O MODAL",
+      "description": "asdasd",
+      "responsible": "Rolemberg Junior",
+      "creationDate": "19/09/2024",
+      "finalizationDate": "2024-09-20",
+      "priority": "ALTA PRIORIDADE",
+      "folder": null,
+      "status": "Fazer",
+      "checklist": []
+    },
+    {
+      "id": "6de6",
+      "name": "Criando outra task para teste",
+      "description": "TESTE",
+      "responsible": "Rolemberg Junior",
+      "creationDate": "20/09/2024",
+      "finalizationDate": "2024-09-21",
+      "priority": "ALTA PRIORIDADE",
+      "folder": null,
+      "status": "Fazer",
+      "checklist": []
     }
   ],
   "pastas": [

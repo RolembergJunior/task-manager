@@ -29,13 +29,12 @@ export default function BarChartGeral() {
 	const { data } = useFetch({ url: "http://localhost:3000/tarefas" });
 	const { search, priority, status, working, competency, folder } =
 		useFilterTask();
-	
-	const dataChart = useMemo(separeMonthsInArrays, [data, filters]);
-	
-	if (!data?.length) return null;
-	
-	function dynamicFilterFunction() {
 
+	const dataChart = useMemo(separeMonthsInArrays, [data, filters]);
+
+	if (!data?.length) return;
+
+	function dynamicFilterFunction() {
 		const filterMap = {
 			search,
 			priority,
@@ -68,40 +67,11 @@ export default function BarChartGeral() {
 			}
 		});
 
-		const normalizedDataChart = Object.entries(monthsTasks).map(
-			([name, value]) => ({ name, value }),
-		);
-
-		return normalizedDataChart;
+		return Object.entries(monthsTasks).map(([name, value]) => ({
+			name,
+			value,
+		}));
 	}
-
-	// MELHORIA PRO PRÓXIMO DESAFIO
-	//   function createArrayTaskPerMonth(){
-
-	//     transformToArray.map( item => {
-	//       return item.value.reduce( ( array, task ) => {
-
-	//         const normalizedDate = format(new Date(formatDateToUs( task.creationDate ) ), 'MMMM/yy');
-	//         const existMonthInArray = array.find( month => month.name === normalizedDate );
-
-	//         if( !existMonthInArray ){
-	//           array.push({
-	//             name: normalizedDate,
-	//             value: 1
-	//           })
-	//         } else{
-	//           array[normalizedDate].value = +1
-	//         }
-
-	//           console.log( array )
-
-	//         return array
-
-	//       },[]);
-	//     } )
-	// };
-
-	// const result = createArrayTaskPerMonth();
 
 	return (
 		<div className="bg-white dark:bg-[#1e293b] row-start-1 row-end-4 col-start-2 col-end-4 p-5">

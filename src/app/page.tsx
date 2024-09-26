@@ -45,7 +45,6 @@ export default function Home() {
 	}, [data]);
 
 	function dynamicFilterFunction() {
-
 		const filterMap = {
 			search,
 			priority,
@@ -55,7 +54,7 @@ export default function Home() {
 			folder,
 		};
 
-		return data.filter((task: tasksProps) =>
+		return allData.filter((task: tasksProps) =>
 			Object.values(filterMap).every((filterFunc) => filterFunc(task)),
 		);
 	}

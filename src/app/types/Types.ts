@@ -44,3 +44,26 @@ export enum Working {
 	LAST_DAY = "Último dia",
 	LATE = "Atrasada",
 }
+
+export interface FiltersProps {
+	search: string;
+	priority: string | null;
+	status: string | null;
+	working: number | string;
+	folder: string | null;
+	competency: string | null;
+}
+
+export interface ModalProps<T>{
+	[x: string]:{
+		isOpen: boolean,
+		text: string | null
+		params?: T
+	}
+}
+
+
+export enum Modals {
+	LOADING = "modalLoading",
+	MODAL_TASK = "ModalTask"
+}

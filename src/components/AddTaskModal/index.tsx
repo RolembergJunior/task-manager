@@ -206,7 +206,9 @@ export default function AddTaskModal() {
 							<SelectContent>
 								<SelectGroup>
 									{dataFolders.data?.map((folders: FolderProps) => (
-										<SelectItem value={folders.id}>{folders.name}</SelectItem>
+										<SelectItem key={folders.id} value={folders.id}>
+											{folders.name}
+										</SelectItem>
 									))}
 								</SelectGroup>
 							</SelectContent>
