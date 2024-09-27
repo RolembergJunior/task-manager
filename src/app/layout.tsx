@@ -16,13 +16,11 @@ export default function RootLayout({
 	return (
 		<html lang="pt-br">
 			<AtomProvider>
-				<ThemeProvider attribute="class">
 					<body>
 						{children}
 						<div id="modal-root"></div> 
 						<ModalLoading/>
 					</body>
-				</ThemeProvider>
 			</AtomProvider>
 		</html>
 	);

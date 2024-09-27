@@ -20,6 +20,7 @@ import { CiCalendarDate, CiSearch } from "react-icons/ci";
 import { Button } from "@/components/ui/button";
 import { isServer } from "@/lib/isServer";
 import { useFilterTask } from "@/utils/dynamicFilterFunction";
+import { ThemeProvider } from "next-themes";
 
 export default function Home() {
 	const [allData, setAllData] = useState<tasksProps[]>([]);
@@ -62,53 +63,55 @@ export default function Home() {
 	if (isLoading) return <Loading />;
 	if (!isLoading && !error)
 		return (
-			<div className="flex bg-[#F5F6FA] dark:bg-black/20 transition-colors durantion-100">
-				<SideBar />
-				<div className="w-[85%]">
-					<div className="flex items-center justify-between bg-white dark:bg-[#1e293b] border border-black/10 w-full h-20 p-4">
-						<div className="flex items-center gap-3">
-							<h1 className="text-xl w-40 font-semibold">
-								{filters.folder === null
-									? "Todas as tarefas"
-									: filters.folder.toString()}
-							</h1>
-							<div className="relative flex items-center">
-								<CiSearch className="absolute focus:hidden m-2" />
-								<Input
-									type="text"
-									className="h-8 focus:border-0 overflow-hidden"
-									onChange={(e) =>
-										setFilters({ ...filters, search: e.target.value })
-									}
-								/>
+			<ThemeProvider attribute="class">
+				<div className="flex bg-[#F5F6FA] dark:bg-black/20 transition-colors durantion-100">
+					<SideBar />
+					<div className="w-[85%]">
+						<div className="flex items-center justify-between bg-white dark:bg-[#1e293b] border border-black/10 w-full h-20 p-4">
+							<div className="flex items-center gap-3">
+								<h1 className="text-xl w-40 font-semibold">
+									{filters.folder === null
+										? "Todas as tarefas"
+										: filters.folder.toString()}
+								</h1>
+								<div className="relative flex items-center">
+									<CiSearch className="absolute focus:hidden m-2" />
+									<Input
+										type="text"
+										className="h-8 focus:border-0 overflow-hidden"
+										onChange={(e) =>
+											setFilters({ ...filters, search: e.target.value })
+										}
+									/>
+								</div>
 							</div>
-						</div>
-						<div className="flex gap-3">
 							<div className="flex gap-3">
-								<div>
-									<SelectPrority />
+								<div className="flex gap-3">
+									<div>
+										<SelectPrority />
+									</div>
+									<div>
+										<SelectStatus />
+									</div>
+									<div>
+										<SelectWorking />
+									</div>
+									<div>
+										<SelectCompetency />
+									</div>
+									<div>
+										<Button variant="outline">
+											<CiCalendarDate />
+										</Button>
+									</div>
 								</div>
-								<div>
-									<SelectStatus />
-								</div>
-								<div>
-									<SelectWorking />
-								</div>
-								<div>
-									<SelectCompetency />
-								</div>
-								<div>
-									<Button variant="outline">
-										<CiCalendarDate />
-									</Button>
-								</div>
+								<AddNewFolder />
+								<AddTaskModal />
 							</div>
-							<AddNewFolder />
-							<AddTaskModal />
 						</div>
+						<DataTable columns={columns} data={sensitiveDataByFilters} />
 					</div>
-					<DataTable columns={columns} data={sensitiveDataByFilters} />
 				</div>
-			</div>
+			</ThemeProvider>
 		);
 }
