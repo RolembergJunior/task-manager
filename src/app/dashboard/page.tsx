@@ -11,11 +11,18 @@ import SelectPriority from "@/components/SelectPriority";
 import SelectWorking from "@/components/SelectWorking";
 import { Button } from "@/components/ui/button";
 import { isServer } from "@/lib/isServer";
+import { useEffect } from "react";
+import { Modals } from "../types/Types";
+import { closeModal } from "../../utils/closeModal";
 
 export default function Dashboard() {
 	const { data } = useFetch({ url: "http://localhost:3000/tarefas" });
 
 	if (!data?.length || !isServer()) return;
+
+	useEffect(() => {
+		closeModal(Modals.LOADING);
+	}, []);
 
 	return (
 		<section>

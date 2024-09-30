@@ -7,5 +7,5 @@ interface ChildrenType {
 }
 
 export default function ProviderTheme({ children }: ChildrenType) {
-	return <ThemeProvider defaultTheme="light">{children}</ThemeProvider>;
+	return <ThemeProvider>{children}</ThemeProvider>;
 }
