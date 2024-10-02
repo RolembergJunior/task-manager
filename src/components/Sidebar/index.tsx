@@ -26,6 +26,8 @@ import {
 } from "@/components/ui/dialog";
 import { GoDash } from "react-icons/go";
 import { DialogClose } from "@radix-ui/react-dialog";
+import { toast } from "sonner";
+import { mutate } from "swr";
 
 export default function SideBar() {
 	const [isOpenFolder, setIsOpenFolder] = useState(false);
@@ -54,7 +56,9 @@ export default function SideBar() {
 			.then((response) => response.json())
 			.catch((error) => console.error("ERRO:", error));
 
-		alert("PASTA DELETADA!!");
+		mutate("http://localhost:3000/pastas");
+
+		toast.success("Pasta excluída!!");
 	}
 
 	if (isLoading) return <Loading />;

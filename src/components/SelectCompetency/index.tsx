@@ -45,7 +45,7 @@ export default function SelectCompetency() {
 				<SelectContent>
 					<SelectItem value={null}>Todos</SelectItem>
 					{arrayWhitoutDuplicates?.map((date, index) => (
-						<SelectItem key={index} value={date?.toString().toLowerCase()}>
+						<SelectItem key={`${index}-${date}`} value={date?.toString().toLowerCase()}>
 							{date?.toString().toUpperCase()}
 						</SelectItem>
 					))}

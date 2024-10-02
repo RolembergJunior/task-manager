@@ -2,7 +2,7 @@
 
 import { useAtom } from "jotai";
 import type { tasksProps } from "@/app/types/Types";
-import { filtersAtom } from "@/app/Atoms";
+import { filtersAtom } from "@/app/atoms/Atoms";
 import { getValueWorkingByDateTask } from "./getValueWorkingByDateTask";
 import { format } from "date-fns";
 import { formatDateToUs } from "./formatDateToUS";

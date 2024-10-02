@@ -11,6 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { FaFolder } from "react-icons/fa";
 import { mutate } from "swr";
+import { toast } from "sonner";
 
 interface FolderTypes {
 	name: string;
@@ -41,9 +42,14 @@ export default function AddNewFolder() {
 			}
 			setNewFolder({ name: "" });
 
-			alert("PASTA SALVA!");
+			toast.success("Pasta adicionada!", {
+				duration: 3000,
+			});
+
 		} else {
-			alert("Coloque o nome da pasta");
+			toast.warning("Adicione um nome!", {
+				duration: 3000,
+			});
 		}
 	}
 

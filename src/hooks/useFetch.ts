@@ -18,7 +18,7 @@ export function useFetch(config: FetchConfig) {
 
 			return data;
 		},
-		[optionsFetch],
+		[],
 	);
 
 	const { data, isLoading, error } = useSWR(url, fetcher);

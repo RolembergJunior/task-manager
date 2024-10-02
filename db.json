@@ -16,7 +16,7 @@
         },
         {
           "name": "beijo",
-          "isCheck": false
+          "isCheck": true
         }
       ],
       "id": "4dc8"
@@ -28,9 +28,14 @@
       "creationDate": "15/07/2024",
       "finalizationDate": "2024-08-10",
       "priority": "MÉDIA PRIORIDADE",
-      "status": "Não iniciado",
-      "folder": "Trabalho",
-      "checklist": [],
+      "status": "Concluída",
+      "folder": null,
+      "checklist": [
+        {
+          "name": "Adicionando um check list",
+          "isCheck": false
+        }
+      ],
       "id": "e98d"
     },
     {
@@ -40,7 +45,7 @@
       "creationDate": "14/08/2024",
       "finalizationDate": "2024-08-15",
       "priority": "ALTA PRIORIDADE",
-      "status": "Fazer",
+      "status": "Concluída",
       "folder": null,
       "checklist": [],
       "id": "a9db"
@@ -52,7 +57,7 @@
       "creationDate": "15/08/2024",
       "finalizationDate": "2024-08-16",
       "priority": "MÉDIA PRIORIDADE",
-      "status": "Em andamento",
+      "status": "Concluída",
       "folder": null,
       "checklist": [],
       "id": "c98c"
@@ -124,18 +129,6 @@
       "priority": "MÉDIA PRIORIDADE",
       "folder": null,
       "status": "Em andamento",
-      "checklist": []
-    },
-    {
-      "id": "355a",
-      "name": "ITEM DA PAGINAÇÃO 2",
-      "description": "",
-      "responsible": "Pitter Antonio",
-      "creationDate": "16/08/2024",
-      "finalizationDate": "2024-08-17",
-      "priority": "MÉDIA PRIORIDADE",
-      "folder": null,
-      "status": "Fazer",
       "checklist": []
     },
     {
@@ -281,24 +274,36 @@
       "folder": null,
       "status": "Fazer",
       "checklist": []
+    },
+    {
+      "id": "fb22",
+      "name": "Adicionando uma nova task",
+      "description": "Adicionada",
+      "responsible": "Rolemberg Junior",
+      "creationDate": "01/10/2024",
+      "finalizationDate": "2024-10-03",
+      "priority": "ALTA PRIORIDADE",
+      "folder": null,
+      "status": "Fazer",
+      "checklist": []
+    },
+    {
+      "id": "0973",
+      "name": "Adicionando uma nova task",
+      "description": "Adicionada",
+      "responsible": "Rolemberg Junior",
+      "creationDate": "01/10/2024",
+      "finalizationDate": "2024-10-03",
+      "priority": "ALTA PRIORIDADE",
+      "folder": null,
+      "status": "Fazer",
+      "checklist": []
     }
   ],
   "pastas": [
     {
-      "id": "d541",
-      "name": "Trabalho"
-    },
-    {
-      "id": "4823",
-      "name": "Nova pasta"
-    },
-    {
       "id": "c66d",
       "name": "Estudos"
-    },
-    {
-      "id": "d93a",
-      "name": "Projeto"
     }
   ]
 }

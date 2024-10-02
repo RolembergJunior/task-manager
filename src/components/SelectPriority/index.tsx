@@ -35,7 +35,7 @@ export default function SelectPrority() {
 			<SelectContent>
 				<SelectItem value="Todos">Todos</SelectItem>
 				{arrayWhitoutDuplicates?.map((priority, index) => (
-					<SelectItem key={index} value={priority.toString()}>
+					<SelectItem key={`${index}-${priority}`} value={priority.toString()}>
 						{priority}
 					</SelectItem>
 				))}

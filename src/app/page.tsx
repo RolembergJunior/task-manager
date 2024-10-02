@@ -3,10 +3,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { useAtom } from "jotai";
 import { useFetch } from "@/hooks/useFetch";
-import type { tasksProps } from "./types/Types";
+import { Modals, type tasksProps } from "./types/Types";
 import SideBar from "@/components/Sidebar";
 import AddTaskModal from "@/components/AddTaskModal";
-import Loading from "@/components/Loading";
 import AddNewFolder from "@/components/AddNewFolder";
 import SelectWorking from "@/components/SelectWorking";
 import SelectStatus from "@/components/SelectStatus";
@@ -20,10 +19,12 @@ import { CiCalendarDate, CiSearch } from "react-icons/ci";
 import { Button } from "@/components/ui/button";
 import { useFilterTask } from "@/utils/dynamicFilterFunction";
 import { ThemeProvider } from "next-themes";
+import { useUpdateAtomModal } from "./atoms/actions";
 
 export default function Home() {
 	const [allData, setAllData] = useState<tasksProps[]>([]);
 	const [filters, setFilters] = useAtom(filtersAtom);
+	const { closeModal } = useUpdateAtomModal();
 	const { search, priority, status, working, competency, folder } =
 		useFilterTask();
 
@@ -42,6 +43,10 @@ export default function Home() {
 		}
 	}, [data]);
 
+	useEffect(() => {
+		closeModal(Modals.LOADING);
+	}, []);
+
 	function dynamicFilterFunction() {
 		const filterMap = {
 			search,
@@ -57,7 +62,6 @@ export default function Home() {
 		);
 	}
 
-	if (isLoading) return <Loading />;
 	if (!isLoading && !error)
 		return (
 			<ThemeProvider attribute="class">

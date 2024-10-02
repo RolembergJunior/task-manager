@@ -1,4 +1,4 @@
-import { modalsAtom } from "@/app/Atoms";
+import { modalsAtom } from "@/app/atoms/Atoms";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 

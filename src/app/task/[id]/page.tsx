@@ -43,12 +43,13 @@ import {
 } from "@radix-ui/react-tooltip";
 import { IoIosClose } from "react-icons/io";
 import { useUpdateAtomModal } from "@/app/atoms/actions";
+import { toast } from "sonner";
 
 export default function Task() {
 	const [dataTask, setDataTask] = useState<tasksProps>({} as tasksProps);
 	const [isOpenInput, setIsOpenInput] = useState(false);
 	const [inputText, setInputText] = useState("");
-	const { closeModal } = useUpdateAtomModal();
+	const { openModal, closeModal } = useUpdateAtomModal();
 	const { theme } = useTheme();
 	const route = useRouter();
 	const param = useParams();
@@ -187,9 +188,49 @@ export default function Task() {
 			...dataTask,
 			checklist: deleteItemCheckList,
 		});
+
+		toast.success("CheckBox excluído!", {
+			duration: 3000,
+		});
 	}
 
-	if (!isLoading)
+	function onHandleClickCheckBox(
+		item: { name: string; isCheck: boolean },
+		indexItem: number,
+	) {
+		const updateCheckboxItems = dataTask.checklist.map(
+			(itemIsChecked, index) =>
+				index === indexItem
+					? { ...item, isCheck: !item.isCheck }
+					: itemIsChecked,
+		);
+
+		setDataTask({
+			...dataTask,
+			checklist: updateCheckboxItems,
+		});
+	}
+
+	function onHandleSaveTask() {
+		if (inputText !== "") {
+			setInputText("");
+			setIsOpenInput(false);
+
+			setDataTask({
+				...dataTask,
+				checklist: [
+					{ name: inputText, isCheck: false },
+					...dataTask.checklist.map((item) => item),
+				],
+			});
+		}
+
+		toast.success("CheckBox adicionado!", {
+			duration: 3000,
+		});
+	}
+
+	if (!isLoading && !error)
 		return (
 			<div className="flex bg-[#F5F6FA] dark:bg-black/20">
 				<SideBar />
@@ -198,6 +239,8 @@ export default function Task() {
 						<div className="flex justify-between">
 							<BiLeftArrowAlt
 								onClick={() => {
+									openModal(Modals.LOADING, "CARREGANDO");
+
 									mutate("http://localhost:3000/tarefas");
 									route.push("/");
 								}}
@@ -404,33 +447,18 @@ export default function Task() {
 									</div>
 									{dataTask.checklist?.length || isOpenInput ? (
 										<div className="bg-[#F5F6FA] dark:bg-black/50 rounded-lg p-3 max-h-52 overflow-auto scrollbar-thin scrollbar-thumb-black scrollbar-track-white">
-											{isOpenInput ? (
+											{isOpenInput && (
 												<div className="flex gap-2">
 													<Input
 														onChange={(e) => setInputText(e.target.value)}
 														type="text"
 														placeholder="Digite aqui..."
 													/>
-													<Button
-														onClick={() => {
-															if (inputText !== "") {
-																setInputText("");
-																setIsOpenInput(false);
-
-																setDataTask({
-																	...dataTask,
-																	checklist: [
-																		{ name: inputText, isCheck: false },
-																		...dataTask.checklist.map((item) => item),
-																	],
-																});
-															}
-														}}
-													>
+													<Button onClick={() => onHandleSaveTask()}>
 														Salvar
 													</Button>
 												</div>
-											) : null}
+											)}
 											{dataTask.checklist?.map((item, indexItem) => (
 												<div
 													key={`${item.name}-${indexItem}`}
@@ -447,20 +475,9 @@ export default function Task() {
 													<div className="flex items-center gap-3">
 														<Input
 															checked={item.isCheck}
-															onClick={() => {
-																const updateCheckboxItems =
-																	dataTask.checklist.map(
-																		(itemIsChecked, index) =>
-																			index === indexItem
-																				? { ...item, isCheck: !item.isCheck }
-																				: itemIsChecked,
-																	);
-
-																setDataTask({
-																	...dataTask,
-																	checklist: updateCheckboxItems,
-																});
-															}}
+															onClick={() =>
+																onHandleClickCheckBox(item, indexItem)
+															}
 															type="checkbox"
 															className="w-5"
 														/>

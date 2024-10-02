@@ -27,6 +27,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { mutate } from "swr";
+import { toast } from "sonner";
 
 export default function AddTaskModal() {
 	const [dataTask, setDataTask] = useState<tasksProps>({
@@ -60,8 +61,18 @@ export default function AddTaskModal() {
 				console.error("Hoube um erro ao adicionar uma task", error);
 			}
 
+			toast.success("Tarefa adicionada!", {
+				duration: 3000,
+			});
+
 			mutate("http://localhost:3000/tarefas");
-		} else alert("Adicione o nome, a data de finalização e o status da tarefa");
+		} else
+			toast.warning(
+				"Adicione o nome, a data de finalização e o status da tarefa",
+				{
+					duration: 3000,
+				},
+			);
 	}
 
 	return (

@@ -34,7 +34,7 @@ export default function SelectStatus() {
 			<SelectContent>
 				<SelectItem value="Todos">Todos</SelectItem>
 				{arrayWhitoutDuplicates?.map((status, index) => (
-					<SelectItem key={index} value={status}>
+					<SelectItem key={`${index}-${status}`} value={status}>
 						{status}
 					</SelectItem>
 				))}
