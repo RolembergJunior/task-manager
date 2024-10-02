@@ -10,15 +10,15 @@ import SelectStatus from "@/components/SelectStatus";
 import SelectPriority from "@/components/SelectPriority";
 import SelectWorking from "@/components/SelectWorking";
 import { Button } from "@/components/ui/button";
-import { isServer } from "@/lib/isServer";
 import { useEffect } from "react";
 import { Modals } from "../types/Types";
-import { closeModal } from "../../utils/closeModal";
+import { useUpdateAtomModal } from "../../app/atoms/actions";
 
 export default function Dashboard() {
 	const { data } = useFetch({ url: "http://localhost:3000/tarefas" });
+	const { closeModal } = useUpdateAtomModal();
 
-	if (!data?.length || !isServer()) return;
+	if (!data?.length) return;
 
 	useEffect(() => {
 		closeModal(Modals.LOADING);

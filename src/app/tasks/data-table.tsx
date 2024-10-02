@@ -22,9 +22,8 @@ import {
 } from "@/components/ui/table";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 import { FaAngleDoubleRight, FaAngleDoubleLeft } from "react-icons/fa";
-import { useAtom } from "jotai";
-import { modalsAtom } from "../Atoms";
 import { type ModalProps, Modals } from "../types/Types";
+import {  useUpdateAtomModal } from "@/app/atoms/actions";
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
@@ -37,7 +36,7 @@ export function DataTable<Tdata, Tvalue>({
 }: DataTableProps<Tdata, Tvalue>) {
 	const [sorting, setSorting] = useState<SortingState>([]);
 	const [page, setPage] = useState(1);
-	const [modals, setModal] = useAtom(modalsAtom);
+	const { openModal } = useUpdateAtomModal()
 	const router = useRouter();
 	const table = useReactTable({
 		data,
@@ -50,19 +49,10 @@ export function DataTable<Tdata, Tvalue>({
 		},
 	});
 
-	// function onHandleClickRow(id: number | string) {
-	// 	// router.push(`/task/${id}`);
-	// }
+	function onHandleClickRow(id: string) {
+		openModal(Modals.LOADING, "CARREGANDO");
 
-	function openModal(modalName: string) {
-		if(!modals[modalName] || modals[modalName].isOpen) return;
-
-		setModal(
-			{
-				...modals,
-				[modalName]: { isOpen: true, text: 'CARREGANDO' }
-			},
-		);
+		router.push(`/task/${id}`);
 	}
 
 	const countAllTasks = data.length;
@@ -102,7 +92,7 @@ export function DataTable<Tdata, Tvalue>({
 								.rows.slice((page - 1) * 10, page * 10)
 								.map((row) => (
 									<TableRow
-										onClick={() => openModal(Modals.LOADING)}
+										onClick={() => onHandleClickRow(row.original.id)}
 										key={row.id}
 										data-state={row.getIsSelected() && "selected"}
 										className="dark:border-white/20"

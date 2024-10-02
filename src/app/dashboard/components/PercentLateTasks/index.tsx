@@ -4,7 +4,7 @@ import { useAtom } from "jotai";
 import { useMemo } from "react";
 import { useFetch } from "@/hooks/useFetch";
 import { useFilterTask } from "@/utils/dynamicFilterFunction";
-import { filtersAtom } from "@/app/Atoms";
+import { filtersAtom } from "@/app/atoms/Atoms";
 import { type tasksProps, Working } from "@/app/types/Types";
 import { formatNumbertoPercent } from "@/utils/formatNumbertoPercent";
 import { getColorbyLabelWorkingTask } from "@/utils/getColorWorkingByLabel";

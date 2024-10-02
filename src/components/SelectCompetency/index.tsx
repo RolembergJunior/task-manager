@@ -10,7 +10,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "../ui/select";
-import { filtersAtom } from "@/app/Atoms";
+import { filtersAtom } from "@/app/atoms/Atoms";
 import { extractMonthFromDate } from "@/utils/extractMonthFromDate";
 import { useFetch } from "@/hooks/useFetch";
 

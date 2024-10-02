@@ -16,7 +16,7 @@ import { useTheme } from "next-themes";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { useAtom } from "jotai";
-import { filtersAtom } from "@/app/Atoms";
+import { filtersAtom } from "@/app/atoms/Atoms";
 import { useFetchFolder } from "@/hooks/useFetch";
 import {
 	Dialog,

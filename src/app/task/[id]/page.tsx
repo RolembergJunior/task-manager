@@ -7,7 +7,6 @@ import { useFetch, useFetchFolder } from "@/hooks/useFetch";
 import { mutate } from "swr";
 import SideBar from "@/components/Sidebar";
 import { Button } from "@/components/ui/button";
-import Loading from "@/components/Loading";
 import { BiLeftArrowAlt } from "react-icons/bi";
 import { FaPlus, FaRegTrashAlt } from "react-icons/fa";
 import {
@@ -30,6 +29,7 @@ import {
 import { Input } from "@/components/ui/input";
 import {
 	type FolderProps,
+	Modals,
 	Prioritys,
 	Status,
 	type tasksProps,
@@ -42,11 +42,13 @@ import {
 	TooltipTrigger,
 } from "@radix-ui/react-tooltip";
 import { IoIosClose } from "react-icons/io";
+import { useUpdateAtomModal } from "@/app/atoms/actions";
 
 export default function Task() {
 	const [dataTask, setDataTask] = useState<tasksProps>({} as tasksProps);
 	const [isOpenInput, setIsOpenInput] = useState(false);
 	const [inputText, setInputText] = useState("");
+	const { closeModal } = useUpdateAtomModal();
 	const { theme } = useTheme();
 	const route = useRouter();
 	const param = useParams();
@@ -59,6 +61,8 @@ export default function Task() {
 			setDataTask({
 				...data,
 			});
+
+			closeModal(Modals.LOADING);
 		}
 	}, [data]);
 
@@ -174,7 +178,17 @@ export default function Task() {
 		}
 	}, [dataTask]);
 
-	if (isLoading || error) return <Loading />;
+	function onHandleDeleteItemChecklist(indexItem: number) {
+		const deleteItemCheckList = dataTask.checklist.filter(
+			(_, index) => index !== indexItem,
+		);
+
+		setDataTask({
+			...dataTask,
+			checklist: deleteItemCheckList,
+		});
+	}
+
 	if (!isLoading)
 		return (
 			<div className="flex bg-[#F5F6FA] dark:bg-black/20">
@@ -419,7 +433,7 @@ export default function Task() {
 											) : null}
 											{dataTask.checklist?.map((item, indexItem) => (
 												<div
-													key={indexItem}
+													key={`${item.name}-${indexItem}`}
 													className="flex items-center justify-between w-full border-b border-black/10 dark:border-white/20"
 												>
 													{item.isCheck ? (
@@ -451,17 +465,9 @@ export default function Task() {
 															className="w-5"
 														/>
 														<div
-															onClick={() => {
-																const deleteItemCheckList =
-																	dataTask.checklist.filter(
-																		(_, index) => index != indexItem,
-																	);
-
-																setDataTask({
-																	...dataTask,
-																	checklist: deleteItemCheckList,
-																});
-															}}
+															onClick={() =>
+																onHandleDeleteItemChecklist(indexItem)
+															}
 														>
 															<IoIosClose size={25} />
 														</div>

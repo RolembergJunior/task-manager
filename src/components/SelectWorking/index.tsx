@@ -11,7 +11,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "../ui/select";
-import { filtersAtom } from "@/app/Atoms";
+import { filtersAtom } from "@/app/atoms/Atoms";
 import { getValueWorkingByDateTask } from "@/utils/getValueWorkingByDateTask";
 
 export default function SelectWorking() {

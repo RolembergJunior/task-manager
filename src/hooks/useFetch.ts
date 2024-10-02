@@ -11,15 +11,17 @@ export function useFetch(config: FetchConfig) {
 
 	const optionsFetch = options ? options : "GET";
 
-	const fetcher = useCallback(async (url: string) => {
-		const response = await fetch(url, { method: optionsFetch });
-		const data = await response.json();
+	const fetcher = useCallback(
+		async (url: string) => {
+			const response = await fetch(url, { method: optionsFetch });
+			const data = await response.json();
 
-		return data;
-	}, []);
+			return data;
+		},
+		[optionsFetch],
+	);
 
 	const { data, isLoading, error } = useSWR(url, fetcher);
-
 	return { data, error, isLoading };
 }
 

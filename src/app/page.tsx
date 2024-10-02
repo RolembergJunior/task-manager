@@ -12,13 +12,12 @@ import SelectWorking from "@/components/SelectWorking";
 import SelectStatus from "@/components/SelectStatus";
 import SelectPrority from "@/components/SelectPriority";
 import SelectCompetency from "@/components/SelectCompetency";
-import { filtersAtom } from "./Atoms";
+import { filtersAtom } from "./atoms/Atoms";
 import { DataTable } from "./tasks/data-table";
 import { columns } from "./tasks/columns";
 import { Input } from "@/components/ui/input";
 import { CiCalendarDate, CiSearch } from "react-icons/ci";
 import { Button } from "@/components/ui/button";
-import { isServer } from "@/lib/isServer";
 import { useFilterTask } from "@/utils/dynamicFilterFunction";
 import { ThemeProvider } from "next-themes";
 
@@ -36,8 +35,6 @@ export default function Home() {
 		allData,
 		filters,
 	]);
-
-	if (!isServer()) return;
 
 	useEffect(() => {
 		if (data?.length) {

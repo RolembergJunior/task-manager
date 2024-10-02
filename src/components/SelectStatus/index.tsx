@@ -10,7 +10,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "../ui/select";
-import { filtersAtom } from "@/app/Atoms";
+import { filtersAtom } from "@/app/atoms/Atoms";
 
 export default function SelectStatus() {
 	const { data } = useFetch({ url: "http://localhost:3000/tarefas" });
