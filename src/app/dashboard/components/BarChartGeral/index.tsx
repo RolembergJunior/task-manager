@@ -1,7 +1,7 @@
 "use client";
 
 import { useAtom } from "jotai";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useFetch } from "@/hooks/useFetch";
 import { useFilterTask } from "@/utils/dynamicFilterFunction";
 import { filtersAtom } from "@/app/atoms/Atoms";
@@ -18,21 +18,36 @@ import {
 	XAxis,
 	YAxis,
 } from "recharts";
-import type { tasksProps } from "@/app/types/Types";
+import { Status, type tasksProps } from "@/app/types/Types";
 
-type taskPerMonth = {
+type tasksByMonthType = {
+	[month: string]: tasksProps[];
+};
+
+type tasksByStatusType = {
 	[month: string]: number;
 };
 
+interface DataChartProps {
+	name: string;
+	closed?: number;
+	working?: number;
+	toDo?: number;
+	late?: number;
+}
+
 export default function BarChartGeral() {
+	const [chartData, setChartData] = useState<DataChartProps[]>();
 	const [filters] = useAtom(filtersAtom);
 	const { data } = useFetch({ url: "http://localhost:3000/tarefas" });
 	const { search, priority, status, working, competency, folder } =
 		useFilterTask();
 
-	const dataChart = useMemo(separeMonthsInArrays, [data, filters]);
-
 	if (!data?.length) return;
+
+	useEffect(() => {
+		generateNormalizedChartData();
+	}, [filters, data]);
 
 	function dynamicFilterFunction() {
 		const filterMap = {
@@ -49,28 +64,48 @@ export default function BarChartGeral() {
 		);
 	}
 
-	function separeMonthsInArrays() {
-		const monthsTasks: taskPerMonth = {};
-		const dataFiltered = dynamicFilterFunction();
+	function generateNormalizedChartData() {
+		const tasksByMonth: tasksByMonthType = {};
+		const filteredTasks = dynamicFilterFunction();
 
-		dataFiltered?.forEach((item) => {
+		filteredTasks?.forEach((item) => {
 			const normalizedDate = format(
 				new Date(formatDateToUs(item.creationDate)),
 				"MMMM/yy",
 				{ locale: ptBR },
 			);
 
-			if (normalizedDate in monthsTasks) {
-				monthsTasks[normalizedDate]++;
+			if (normalizedDate in tasksByMonth) {
+				tasksByMonth[normalizedDate].push(item);
 			} else {
-				monthsTasks[normalizedDate] = 1;
+				tasksByMonth[normalizedDate] = [item];
 			}
 		});
 
-		return Object.entries(monthsTasks).map(([name, value]) => ({
-			name,
-			value,
-		}));
+		const normalizedChartData = Object.entries(tasksByMonth).map(
+			([name, value]) => ({
+				name,
+				...separeStatusInArrays(value),
+			}),
+		);
+
+		setChartData(normalizedChartData);
+	}
+
+	function separeStatusInArrays(data: tasksProps[]): tasksByStatusType {
+		const statusCount: tasksByStatusType = {};
+
+		data?.forEach((item) => {
+			const status: string = item.status;
+
+			if (status in statusCount) {
+				statusCount[status]++;
+			} else {
+				statusCount[status] = 1;
+			}
+		});
+
+		return statusCount;
 	}
 
 	return (
@@ -80,7 +115,7 @@ export default function BarChartGeral() {
 				<BarChart
 					width={500}
 					height={400}
-					data={dataChart}
+					data={chartData}
 					margin={{
 						top: 20,
 						right: 20,
@@ -91,9 +126,16 @@ export default function BarChartGeral() {
 					<CartesianGrid stroke="#ffffff00" />
 					<XAxis type="category" dataKey="name" />
 					<YAxis type="number" />
-					<Tooltip />
+					<Tooltip
+						contentStyle={{
+							background: "#eab308",
+						}}
+					/>
 					<Legend />
-					<Bar dataKey="value" fill="#2449ee" />
+					<Bar dataKey={Status.NOT_INICIATE} fill="#6b7280" />
+					<Bar dataKey={Status.TO_DO} fill="#2449ee" />
+					<Bar dataKey={Status.WORKING} fill="#eab308" />
+					<Bar dataKey={Status.CLOSED} fill="#16a34a" />
 				</BarChart>
 			</ResponsiveContainer>
 		</div>

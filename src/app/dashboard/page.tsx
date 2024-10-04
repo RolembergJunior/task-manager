@@ -20,9 +20,9 @@ export default function Dashboard() {
 
 	if (!data?.length) return;
 
-	useEffect(() => {
-		closeModal(Modals.LOADING);
-	}, []);
+	// useEffect(() => {
+	// 	closeModal(Modals.LOADING);
+	// }, []);
 
 	return (
 		<section>
