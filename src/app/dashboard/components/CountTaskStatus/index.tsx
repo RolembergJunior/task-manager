@@ -8,7 +8,7 @@ import { filtersAtom } from "@/app/atoms/Atoms";
 import { Status, type tasksProps } from "@/app/types/Types";
 import { formatNumbertoPercent } from "@/utils/formatNumbertoPercent";
 
-type StatusProps = {
+type taksByStatusType = {
 	[status: string]: tasksProps[];
 };
 
@@ -22,10 +22,7 @@ export default function CountTaskStatus() {
 
 	if (!data) return;
 
-	const totalItens = data.length;
-
 	function dynamicFilterFunction() {
-
 		const filterMap = {
 			search,
 			priority,
@@ -41,21 +38,23 @@ export default function CountTaskStatus() {
 	}
 
 	function separeStatusInArrays() {
-		const statusArray: StatusProps = {};
+		const tasksByStatus: taksByStatusType = {};
 		const dataFiltered = dynamicFilterFunction();
 
 		dataFiltered?.forEach((item) => {
 			const status: string = item.status;
 
-			if (status in statusArray) {
-				statusArray[status].push(item);
+			if (status in tasksByStatus) {
+				tasksByStatus[status].push(item);
 			} else {
-				statusArray[status] = [item];
+				tasksByStatus[status] = [item];
 			}
 		});
 
-		return statusArray;
+		return tasksByStatus;
 	}
+
+	const totalItens = dynamicFilterFunction().length;
 
 	return (
 		<div className="flex flex-col justify-around row-start-1 row-end-2 col-start-1 col-end-2 bg-white dark:bg-[#1e293b] p-4">
@@ -64,9 +63,7 @@ export default function CountTaskStatus() {
 				<div
 					style={{
 						width: formatNumbertoPercent(
-							(statusTasks[Status.NOT_INICIATE]?.length
-								? statusTasks[Status.NOT_INICIATE]?.length
-								: 0) / totalItens,
+							statusTasks[Status.NOT_INICIATE]?.length / totalItens,
 							2,
 						),
 					}}
@@ -75,9 +72,7 @@ export default function CountTaskStatus() {
 				<div
 					style={{
 						width: formatNumbertoPercent(
-							(statusTasks[Status.TO_DO]?.length
-								? statusTasks[Status.TO_DO]?.length
-								: 0) / totalItens,
+							statusTasks[Status.TO_DO]?.length / totalItens,
 							2,
 						),
 					}}
@@ -86,9 +81,7 @@ export default function CountTaskStatus() {
 				<div
 					style={{
 						width: formatNumbertoPercent(
-							(statusTasks[Status.WORKING]?.length
-								? statusTasks[Status.WORKING]?.length
-								: 0) / totalItens,
+							statusTasks[Status.WORKING]?.length / totalItens,
 							2,
 						),
 					}}
@@ -97,9 +90,7 @@ export default function CountTaskStatus() {
 				<div
 					style={{
 						width: formatNumbertoPercent(
-							(statusTasks[Status.CLOSED]?.length
-								? statusTasks[Status.CLOSED]?.length
-								: 0) / totalItens,
+							statusTasks[Status.CLOSED]?.length / totalItens,
 							2,
 						),
 					}}
@@ -110,9 +101,7 @@ export default function CountTaskStatus() {
 				<div className="text-center">
 					<p className="text-xl">
 						{formatNumbertoPercent(
-							(statusTasks[Status.NOT_INICIATE]?.length
-								? statusTasks[Status.NOT_INICIATE]?.length
-								: 0) / totalItens,
+							statusTasks[Status.NOT_INICIATE]?.length / totalItens,
 							2,
 						)}
 					</p>
@@ -121,9 +110,7 @@ export default function CountTaskStatus() {
 				<div className="text-center">
 					<p className="text-xl">
 						{formatNumbertoPercent(
-							(statusTasks[Status.TO_DO]?.length
-								? statusTasks[Status.TO_DO]?.length
-								: 0) / totalItens,
+							statusTasks[Status.TO_DO]?.length / totalItens,
 							2,
 						)}
 					</p>
@@ -132,9 +119,7 @@ export default function CountTaskStatus() {
 				<div className="text-center">
 					<p className="text-xl">
 						{formatNumbertoPercent(
-							(statusTasks[Status.WORKING]?.length
-								? statusTasks[Status.WORKING]?.length
-								: 0) / totalItens,
+							statusTasks[Status.WORKING]?.length / totalItens,
 							2,
 						)}
 					</p>
@@ -143,9 +128,7 @@ export default function CountTaskStatus() {
 				<div className="text-center">
 					<p className="text-xl">
 						{formatNumbertoPercent(
-							(statusTasks[Status.CLOSED]?.length
-								? statusTasks[Status.CLOSED]?.length
-								: 0) / totalItens,
+							statusTasks[Status.CLOSED]?.length / totalItens,
 							2,
 						)}
 					</p>
