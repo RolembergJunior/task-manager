@@ -1,7 +1,7 @@
 "use client";
 
 import { useAtom } from "jotai";
-import { useEffect, useMemo, useState } from "react";
+import { ReactElement, useEffect, useMemo, useState } from "react";
 import { useFetch } from "@/hooks/useFetch";
 import { useFilterTask } from "@/utils/dynamicFilterFunction";
 import { filtersAtom } from "@/app/atoms/Atoms";
@@ -19,6 +19,7 @@ import {
 	YAxis,
 } from "recharts";
 import { Status, type tasksProps } from "@/app/types/Types";
+import { useTheme } from "next-themes";
 
 type tasksByMonthType = {
 	[month: string]: tasksProps[];
@@ -42,6 +43,7 @@ export default function BarChartGeral() {
 	const { data } = useFetch({ url: "http://localhost:3000/tarefas" });
 	const { search, priority, status, working, competency, folder } =
 		useFilterTask();
+	const { theme } = useTheme();
 
 	if (!data?.length) return;
 
@@ -84,7 +86,7 @@ export default function BarChartGeral() {
 
 		const normalizedChartData = Object.entries(tasksByMonth).map(
 			([name, value]) => ({
-				name,
+				name: name.toUpperCase(),
 				...separeStatusInArrays(value),
 			}),
 		);
@@ -127,8 +129,19 @@ export default function BarChartGeral() {
 					<XAxis type="category" dataKey="name" />
 					<YAxis type="number" />
 					<Tooltip
+						labelStyle={{
+							color: "#4f504f",
+							fontWeight: "bolder",
+						}}
+						itemStyle={{
+							fontWeight: "lighter",
+						}}
 						contentStyle={{
-							background: "#eab308",
+							background: "#ece6e6",
+							borderRadius: "5px",
+							border: "1px solid rgb(0,0,0,0.2)",
+							padding: "1rem",
+							width: "12rem"
 						}}
 					/>
 					<Legend />

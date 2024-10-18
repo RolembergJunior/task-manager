@@ -186,14 +186,14 @@ export default function SideBar() {
 				<div className="bg-white dark:bg-[#1e293b] border-t dark:border-t-white/20 p-3">
 					<div className="flex justify-between bg-[#D9D9D9] dark:bg-white/20 w-[85%] h-10 mx-auto gap-1 p-1 rounded-md transition-all">
 						<div
-							onClick={() => setTheme(theme === "dark" ? "light" : "light")}
+							onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
 							className="bg-white dark:bg-transparent flex items-center gap-2 p-4 rounded-md hover:cursor-pointer"
 						>
 							<LuSun />
 							<p>Claro</p>
 						</div>
 						<div
-							onClick={() => setTheme(theme === "light" ? "dark" : "dark")}
+							onClick={() => setTheme(theme === "light" ? "dark" : "light")}
 							className="bg-transparent dark:bg-black flex items-center gap-2 p-4 rounded-md hover:cursor-pointer"
 						>
 							<IoMoonOutline />

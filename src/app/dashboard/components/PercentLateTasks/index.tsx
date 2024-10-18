@@ -27,10 +27,25 @@ export default function PercentLateTaskDash() {
 	const { search, priority, status, working, competency, folder } =
 		useFilterTask();
 
-	const workingTask: workingTaskProps[] = useMemo(separeWorkingTaskInArray, [
-		data,
-		filters,
-	]);
+	const tasksByWorking = useMemo(separeWorkingTaskInArray, [data, filters]);
+
+	const templateConfig = [
+		{
+			name: "RUIM",
+			value: 50,
+			color: "#FF0000",
+		},
+		{
+			name: "BOM",
+			value: 20,
+			color: "#FFFF00",
+		},
+		{
+			name: "EXCELENTE",
+			value: 10,
+			color: "#00FF00",
+		},
+	];
 
 	if (!data?.length) return;
 
@@ -77,7 +92,7 @@ export default function PercentLateTaskDash() {
 		return 0;
 	}
 
-	function separeWorkingTaskInArray() {
+	function separeWorkingTaskInArray(): workingTaskProps[] {
 		const workingTasks: WorkingType = {};
 		const dataFiltered = dynamicFilterFunction();
 
@@ -123,7 +138,8 @@ export default function PercentLateTaskDash() {
 	const cy = 150;
 	const iR = 50;
 	const oR = 100;
-	const value = sumLastdayAndOnTimevalues(workingTask);
+	const value = sumLastdayAndOnTimevalues(tasksByWorking);
+
 	let total = 0;
 
 	const needle = (
@@ -154,7 +170,14 @@ export default function PercentLateTaskDash() {
 		const yp = y0 + length * sin;
 
 		return [
-			<circle key={`circle-angle-${sin}-${cos}`} cx={x0} cy={y0} r={r} fill={color} stroke="none"/>,
+			<circle
+				key={`circle-angle-${sin}-${cos}`}
+				cx={x0}
+				cy={y0}
+				r={r}
+				fill={color}
+				stroke="none"
+			/>,
 			<path
 				key={`M${xba} ${yba}L${xbb} ${ybb} L${xp} ${yp} L${xba} ${yba}`}
 				d={`M${xba} ${yba}L${xbb} ${ybb} L${xp} ${yp} L${xba} ${yba}`}
@@ -175,7 +198,7 @@ export default function PercentLateTaskDash() {
 					dataKey="value"
 					startAngle={180}
 					endAngle={0}
-					data={workingTask}
+					data={templateConfig}
 					cx={cx}
 					cy={cy}
 					innerRadius={iR}
@@ -183,11 +206,11 @@ export default function PercentLateTaskDash() {
 					fill="#8884d8"
 					stroke="none"
 				>
-					{workingTask.map((entry, index) => (
-						<Cell key={`cell-${index}`} fill={entry.color} />
+					{templateConfig.map((entry) => (
+						<Cell key={`cell-${entry.color}`} fill={entry.color} />
 					))}
 				</Pie>
-				{needle(value, workingTask, cx, cy, iR, oR, "#d0d000")}
+				{needle(value, tasksByWorking, cx, cy, iR, oR, "#d0d000")}
 			</PieChart>
 			<h3 className="absolute top-[50%] right-[250px] text-black dark:text-red-600 font-medium">
 				{formatNumbertoPercent(value / total, 2)}
