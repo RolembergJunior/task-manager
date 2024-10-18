@@ -2,7 +2,7 @@
 
 import { Modals } from "@/app/types/Types";
 import { useUpdateAtomModal } from "@/app/atoms/actions";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import type { ReactElement } from "react";
 
 interface NavLinkProps {
@@ -12,13 +12,16 @@ interface NavLinkProps {
 }
 
 export default function NavLink({ icon, name, href }: NavLinkProps) {
-	const { openModal } = useUpdateAtomModal()
+	const { openModal } = useUpdateAtomModal();
 	const route = useRouter();
+	const pathName = usePathname();
 
 	function onClickNewRote() {
-		openModal(Modals.LOADING, "CARREGANDO");
+		if (pathName !== href) {
+			openModal(Modals.LOADING, "CARREGANDO");
 
-		route.push(`http://localhost:3001${href}`);
+			route.push(`http://localhost:3001${href}`);
+		}
 	}
 
 	return (
