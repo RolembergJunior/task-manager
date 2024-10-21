@@ -11,7 +11,7 @@ export interface CheckListProps {
 export interface tasksProps {
 	// id: number | string | null,
 	name: string;
-	description: string;
+	description: ValueProps[];
 	responsible: string | null;
 	creationDate: string;
 	finalizationDate: string;
@@ -19,6 +19,11 @@ export interface tasksProps {
 	status: string;
 	folder: string | null;
 	checklist: CheckListProps[];
+}
+
+export interface ValueProps {
+	type: string;
+	children: { text: string; [x: string]: string }[];
 }
 
 export interface FolderProps {

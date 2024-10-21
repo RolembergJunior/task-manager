@@ -32,7 +32,16 @@ import { toast } from "sonner";
 export default function AddTaskModal() {
 	const [dataTask, setDataTask] = useState<tasksProps>({
 		name: "",
-		description: "",
+		description: [
+			{
+				type: "paragraph",
+				children: [
+					{
+						text: "",
+					},
+				],
+			},
+		],
 		responsible: null,
 		creationDate: new Intl.DateTimeFormat("pt-BR").format(new Date(Date.now())),
 		finalizationDate: "",
@@ -104,7 +113,19 @@ export default function AddTaskModal() {
 							<label htmlFor="name">Descrição</label>
 							<Input
 								onChange={(e) =>
-									setDataTask({ ...dataTask, description: e.target.value })
+									setDataTask({
+										...dataTask,
+										description: [
+											{
+												type: "paragraph",
+												children: [
+													{
+														text: e.target.value,
+													},
+												],
+											},
+										],
+									})
 								}
 								id="name"
 								type="text"

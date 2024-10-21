@@ -1,88 +1,23 @@
 {
   "tarefas": [
     {
-      "name": "Ver o meu amor",
-      "description": "dar muitoa bjs no seu amor",
-      "responsible": "Rolemberg Junior",
-      "creationDate": "15/07/2024",
-      "finalizationDate": "2024-09-27",
-      "priority": "ALTA PRIORIDADE",
-      "status": "Em andamento",
-      "folder": "Nova pasta",
-      "checklist": [
-        {
-          "name": "abraço ",
-          "isCheck": true
-        },
-        {
-          "name": "beijo",
-          "isCheck": true
-        }
-      ],
-      "id": "4dc8"
-    },
-    {
-      "name": "Crair proc que libera relatórios por módulos",
-      "description": "Criar um campo de filtro para idDatasets",
-      "responsible": "Rolemberg Junior",
-      "creationDate": "15/07/2024",
-      "finalizationDate": "2024-08-10",
-      "priority": "MÉDIA PRIORIDADE",
-      "status": "Concluída",
-      "folder": null,
-      "checklist": [
-        {
-          "name": "Adicionando um check list",
-          "isCheck": false
-        }
-      ],
-      "id": "e98d"
-    },
-    {
-      "name": "Task do vídeo",
-      "description": "Task criada",
-      "responsible": "Pitter Antonio",
-      "creationDate": "14/08/2024",
-      "finalizationDate": "2024-08-15",
-      "priority": "ALTA PRIORIDADE",
-      "status": "Concluída",
-      "folder": null,
-      "checklist": [],
-      "id": "a9db"
-    },
-    {
-      "name": "Criar a pagination nesse relatório",
-      "description": "Usar o Slice() para limitar os itens por páginas usando a seguinte fórmula .slice( page - 1, page * 10 ) ",
-      "responsible": "Rolemberg Junior",
-      "creationDate": "15/08/2024",
-      "finalizationDate": "2024-08-16",
-      "priority": "MÉDIA PRIORIDADE",
-      "status": "Concluída",
-      "folder": null,
-      "checklist": [],
-      "id": "c98c"
-    },
-    {
-      "id": "50ba",
-      "name": "qweqe",
-      "description": "qweq",
-      "responsible": "Rolemberg Junior",
-      "creationDate": "16/08/2024",
-      "finalizationDate": "2024-08-01",
-      "priority": "MÉDIA PRIORIDADE",
-      "folder": null,
-      "status": "Fazer",
-      "checklist": []
-    },
-    {
       "name": "TESTANDO",
-      "description": "qqweqweq",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "text": "TESTANDOOOO"
+            }
+          ]
+        }
+      ],
       "responsible": "Rolemberg Junior",
       "creationDate": "16/08/2024",
       "finalizationDate": "2024-09-11",
       "priority": "ALTA PRIORIDADE",
       "status": "Em andamento",
-      "folder": "Estudos",
+      "folder": null,
       "checklist": [
         {
           "name": "Criando chek 2",
@@ -96,20 +31,17 @@
       "id": "2e45"
     },
     {
-      "id": "aa01",
-      "name": "qewqweqw",
-      "description": "eqweqweqw",
-      "responsible": "Pitter Antonio",
-      "creationDate": "16/08/2024",
-      "finalizationDate": "2024-08-30",
-      "priority": "MÉDIA PRIORIDADE",
-      "folder": null,
-      "status": "Fazer",
-      "checklist": []
-    },
-    {
       "name": "qweqweqweqwe",
-      "description": "qweqwe",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "text": "TESTANDO"
+            }
+          ]
+        }
+      ],
       "responsible": "Pitter Antonio",
       "creationDate": "16/08/2024",
       "finalizationDate": "2024-08-31",
@@ -120,20 +52,38 @@
       "id": "8433"
     },
     {
-      "id": "b0bc",
       "name": "qweqweqweqweqw",
-      "description": "qweqwe",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "text": "asdasdasdasdas"
+            }
+          ]
+        }
+      ],
       "responsible": "Fernanda Sales",
       "creationDate": "16/08/2024",
       "finalizationDate": "2024-08-24",
       "priority": "MÉDIA PRIORIDADE",
-      "folder": null,
       "status": "Em andamento",
-      "checklist": []
+      "folder": null,
+      "checklist": [],
+      "id": "b0bc"
     },
     {
       "name": "Terminar de FAZER atividades de figuras de linguagem",
-      "description": "Fazer exercícios de ENEM sobre figuras de linguagem.",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "text": "TESTANDO"
+            }
+          ]
+        }
+      ],
       "responsible": "Rolemberg Junior",
       "creationDate": "22/08/2024",
       "finalizationDate": "2024-08-29",
@@ -145,7 +95,16 @@
     },
     {
       "name": "Iniciar módulo de PROBRABILIDADE ",
-      "description": "",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "text": "TESTANDO"
+            }
+          ]
+        }
+      ],
       "responsible": "Rolemberg Junior",
       "creationDate": "22/08/2024",
       "finalizationDate": "2024-08-23",
@@ -157,7 +116,16 @@
     },
     {
       "name": "Fazer bastante exercícios de ELETRODINÂMICA E ONDULATÓRIA",
-      "description": "",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "text": "TESTANDO"
+            }
+          ]
+        }
+      ],
       "responsible": "Rolemberg Junior",
       "creationDate": "22/08/2024",
       "finalizationDate": "2024-08-23",
@@ -170,7 +138,16 @@
     {
       "id": "e9b9",
       "name": "LIXAR O CARRO",
-      "description": "TESTE",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "text": "TESTANDO"
+            }
+          ]
+        }
+      ],
       "responsible": "Rolemberg Junior",
       "creationDate": "24/08/2024",
       "finalizationDate": "2024-09-20",
@@ -181,7 +158,16 @@
     },
     {
       "name": "Estudar sobre o REDUCE",
-      "description": "Pesquisar sobre sua funcionalidade",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "text": "TESTANDO"
+            }
+          ]
+        }
+      ],
       "responsible": "Rolemberg Junior",
       "creationDate": "31/08/2024",
       "finalizationDate": "2024-09-01",
@@ -193,7 +179,16 @@
     },
     {
       "name": "Próximos passos do projeto",
-      "description": "1 - Criar um novo filtro  de ANDAMENTO, onde o usuário poderá verificar se a tarefa está, Atrasada, no Dia ou no prazo \n2 - Criar modal no contexto, para poder criar chamá-lo em qualquer lugar \n3 - Ajustar lógica do Dashboard ",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "text": "TESTANDO"
+            }
+          ]
+        }
+      ],
       "responsible": "Rolemberg Junior",
       "creationDate": "01/09/2024",
       "finalizationDate": "2024-09-06",
@@ -206,7 +201,16 @@
     {
       "id": "d922",
       "name": "TESTE",
-      "description": "asdasd",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "text": "TESTANDO"
+            }
+          ]
+        }
+      ],
       "responsible": "Rolemberg Junior",
       "creationDate": "10/09/2024",
       "finalizationDate": "2024-09-06",
@@ -218,7 +222,16 @@
     {
       "id": "d579",
       "name": "LUANZIN ULTIMO TESTE",
-      "description": "asdas",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "text": "TESTANDO"
+            }
+          ]
+        }
+      ],
       "responsible": "Rolemberg Junior",
       "creationDate": "10/09/2024",
       "finalizationDate": "2024-09-05",
@@ -230,7 +243,16 @@
     {
       "id": "4a4b",
       "name": "NEW ITEM",
-      "description": "asdas",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "text": "TESTANDO"
+            }
+          ]
+        }
+      ],
       "responsible": "Rolemberg Junior",
       "creationDate": "10/09/2024",
       "finalizationDate": "2024-09-19",
@@ -242,7 +264,16 @@
     {
       "id": "959f",
       "name": "TESTANDO DE NOVO",
-      "description": "asdasd",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "text": "TESTANDO"
+            }
+          ]
+        }
+      ],
       "responsible": "Rolemberg Junior",
       "creationDate": "10/09/2024",
       "finalizationDate": "2024-09-19",
@@ -254,7 +285,16 @@
     {
       "id": "e46f",
       "name": "TESTANDO O MODAL",
-      "description": "asdasd",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "text": "TESTANDO"
+            }
+          ]
+        }
+      ],
       "responsible": "Rolemberg Junior",
       "creationDate": "19/09/2024",
       "finalizationDate": "2024-09-20",
@@ -266,7 +306,16 @@
     {
       "id": "6de6",
       "name": "Criando outra task para teste",
-      "description": "TESTE",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "text": "TESTANDO"
+            }
+          ]
+        }
+      ],
       "responsible": "Rolemberg Junior",
       "creationDate": "20/09/2024",
       "finalizationDate": "2024-09-21",
@@ -278,7 +327,16 @@
     {
       "id": "fb22",
       "name": "Adicionando uma nova task",
-      "description": "Adicionada",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "text": "TESTANDO"
+            }
+          ]
+        }
+      ],
       "responsible": "Rolemberg Junior",
       "creationDate": "01/10/2024",
       "finalizationDate": "2024-10-03",
@@ -290,7 +348,16 @@
     {
       "id": "0973",
       "name": "Adicionando uma nova task",
-      "description": "Adicionada",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "text": "TESTANDO"
+            }
+          ]
+        }
+      ],
       "responsible": "Rolemberg Junior",
       "creationDate": "01/10/2024",
       "finalizationDate": "2024-10-03",
@@ -298,6 +365,48 @@
       "folder": null,
       "status": "Fazer",
       "checklist": []
+    },
+    {
+      "name": "Criar o DASHBOARD GERENCIAL V2 FINANCEIRO",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "text": "TESTANDO"
+            }
+          ]
+        }
+      ],
+      "responsible": "Rolemberg Junior",
+      "creationDate": "04/10/2024",
+      "finalizationDate": "2024-10-31",
+      "priority": "ALTA PRIORIDADE",
+      "status": "Fazer",
+      "folder": null,
+      "checklist": [],
+      "id": "cade"
+    },
+    {
+      "name": "Task sem description",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "text": "Testando"
+            }
+          ]
+        }
+      ],
+      "responsible": "Rolemberg Junior",
+      "creationDate": "20/10/2024",
+      "finalizationDate": "2024-10-23",
+      "priority": "ALTA PRIORIDADE",
+      "status": "Não iniciado",
+      "folder": null,
+      "checklist": [],
+      "id": "6540"
     }
   ],
   "pastas": [
