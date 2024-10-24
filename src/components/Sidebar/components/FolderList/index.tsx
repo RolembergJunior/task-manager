@@ -72,7 +72,7 @@ export default function FolderList() {
 					<MdOutlineKeyboardArrowRight />
 				)}
 			</div>
-			<div
+			<nav
 				style={{
 					visibility: isOpenFolder ? "visible" : "hidden",
 					overflow: isOpenFolder ? "visible" : "hidden",
@@ -120,7 +120,7 @@ export default function FolderList() {
 						</div>
 					))}
 				</ul>
-			</div>
+			</nav>
 		</>
 	);
 }

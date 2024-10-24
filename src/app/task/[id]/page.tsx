@@ -234,11 +234,11 @@ export default function Task() {
 	if (!isLoading && !error)
 		return (
 			<ThemeProvider attribute="class">
-				<div className="flex bg-[#F5F6FA] dark:bg-black/20">
+				<section className="flex bg-[#F5F6FA] dark:bg-black/20">
 					<SideBar />
 					<div className="w-[90%] my-auto">
 						<div className="bg-white dark:bg-[#1e293b] mx-auto w-[95%] h-[95vh] rounded-xl shadow-md shadow-black/20 p-5">
-							<div className="flex justify-between">
+							<header className="flex justify-between">
 								<BiLeftArrowAlt
 									onClick={() => {
 										openModal(Modals.LOADING, "CARREGANDO");
@@ -275,9 +275,9 @@ export default function Task() {
 										</DialogHeader>
 									</DialogContent>
 								</Dialog>
-							</div>
-							<div className="flex">
-								<div className="mt-16 px-10 space-y-10 w-[70%]">
+							</header>
+							<main className="flex">
+								<section className="mt-16 px-10 space-y-10 w-[70%]">
 									<div className="flex items-center bg-[#F5F6FA] dark:bg-black/50 gap-4 p-2 rounded-md">
 										<div className="w-3 h-3 mx-auto rounded-full">
 											{verifyDateAndStylize()}
@@ -503,7 +503,7 @@ export default function Task() {
 											</div>
 										) : null}
 									</div>
-								</div>
+								</section>
 								<div className="mt-16 space-y-5 w-[20%] mx-auto h-full">
 									<h1 className="text-center text-xl font-semibold">
 										Atividade
@@ -519,10 +519,10 @@ export default function Task() {
 										<Button>Enviar</Button>
 									</div>
 								</div>
-							</div>
+							</main>
 						</div>
 					</div>
-				</div>
+				</section>
 			</ThemeProvider>
 		);
 }

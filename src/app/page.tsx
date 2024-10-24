@@ -59,22 +59,21 @@ export default function Home() {
 			<ThemeProvider attribute="class">
 				<div className="flex bg-[#F5F6FA] dark:bg-black/20 transition-colors durantion-100">
 					<SideBar />
-					<main className="w-[85%]">
-						<header className="flex items-center justify-between bg-white dark:bg-[#1e293b] border border-black/10 w-full h-20 p-4">
-							<Header
-								title={
-									filters.folder === null
-										? "Todas as tarefas"
-										: filters.folder.toString()
-								}
-								hasAddTaskButton
-								hasFolderButton
-								hasSearchFilter
-								onClickButton={() => null}
-							/>
-						</header>
+					<div className="w-[85%]">
+						<Header
+							title={
+								filters.folder === null
+									? "Todas as tarefas"
+									: filters.folder.toString()
+							}
+							hasAddTaskButton
+							hasFolderButton
+							hasSearchFilter
+							onClickButton={() => null}
+						/>
+
 						<DataTable columns={columns} data={sensitiveDataByFilters} />
-					</main>
+					</div>
 				</div>
 			</ThemeProvider>
 		);

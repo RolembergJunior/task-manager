@@ -40,7 +40,7 @@ export default function Header(props: PropsHeader) {
 	} = props;
 
 	return (
-		<div
+		<header
 			style={ContentStyle?.content}
 			className="flex justify-between items-center bg-white dark:bg-[#1e293b] border-b w-full h-[81px] p-5 "
 		>
@@ -85,6 +85,6 @@ export default function Header(props: PropsHeader) {
 					{titleButton}
 				</Button>
 			)}
-		</div>
+		</header>
 	);
 }

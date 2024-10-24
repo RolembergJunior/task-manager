@@ -43,24 +43,22 @@ export default function Dashboard() {
 	if (!data?.length) return;
 
 	return (
-		<>
-			<ThemeProvider attribute="class">
-				<main className="flex">
-					<SideBar />
-					<header className="flex flex-col bg-[#F5F6FA] dark:bg-black/70 w-[85%]">
-						<Header
-							title="DashBoard"
-							titleButton="Editar Layout"
-							onClickButton={() => null}
-						/>
-						<section className="grid grid-rows-3 grid-cols-3 w-full h-[90vh] p-5 gap-2">
-							<CountTaskStatus />
-							<PercentLateTaskDash />
-							<BarChartGeral />
-						</section>
-					</header>
-				</main>
-			</ThemeProvider>
-		</>
+		<ThemeProvider attribute="class">
+			<div className="flex">
+				<SideBar />
+				<div className="flex flex-col bg-[#F5F6FA] dark:bg-black/70 w-[85%]">
+					<Header
+						title="DashBoard"
+						titleButton="Editar Layout"
+						onClickButton={() => null}
+					/>
+					<main className="grid grid-rows-3 grid-cols-3 w-full h-[90vh] p-5 gap-2">
+						<CountTaskStatus />
+						<PercentLateTaskDash />
+						<BarChartGeral />
+					</main>
+				</div>
+			</div>
+		</ThemeProvider>
 	);
 }
