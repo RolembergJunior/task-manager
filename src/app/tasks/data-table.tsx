@@ -62,7 +62,7 @@ export function DataTable<Tdata, Tvalue>({
 	if (data === undefined) return <Loading />;
 	if (data !== undefined)
 		return (
-			<div className="bg-white dark:bg-[#1e293b] rounded-md border dark:border-white/20 w-[95%] mx-auto my-5">
+			<section className="bg-white dark:bg-[#1e293b] rounded-md border dark:border-white/20 w-[95%] mx-auto my-5">
 				<Table>
 					<TableHeader>
 						{table?.getHeaderGroups().map((headerGroup) => (
@@ -159,6 +159,6 @@ export function DataTable<Tdata, Tvalue>({
 						</ButtonIcon>
 					</div>
 				</div>
-			</div>
+			</section>
 		);
 }
