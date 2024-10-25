@@ -3,7 +3,7 @@
 import { useAtom } from "jotai";
 import { modalsAtom } from "./Atoms";
 
-export const openModal =
+const openModal =
 	(modals, setModals) => (modalName: string, modalText: string) => {
 		setModals({
 			...modals,
@@ -11,7 +11,7 @@ export const openModal =
 		});
 	};
 
-export const closeModal = (modals, setModals) => (modalName: string) => {
+const closeModal = (modals, setModals) => (modalName: string) => {
 	setModals({
 		...modals,
 		[modalName]: { isOpen: false, text: null },

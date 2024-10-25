@@ -127,6 +127,14 @@ export default function Task() {
 		}
 	}
 
+	function onClickGoHome() {
+		openModal(Modals.LOADING, "CARREGANDO");
+
+		mutate("http://localhost:3000/tarefas");
+
+		route.push("/");
+	}
+
 	const options = {
 		method: "DELETE",
 	};
@@ -140,15 +148,11 @@ export default function Task() {
 	}
 
 	function getIdFolderSelected(folderNameSelected: string | null) {
-		const idFolderSelected = dataFolders.data?.find(
+		const findFolderSelected = dataFolders.data?.find(
 			(folder: FolderProps) => folder.name === folderNameSelected,
 		);
 
-		if (idFolderSelected?.name) {
-			return idFolderSelected.name;
-		}
-
-		return null;
+		return findFolderSelected?.name;
 	}
 
 	async function onEditTask() {
@@ -231,6 +235,182 @@ export default function Task() {
 		});
 	}
 
+	const renderSelectors = () => {
+		return (
+			<>
+				<section className="flex items-center gap-6">
+					<div>
+						<span className="font-medium text-black/50 dark:text-white/70">
+							Responsável
+						</span>
+						<Select
+							onValueChange={(value) =>
+								setDataTask({ ...dataTask, responsible: value })
+							}
+						>
+							<SelectTrigger className="w-34 border-none focus:outline-none">
+								<SelectValue placeholder={dataTask.responsible} />
+							</SelectTrigger>
+							<SelectContent>
+								<SelectGroup>
+									<SelectItem value="Rolemberg Junior">
+										Rolemberg Junior
+									</SelectItem>
+									<SelectItem value="Pitter Antonio">Pitter Antonio</SelectItem>
+									<SelectItem value="Fernanda Sales">Fernanda Sales</SelectItem>
+									<SelectItem value="Ruan Pablo">Ruan Pablo</SelectItem>
+									<SelectItem value="Luan Carlos">Luan Carlos</SelectItem>
+								</SelectGroup>
+							</SelectContent>
+						</Select>
+					</div>
+					<div>
+						<span className="font-medium text-black/50 dark:text-white/70">
+							Data de criação
+						</span>
+						<p className="">{dataTask.creationDate}</p>
+					</div>
+					<div>
+						<span className="font-medium text-black/50 dark:text-white/70">
+							Data de finalização
+						</span>
+						<Input
+							onChange={(e) =>
+								setDataTask({
+									...dataTask,
+									finalizationDate: e.target.value,
+								})
+							}
+							type="date"
+							color="white"
+							className="border-none focus:outline-none"
+							value={dataTask.finalizationDate}
+						/>
+					</div>
+					<div>
+						<span className="font-medium text-black/50 dark:text-white/70">
+							Prioridade
+						</span>
+						<Select
+							onValueChange={(value) =>
+								setDataTask({ ...dataTask, priority: value })
+							}
+						>
+							<SelectTrigger className="w-34 border-none " color="white">
+								<SelectValue placeholder={dataTask.priority} />
+							</SelectTrigger>
+							<SelectContent>
+								<SelectGroup>
+									<SelectItem value={Prioritys.HIGH_PRORITY}>
+										URGENTE
+									</SelectItem>
+									<SelectItem value={Prioritys.MEDIUM_PRIORITY}>
+										MÉDIA URGÊNCIA
+									</SelectItem>
+									<SelectItem value={Prioritys.LOW_PRIORITY}>
+										BAIXA URGÊNCIA
+									</SelectItem>
+								</SelectGroup>
+							</SelectContent>
+						</Select>
+					</div>
+					<div>
+						<span className="font-medium text-black/50 dark:text-white/70">
+							Status
+						</span>
+						<Select
+							onValueChange={(value) =>
+								setDataTask({ ...dataTask, status: value })
+							}
+						>
+							<SelectTrigger className="w-34 border-none" color="white">
+								<SelectValue placeholder={dataTask.status} />
+							</SelectTrigger>
+							<SelectContent>
+								<SelectGroup>
+									<SelectItem value={Status.NOT_INICIATE}>
+										Não inciado
+									</SelectItem>
+									<SelectItem value={Status.TO_DO}>Fazer</SelectItem>
+									<SelectItem value={Status.WORKING}>Em andamento</SelectItem>
+									<SelectItem value={Status.CLOSED}>Concluído</SelectItem>
+								</SelectGroup>
+							</SelectContent>
+						</Select>
+					</div>
+					<div>
+						<span className="font-medium text-black/50 dark:text-white/70">
+							Pasta
+						</span>
+						<Select
+							onValueChange={(value) =>
+								setDataTask({ ...dataTask, folder: value })
+							}
+						>
+							<SelectTrigger>
+								<SelectValue
+									placeholder={getIdFolderSelected(dataTask.folder)}
+								/>
+							</SelectTrigger>
+							<SelectContent>
+								{dataFolders.data?.map((folder: FolderProps) => (
+									<SelectItem value={folder.name} key={folder.id}>
+										{folder.name}
+									</SelectItem>
+								))}
+								;
+							</SelectContent>
+						</Select>
+					</div>
+				</section>
+			</>
+		);
+	};
+
+	const renderCheckList = () => {
+		if (dataTask.checklist?.length || isOpenInput)
+			return (
+				<section className="bg-[#F5F6FA] dark:bg-black/50 rounded-lg p-3 max-h-52 overflow-auto scrollbar-thin scrollbar-thumb-black scrollbar-track-white">
+					{isOpenInput && (
+						<div className="flex gap-2">
+							<Input
+								onChange={(e) => setInputText(e.target.value)}
+								type="text"
+								placeholder="Digite aqui..."
+							/>
+							<Button onClick={() => onHandleSaveTask()}>Salvar</Button>
+						</div>
+					)}
+					{dataTask.checklist?.map((item, indexItem) => (
+						<div
+							key={`${item.name}-${indexItem}`}
+							className="flex items-center justify-between w-full border-b border-black/10 dark:border-white/20"
+						>
+							{item.isCheck ? (
+								<div className="relative">
+									<label>{item.name}</label>
+									<hr className="absolute top-[43%] bg-black dark:bg-white w-full h-[2px]" />
+								</div>
+							) : (
+								<label>{item.name}</label>
+							)}
+							<div className="flex items-center gap-3">
+								<Input
+									checked={item.isCheck}
+									onClick={() => onHandleClickCheckBox(item, indexItem)}
+									type="checkbox"
+									className="w-5"
+								/>
+								<div onClick={() => onHandleDeleteItemChecklist(indexItem)}>
+									<IoIosClose size={25} />
+								</div>
+							</div>
+						</div>
+					))}
+				</section>
+			);
+	};
+
 	if (!isLoading && !error)
 		return (
 			<ThemeProvider attribute="class">
@@ -240,12 +420,7 @@ export default function Task() {
 						<div className="bg-white dark:bg-[#1e293b] mx-auto w-[95%] h-[95vh] rounded-xl shadow-md shadow-black/20 p-5">
 							<header className="flex justify-between">
 								<BiLeftArrowAlt
-									onClick={() => {
-										openModal(Modals.LOADING, "CARREGANDO");
-
-										mutate("http://localhost:3000/tarefas");
-										route.push("/");
-									}}
+									onClick={() => onClickGoHome()}
 									className="hover:cursor-pointer"
 									size={30}
 								/>
@@ -290,149 +465,7 @@ export default function Task() {
 											className="bg-transparent h-10 w-full text-3xl font-semibold focus:outline-none resize-none overflow-auto"
 										/>
 									</div>
-									<div className="flex items-center gap-6">
-										<div>
-											<span className="font-medium text-black/50 dark:text-white/70">
-												Responsável
-											</span>
-											<Select
-												onValueChange={(value) =>
-													setDataTask({ ...dataTask, responsible: value })
-												}
-											>
-												<SelectTrigger className="w-34 border-none focus:outline-none">
-													<SelectValue placeholder={dataTask.responsible} />
-												</SelectTrigger>
-												<SelectContent>
-													<SelectGroup>
-														<SelectItem value="Rolemberg Junior">
-															Rolemberg Junior
-														</SelectItem>
-														<SelectItem value="Pitter Antonio">
-															Pitter Antonio
-														</SelectItem>
-														<SelectItem value="Fernanda Sales">
-															Fernanda Sales
-														</SelectItem>
-														<SelectItem value="Ruan Pablo">
-															Ruan Pablo
-														</SelectItem>
-														<SelectItem value="Luan Carlos">
-															Luan Carlos
-														</SelectItem>
-													</SelectGroup>
-												</SelectContent>
-											</Select>
-										</div>
-										<div>
-											<span className="font-medium text-black/50 dark:text-white/70">
-												Data de criação
-											</span>
-											<p className="">{dataTask.creationDate}</p>
-										</div>
-										<div>
-											<span className="font-medium text-black/50 dark:text-white/70">
-												Data de finalização
-											</span>
-											<Input
-												onChange={(e) =>
-													setDataTask({
-														...dataTask,
-														finalizationDate: e.target.value,
-													})
-												}
-												type="date"
-												color="white"
-												className="border-none focus:outline-none"
-												value={dataTask.finalizationDate}
-											/>
-										</div>
-										<div>
-											<span className="font-medium text-black/50 dark:text-white/70">
-												Prioridade
-											</span>
-											<Select
-												onValueChange={(value) =>
-													setDataTask({ ...dataTask, priority: value })
-												}
-											>
-												<SelectTrigger
-													className="w-34 border-none "
-													color="white"
-												>
-													<SelectValue placeholder={dataTask.priority} />
-												</SelectTrigger>
-												<SelectContent>
-													<SelectGroup>
-														<SelectItem value={Prioritys.HIGH_PRORITY}>
-															URGENTE
-														</SelectItem>
-														<SelectItem value={Prioritys.MEDIUM_PRIORITY}>
-															MÉDIA URGÊNCIA
-														</SelectItem>
-														<SelectItem value={Prioritys.LOW_PRIORITY}>
-															BAIXA URGÊNCIA
-														</SelectItem>
-													</SelectGroup>
-												</SelectContent>
-											</Select>
-										</div>
-										<div>
-											<span className="font-medium text-black/50 dark:text-white/70">
-												Status
-											</span>
-											<Select
-												onValueChange={(value) =>
-													setDataTask({ ...dataTask, status: value })
-												}
-											>
-												<SelectTrigger
-													className="w-34 border-none"
-													color="white"
-												>
-													<SelectValue placeholder={dataTask.status} />
-												</SelectTrigger>
-												<SelectContent>
-													<SelectGroup>
-														<SelectItem value={Status.NOT_INICIATE}>
-															Não inciado
-														</SelectItem>
-														<SelectItem value={Status.TO_DO}>Fazer</SelectItem>
-														<SelectItem value={Status.WORKING}>
-															Em andamento
-														</SelectItem>
-														<SelectItem value={Status.CLOSED}>
-															Concluído
-														</SelectItem>
-													</SelectGroup>
-												</SelectContent>
-											</Select>
-										</div>
-										<div>
-											<span className="font-medium text-black/50 dark:text-white/70">
-												Pasta
-											</span>
-											<Select
-												onValueChange={(value) =>
-													setDataTask({ ...dataTask, folder: value })
-												}
-											>
-												<SelectTrigger>
-													<SelectValue
-														placeholder={getIdFolderSelected(dataTask.folder)}
-													/>
-												</SelectTrigger>
-												<SelectContent>
-													{dataFolders.data?.map((folder: FolderProps) => (
-														<SelectItem value={folder.name} key={folder.id}>
-															{folder.name}
-														</SelectItem>
-													))}
-													;
-												</SelectContent>
-											</Select>
-										</div>
-									</div>
+									{renderSelectors()}
 									{/* <textarea
 									value={dataTask.description}
 									contentEditable={true}
@@ -454,54 +487,7 @@ export default function Task() {
 												<FaPlus />
 											</div>
 										</div>
-										{dataTask.checklist?.length || isOpenInput ? (
-											<div className="bg-[#F5F6FA] dark:bg-black/50 rounded-lg p-3 max-h-52 overflow-auto scrollbar-thin scrollbar-thumb-black scrollbar-track-white">
-												{isOpenInput && (
-													<div className="flex gap-2">
-														<Input
-															onChange={(e) => setInputText(e.target.value)}
-															type="text"
-															placeholder="Digite aqui..."
-														/>
-														<Button onClick={() => onHandleSaveTask()}>
-															Salvar
-														</Button>
-													</div>
-												)}
-												{dataTask.checklist?.map((item, indexItem) => (
-													<div
-														key={`${item.name}-${indexItem}`}
-														className="flex items-center justify-between w-full border-b border-black/10 dark:border-white/20"
-													>
-														{item.isCheck ? (
-															<div className="relative">
-																<label>{item.name}</label>
-																<hr className="absolute top-[43%] bg-black dark:bg-white w-full h-[2px]" />
-															</div>
-														) : (
-															<label>{item.name}</label>
-														)}
-														<div className="flex items-center gap-3">
-															<Input
-																checked={item.isCheck}
-																onClick={() =>
-																	onHandleClickCheckBox(item, indexItem)
-																}
-																type="checkbox"
-																className="w-5"
-															/>
-															<div
-																onClick={() =>
-																	onHandleDeleteItemChecklist(indexItem)
-																}
-															>
-																<IoIosClose size={25} />
-															</div>
-														</div>
-													</div>
-												))}
-											</div>
-										) : null}
+										{renderCheckList()}
 									</div>
 								</section>
 								<div className="mt-16 space-y-5 w-[20%] mx-auto h-full">
